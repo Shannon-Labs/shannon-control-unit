@@ -35,7 +35,7 @@ Set your target information ratio \( S^* \), and our PI controller automatically
 
 **Validated Results:**
 
-| Model | Metric | Baseline | SCU | Improvement |
+| Model | Metric | Cross-Entropy Baseline | SCU | Improvement |
 |-------|--------|----------|-----|-------------|
 | **Llama-3.2-1B** | BPT | 3.920 | 3.676 | **-6.2%** |
 | | Perplexity | 15.14 | 12.78 | **-15.6%** |

@@ -325,7 +325,7 @@ if __name__ == "__main__":
                        help="Initial lambda value")
     parser.add_argument("--lambda_min", type=float, default=1e-4,
                        help="Minimum lambda")
-    parser.add_argument("--lambda_max", type=float, default=10.0,
+    parser.add_argument("--lambda_max", type=float, default=2.0,
                        help="Maximum lambda")
     
     # Training args

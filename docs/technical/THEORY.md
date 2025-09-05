@@ -41,16 +41,16 @@ This ratio satisfies $S \in [0,1]$, with interpretation:
 
 ### 2.1 Plant Model
 
-The system exhibits positive plant gain: increasing $\lambda$ increases regularization, which increases ParamBPT and thus $S$:
+The system exhibits negative plant gain during training: increasing $\lambda$ strengthens regularization, reduces weights, and decreases ParamBPT, hence $S$:
 
-$$\frac{\partial S}{\partial \lambda} > 0$$
+$$\frac{\partial S}{\partial \lambda} < 0$$
 
 An effective first‑order approximation is:
 
 $$G(s) = \frac{K}{1 + \tau s} e^{-Ls}$$
 
 where:
-- $K > 0$ is the (positive) plant gain
+- $K < 0$ captures the negative plant gain
 - $\tau$ is the system time constant
 - $L$ is the transport delay (gradient computation)
 
@@ -66,9 +66,9 @@ where $e(t) = S_{\text{measured}}(t) - S^*$ is the tracking error.
 
 Due to the positivity constraint on $\lambda$, we employ multiplicative updates:
 
-$$\lambda_{k+1} = \lambda_k \, \exp(-u(k))$$
+$$\lambda_{k+1} = \lambda_k \, \exp(+u(k))$$
 
-With $K>0$ (plant increases $S$ when $\lambda$ increases), the negative sign in the exponent implements negative feedback: when $S>S^*$ ($u>0$), $\lambda$ decreases; when $S<S^*$ ($u<0$), $\lambda$ increases. This keeps $\lambda>0$ and yields scale‑invariant control dynamics.
+With $K<0$ (plant decreases $S$ when $\lambda$ increases), a positive sign implements negative feedback: when $S>S^*$ ($u>0$), $\lambda$ increases to push $S$ down; when $S<S^*$ ($u<0$), $\lambda$ decreases to allow $S$ up.
 
 ## 3. Convergence Analysis
 

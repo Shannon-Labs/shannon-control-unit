@@ -36,23 +36,17 @@ def update_lambda(
     leak: float = 0.995,
     satur_guard: bool = True
 ) -> Tuple[float, float, float]:
-    """Update lambda using PI control with negative plant gain.
+    """Update lambda using PI control (negative plant gain).
     
-    Control law with negative plant gain (system naturally increases S with higher λ):
-        error = S_measured - S_target
-        λ_new = λ * exp(-(Kp*error + Ki*∫error))
-        
-    When S > S_target (too much regularization):
-        - error > 0
-        - control_effort = Kp*error + Ki*∫error > 0
-        - λ multiplier = exp(-control_effort) < 1
-        - λ decreases (correct: less regularization)
-        
-    When S < S_target (too little regularization):
-        - error < 0
-        - control_effort = Kp*error + Ki*∫error < 0
-        - λ multiplier = exp(-control_effort) > 1
-        - λ increases (correct: more regularization)
+    Plant sign: increasing λ strengthens regularization, which (over training) reduces
+    weights and thus decreases ParamBPT. Therefore dS/dλ < 0 (negative plant gain).
+
+    We want negative feedback on S:
+        error e = S_measured - S_target
+        λ_new = λ * exp(+ (Kp*e + Ki*∫e))
+
+    - If S > S* (e > 0), increase λ to push S down.
+    - If S < S* (e < 0), decrease λ to allow S up.
     
     Args:
         lmbda: Current lambda value
@@ -124,13 +118,16 @@ def update_lambda(
     # Compute control effort
     control_effort = Kp * error + I
     
-    # Multiplicative update with negative plant gain
-    # Negative sign because higher λ increases S (negative plant gain)
-    lmbda_new = lmbda * math.exp(-control_effort)
+    # Multiplicative update for negative plant gain (increase λ when e>0)
+    lmbda_new = lmbda * math.exp(control_effort)
     
     # Apply bounds
     lmbda_new = max(lmin, min(lmax, lmbda_new))
     
+    # Guardrail assertions (lightweight; keep always-on as they are cheap)
+    assert 0.0 <= S_hat <= 1.0 or math.isnan(S_hat) is False, "S_hat out of [0,1] or NaN"
+    assert lmin - 1e-12 <= lmbda_new <= lmax + 1e-12, "lambda out of bounds"
+    assert i_min - 1e-12 <= I <= i_max + 1e-12, "integral term out of bounds"
     return lmbda_new, I, S_hat
 
 
