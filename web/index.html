@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shannon Labs: Cruise Control for LLM Training | 15.6% Proven Improvement</title>
-  <meta name="description" content="Shannon Control Unit - Automatic regularization for LLM training using PI control. Proven 15.6% perplexity reduction on Llama-3.2-1B. Like cruise control: set your target, SCU maintains it automatically.">
+  <title>Shannon Labs: Cruise Control for LLM Training | −10.6% BPT, −12.6% PPL (3B)</title>
+  <meta name="description" content="Shannon Control Unit — Adaptive MDL regularization with PI control. Validated: −10.6% BPT and −12.6% perplexity on Llama‑3.2‑3B (LoRA); −15.6% perplexity at 1B. Set S* target, SCU maintains it automatically.">
   
   <!-- Open Graph / Twitter -->
   <meta property="og:type" content="website">
@@ -14,7 +14,7 @@
   <meta property="og:image" content="https://shannonlabs.dev/assets/shannon-scu-og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Shannon Control Unit - 10.6% BPT Improvement at 3B Scale">
+  <meta property="og:image:alt" content="Shannon Control Unit — −10.6% BPT and −12.6% perplexity at 3B">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://shannonlabs.dev/">
   <meta name="twitter:title" content="Shannon Labs — Cruise Control for LLM Training">
@@ -826,15 +826,32 @@
     <section class="hero">
       <div class="hero-content">
         <h1 style="margin-bottom: 1.5rem;">Cruise Control for LLM Training</h1>
-        <p class="hero-subhead" style="margin-bottom: 3rem; font-size: 1.25rem; opacity: 0.9;">Set your target. SCU maintains it automatically.</p>
-        
-        <div class="proof-capsule" style="margin-bottom: 3rem;">
-          <div class="proof-value">10.6% improvement at 3B scale</div>
+        <p class="hero-subhead" style="margin-bottom: 2rem; font-size: 1.25rem; opacity: 0.9;">Set a target information ratio (S*). SCU maintains it automatically—reducing loss and time‑to‑target.</p>
+
+        <div class="proof-capsule" style="margin-bottom: 2rem;">
+          <div style="display: grid; grid-template-columns: repeat(3, minmax(140px, 1fr)); gap: 1.25rem; align-items: center;">
+            <div>
+              <div class="proof-label">3B — BPT</div>
+              <div class="proof-value">−10.6%</div>
+            </div>
+            <div>
+              <div class="proof-label">3B — Perplexity</div>
+              <div class="proof-value">−12.6%</div>
+            </div>
+            <div>
+              <div class="proof-label">Time‑to‑Target</div>
+              <div class="proof-value" style="color: var(--gray-800);">≥10% fewer steps*</div>
+            </div>
+          </div>
+          <div style="margin-top: .5rem; font-size: .85rem; color: var(--gray-500); text-align: left;">
+            *goal for 7B+ validations; see roadmap below
+          </div>
         </div>
-        
+
         <div class="hero-actions">
           <a href="https://calendly.com/hunter-shannonlabs/30min" target="_blank" rel="noopener" class="btn btn-primary" aria-label="Book a demo">Book a Demo</a>
-          <a href="https://huggingface.co/hunterbown/shannon-control-unit" target="_blank" rel="noopener" class="btn btn-secondary" aria-label="Explore the models">View Models</a>
+          <a href="#results" class="btn btn-secondary" aria-label="See validation results">See Validation</a>
+          <a href="#validation" class="btn btn-secondary" aria-label="See roadmap and ROI">Roadmap & ROI</a>
         </div>
       </div>
     </section>
