@@ -852,10 +852,7 @@
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-bottom: 3rem;">
           <!-- Claude Shannon (LEFT) -->
           <div style="text-align: center;">
-            <!-- Mathematical symbol placeholder for Shannon -->
-            <div style="width: 200px; height: 200px; margin: 0 auto 1rem; border-radius: 12px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-              <div style="color: white; font-size: 4rem; font-family: var(--font-mono); font-weight: 300;">H(X)</div>
-            </div>
+            <img src="/photos/claude_shannon.jpg" alt="Claude Shannon" style="width: 100%; max-width: 200px; margin: 0 auto 1rem; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);" onerror="this.style.display='none'">
             <div style="background: var(--white); padding: 1.5rem; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
               <h3 style="color: var(--primary); margin-bottom: 1rem;">Claude Shannon</h3>
               <p style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 1rem;">Father of Information Theory (1916-2001)</p>
@@ -892,7 +889,7 @@
             <div style="background: var(--white); border-left: 4px solid var(--primary); padding: 1.5rem; border-radius: 8px; margin-top: 2rem;">
               <h3 style="margin: 0 0 0.5rem 0; color: var(--primary);">Strategic Engagement</h3>
               <p style="margin: 0; line-height: 1.6;">
-                The Shannon Control Unit brings cruise control to LLM training. Set your target information ratio, and our PI controller maintains it automatically throughout training.
+                We will calculate the optimal information ratio for minimizing perplexity and bit per token, and our PI controller maintains it automatically throughout training as the system moves between states of increased and decreased entropy.
               </p>
               <p style="margin: .75rem 0 0; line-height: 1.6;">
                 For organizations spending billions on AI infrastructure, SCU represents $100M+ in annual savings. We're engaged with leading compute providers for validation at scale.
