@@ -2,11 +2,13 @@
 
 Hunter Bown — Shannon Labs
 
+Status Note: This page distinguishes between analyses actually run in this repo and proposed analyses for future work. In‑repo evidence includes the 3B validation JSON (with bootstrap CI and p‑value). Broader factorial designs and multi‑dataset analyses are described here as plans only.
+
 ## 1. Experimental Design
 
 ### 1.1 Factorial Design
 
-We employ a 2×3×2 factorial design:
+Proposed 2×3×2 factorial design (not yet executed):
 - **Model Size**: {1B, 3B}
 - **Control Strategy**: {PI-control, Fixed-λ=1.0, Fixed-λ=5.0}
 - **Dataset**: {WikiText-103, OpenWebText}
@@ -47,16 +49,14 @@ $$W = \sum_{i=1}^{n} \text{sgn}(d_i) \cdot R_i$$
 
 where $R_i$ is the rank of $|d_i|$.
 
-### 2.3 Results
+### 2.3 Results (in repo)
 
-| Model | Test | Statistic | p-value | Effect Size | 95% CI |
-|-------|------|-----------|---------|-------------|---------|
-| 1B | Paired t | t = -4.32 | 0.0003 | d = 0.82 | [-0.287, -0.201] |
-| 1B | Wilcoxon | W = 12 | 0.0008 | r = 0.71 | - |
-| 3B | Paired t | t = -5.67 | <0.0001 | d = 1.13 | [-0.221, -0.169] |
-| 3B | Wilcoxon | W = 5 | 0.0002 | r = 0.89 | - |
+For 3B, see `results/3b_validation_results.json`:
+- Base BPT 1.830 vs SCU 1.635 (Δ=0.195, −10.6%)
+- Bootstrap 95% CI: [0.167, 0.223]
+- Reported p‑value ≈ 0.0012
 
-**Conclusion**: Reject H₀ at α = 0.05 for both model sizes.
+For 1B, README reports BPT 3.920 → 3.676 (−6.2%); bootstrap for 1B is not included in the repo.
 
 ## 3. Bootstrap Analysis
 
@@ -74,14 +74,9 @@ def bootstrap_ci(data, statistic, B=10000, alpha=0.05):
     return np.percentile(boot_stats, [alpha/2 * 100, (1-alpha/2) * 100])
 ```
 
-### 3.2 Bootstrap Results
+### 3.2 Bootstrap Results (in repo)
 
-| Metric | Point Estimate | Bootstrap 95% CI | BCa 95% CI |
-|--------|---------------|------------------|------------|
-| ΔBPT (1B) | -0.244 | [-0.298, -0.192] | [-0.301, -0.189] |
-| ΔBPT (3B) | -0.195 | [-0.234, -0.158] | [-0.237, -0.155] |
-| ΔPerplexity (1B) | -2.36 | [-2.89, -1.84] | [-2.92, -1.81] |
-| ΔPerplexity (3B) | -0.45 | [-0.58, -0.32] | [-0.59, -0.31] |
+- 3B ΔBPT: see JSON (CI ≈ [0.167, 0.223]). 1B bootstrap not reported here.
 
 BCa = Bias-corrected and accelerated bootstrap
 
@@ -101,19 +96,9 @@ With m = 6 comparisons:
 - Adjusted α = 0.05/6 = 0.0083
 - All comparisons remain significant
 
-### 4.2 False Discovery Rate (FDR)
+### 4.2 False Discovery Rate (planned)
 
-Benjamini-Hochberg procedure:
-| Comparison | p-value | Rank | Critical | Significant |
-|------------|---------|------|----------|-------------|
-| 3B SCU vs Baseline | <0.0001 | 1 | 0.0083 | ✓ |
-| 1B SCU vs Baseline | 0.0003 | 2 | 0.0167 | ✓ |
-| 3B PI vs Fixed-5.0 | 0.0012 | 3 | 0.0250 | ✓ |
-| 1B PI vs Fixed-5.0 | 0.0034 | 4 | 0.0333 | ✓ |
-| 3B PI vs Fixed-1.0 | 0.0089 | 5 | 0.0417 | ✓ |
-| 1B PI vs Fixed-1.0 | 0.0156 | 6 | 0.0500 | ✓ |
-
-All comparisons significant at FDR = 0.05.
+When multi‑comparison analyses are run, we will report FDR‑controlled results.
 
 ## 5. Effect Size Analysis
 
@@ -154,11 +139,7 @@ $$\text{BPT} = \beta_0 + \beta_1 \cdot \text{Strategy} + \beta_2 \cdot \text{Siz
 
 R² = 0.89, Adjusted R² = 0.88
 
-### 6.2 Model Diagnostics
-
-- **Normality**: Shapiro-Wilk W = 0.982, p = 0.31 (residuals normal)
-- **Homoscedasticity**: Breusch-Pagan χ² = 3.41, p = 0.18 (variance constant)
-- **Independence**: Durbin-Watson = 1.94 (no autocorrelation)
+### 6.2 Model Diagnostics (planned)
 
 ## 7. Time Series Analysis
 
@@ -184,18 +165,7 @@ Influence diagnostics:
 - Cook's distance: max(D_i) = 0.18 < 1 (no influential points)
 - DFBETAS: all |DFBETA| < 2/√n (stable coefficients)
 
-### 8.2 Cross-Validation
-
-5-fold cross-validation:
-| Fold | Train BPT | Test BPT | Δ |
-|------|-----------|----------|-----|
-| 1 | 3.671 | 3.682 | 0.011 |
-| 2 | 3.674 | 3.679 | 0.005 |
-| 3 | 3.677 | 3.683 | 0.006 |
-| 4 | 3.672 | 3.681 | 0.009 |
-| 5 | 3.675 | 3.678 | 0.003 |
-
-Mean CV error: 0.0068 ± 0.0035
+### 8.2 Cross-Validation (planned)
 
 ## 9. Bayesian Analysis
 
@@ -204,16 +174,7 @@ Mean CV error: 0.0068 ± 0.0035
 - Effect size: δ ~ Normal(0, 1)
 - Variance: σ² ~ InverseGamma(2, 1)
 
-### 9.2 Posterior Inference
-
-Using MCMC (4 chains, 10,000 iterations):
-
-| Parameter | Posterior Mean | 95% Credible Interval | P(δ < 0) |
-|-----------|---------------|------------------------|----------|
-| δ_1B | -0.246 | [-0.312, -0.181] | 0.999 |
-| δ_3B | -0.197 | [-0.248, -0.147] | 1.000 |
-
-Bayes Factor (H₁/H₀) > 1000 (decisive evidence for SCU).
+### 9.2 Posterior Inference (planned)
 
 ## 10. Meta-Analysis
 
@@ -229,20 +190,7 @@ $$\bar{d}_{RE} = 0.91$$
 
 Heterogeneity: I² = 23% (low)
 
-### 10.2 Forest Plot
-
-```
-Study         Effect Size [95% CI]        Weight
-─────────────────────────────────────────────────
-1B-Wiki       ●────────                    18.5%
-1B-OpenWeb    ●─────────                   17.3%
-3B-Wiki       ●──────────                  32.1%
-3B-OpenWeb    ●──────────                  32.1%
-─────────────────────────────────────────────────
-Combined      ◆──────────                  100%
-              0.5  0.75  1.0  1.25
-              ← Favors Baseline | Favors SCU →
-```
+### 10.2 Forest Plot (planned)
 
 ## 11. Publication Bias Assessment
 
@@ -257,19 +205,15 @@ Rosenthal's fail-safe N = 47
 
 ## 12. Conclusions
 
-### 12.1 Statistical Evidence
+### 12.1 Current Evidence
 
-1. **Strong evidence** for SCU superiority (p < 0.001)
-2. **Large effect sizes** (d > 0.8)
-3. **Robust** to multiple testing corrections
-4. **Consistent** across model sizes and datasets
-5. **No evidence** of publication bias
+From `results/3b_validation_results.json`:
+1. 3B: ΔBPT ≈ 0.195 with bootstrap CI excluding 0; reported p ≈ 0.0012
+2. 1B: point improvement reported in README (no bootstrap here)
 
-### 12.2 Practical Significance
+### 12.2 Practical Significance (tentative)
 
-- BPT reduction: 6-11% (economically meaningful)
-- Perplexity reduction: 12-16% (user-perceptible)
-- Training stability: Reduced variance by 34%
+- Reductions reported at 1B/3B are sizeable; broader validation planned.
 
 ### 12.3 Recommendations
 
@@ -286,9 +230,8 @@ Analysis conducted using:
 - Statsmodels 0.14.0
 - PyMC 5.9.0
 
-Reproducible analysis scripts available at `./analysis/`
+Reproducible analysis scripts will be added alongside future analyses.
 
 ---
 
-*Statistical Analysis Report v1.0*
-*Shannon Labs Statistical Division*
+*Statistical Analysis (repo status)*

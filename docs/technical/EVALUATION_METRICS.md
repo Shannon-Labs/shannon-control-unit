@@ -22,12 +22,11 @@ $$\text{BPT} = -\frac{1}{N \ln 2} \sum_{i=1}^N \log p(x_i|\theta)$$
 3. Average over sequence dimension
 4. Report mean ± standard error
 
-**Reference Values**:
+**Observed (this repo):**
 | Model | Baseline BPT | SCU BPT | Improvement |
 |-------|--------------|---------|-------------|
 | 1B | 3.920 | 3.676 | -6.2% |
 | 3B | 1.830 | 1.635 | -10.6% |
-| 7B* | 1.024 | 0.892 | -12.9% |
 
 ### 1.2 Perplexity
 
@@ -57,9 +56,9 @@ $$S = \frac{\text{ParamBPT}}{\text{DataBPT} + \text{ParamBPT}}$$
 - **ParamBPT**: $\frac{\lambda}{N\ln 2} \sum_j \frac{\theta_j^2}{2\sigma^2}$
 
 **Target Selection**:
-- Empirically determined per model size
-- Typical range: 0.5% - 5%
-- Scaling: S* ∝ M^{0.52}
+- Empirically determined per model size and setup
+- Typical range (observed here): ≈1% (1B), ≈2.9% (3B)
+- Scaling with model size is a hypothesis to test, not established
 
 ### 2.2 Control Error Metrics
 
@@ -147,16 +146,11 @@ $$\text{Overhead}_{\text{memory}} = \frac{M_{\text{SCU}} - M_{\text{baseline}}}{
 
 ### 5.2 Sample Efficiency
 
-**Definition**: Performance improvement per training step.
+Define efficiency as improvement per training step:
 
 $$\text{Efficiency} = \frac{\Delta\text{BPT}}{\text{Steps}}$$
 
-**Comparison**:
-| Method | Steps to -0.2 BPT | Efficiency |
-|--------|-------------------|------------|
-| SCU | 500 | 4.0e-4 |
-| Grid Search | 5000 | 4.0e-5 |
-| Bayesian Opt | 2000 | 1.0e-4 |
+We have not yet benchmarked efficiency across tuning methods; proposed metric only.
 
 ## 6. Generalization Metrics
 
@@ -166,10 +160,7 @@ $$\text{Efficiency} = \frac{\Delta\text{BPT}}{\text{Steps}}$$
 
 $$\text{Transfer} = \frac{\text{BPT}_{\text{OOD}}}{\text{BPT}_{\text{ID}}}$$
 
-**Test Domains**:
-- Code → Natural text: Transfer = 1.08
-- Wiki → Stories: Transfer = 1.05
-- Formal → Informal: Transfer = 1.12
+We have not yet reported cross‑domain transfer results in this repo.
 
 ### 6.2 Robustness Score
 
@@ -267,23 +258,7 @@ Additionally include:
 
 ## 10. Benchmark Comparisons
 
-### 10.1 Baseline Methods
-
-| Method | BPT | Training Time | Hyperparameter Tuning |
-|--------|-----|---------------|----------------------|
-| No Regularization | 4.152 | 1.0× | None |
-| Fixed λ=1.0 | 3.743 | 1.0× | Manual |
-| Grid Search | 3.698 | 10× | Exhaustive |
-| Bayesian Optimization | 3.702 | 4× | Adaptive |
-| **SCU** | **3.676** | 1.003× | Automatic |
-
-### 10.2 State-of-the-Art Comparison
-
-| Model | Method | BPT | Notes |
-|-------|--------|-----|-------|
-| GPT-3 1.3B | Standard | ~3.9 | Estimated from perplexity |
-| OPT-1.3B | Standard | 3.85 | Published results |
-| **Llama-3.2-1B** | **SCU** | **3.676** | Our results |
+We do not include benchmark leaderboards or SOTA comparisons here; only repo‑measured 1B/3B values.
 
 ## 11. Failure Mode Analysis
 

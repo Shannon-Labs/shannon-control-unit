@@ -2,6 +2,8 @@
 
 Hunter Bown — Shannon Labs
 
+Status Note: This document focuses on asymptotic cost. Tables that look like measurements are illustrative templates and are not claimed as results from this repo unless accompanied by scripts and logs.
+
 ## 1. Asymptotic Complexity
 
 ### 1.1 Time Complexity Per Training Step
@@ -75,11 +77,11 @@ def update_lambda(lambda_curr, S_meas, S_target, I):
 
 Total: **O(1)** - constant time regardless of model size
 
-## 3. Empirical Measurements
+## 3. Empirical Measurements (illustrative)
 
-### 3.1 Wall-Clock Time Analysis
+### 3.1 Wall-Clock Time Analysis (template)
 
-Measured on NVIDIA A100 80GB GPU:
+Example table format for future reporting:
 
 | Model | Baseline (ms/step) | SCU (ms/step) | Overhead (ms) | Overhead (%) |
 |-------|-------------------|---------------|---------------|--------------|
@@ -87,9 +89,9 @@ Measured on NVIDIA A100 80GB GPU:
 | 3B | 512.7 ± 3.4 | 514.2 ± 3.5 | 1.5 ± 0.4 | 0.29% |
 | 7B | 981.4 ± 5.2 | 984.8 ± 5.3 | 3.4 ± 0.6 | 0.35% |
 
-### 3.2 Memory Profiling
+### 3.2 Memory Profiling (template)
 
-Peak memory usage (GB):
+Example table format for future reporting:
 
 | Model | Baseline | SCU | Overhead | Overhead (%) |
 |-------|----------|-----|----------|--------------|
@@ -193,7 +195,7 @@ Controller on first stage:
 
 ## 7. Hardware Utilization
 
-### 7.1 GPU Metrics
+### 7.1 GPU Metrics (template)
 
 | Metric | Baseline | SCU | Impact |
 |--------|----------|-----|--------|
@@ -202,7 +204,7 @@ Controller on first stage:
 | Tensor Core Usage | 89.1% | 89.1% | 0.0% |
 | Power Efficiency | 287 W | 288 W | +0.3% |
 
-### 7.2 CPU Profiling
+### 7.2 CPU Profiling (template)
 
 Control operations on CPU while GPU computes:
 ```
@@ -258,10 +260,7 @@ $$\frac{F_{SCU}}{F_{total}} = \frac{2P + 10}{6BLD^2T} < 10^{-6}$$
 
 ### 10.2 Carbon Footprint
 
-For 1B model training (1 week on 8×A100):
-- Baseline: 168 kWh
-- SCU: 168.5 kWh
-- **Additional: 0.5 kWh (0.3%)**
+Energy example (template): provide method and logs alongside numbers when available.
 
 ## 11. Implementation Optimizations
 
@@ -305,11 +304,7 @@ float param_sum = _mm512_reduce_add_ps(sum_vec);
 
 ### 12.2 Scalability
 
-SCU remains efficient for:
-- Models up to 1T parameters
-- Batch sizes from 1 to 10,000
-- Any sequence length
-- Up to 10,000 distributed workers
+Expected behavior from asymptotics; we have not reported upper‑bound measurements in this repo.
 
 ### 12.3 Recommendations
 

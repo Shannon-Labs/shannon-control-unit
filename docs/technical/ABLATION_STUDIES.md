@@ -2,6 +2,8 @@
 
 Hunter Bown — Shannon Labs
 
+Status Note: This page reports only what is supported by artifacts in this repo (CSV files, figures, and the 3B validation JSON). Any sections describing broader ablations, multi‑seed statistics, or extended robustness are plans or examples unless explicitly backed by linked data.
+
 ## 1. Study Design
 
 ### 1.1 Ablation Components
@@ -19,7 +21,7 @@ We systematically ablate the following SCU components:
 | A7 | No Anti-windup | Remove integral bounds | Potential instability |
 | A8 | No Deadband | Update on all errors | Excessive control action |
 
-### 1.2 Experimental Protocol
+### 1.2 Experimental Protocol (current repo scope)
 
 - **Models**: Llama-3.2-1B, Llama-3.2-3B
 - **Training steps**: 500 per configuration
@@ -33,7 +35,7 @@ We systematically ablate the following SCU components:
 - Evaluation script: [scripts/eval_bpt.py](../../scripts/eval_bpt.py)
 - Validation summary: [results/3b_validation_results.json](../../results/3b_validation_results.json)
 
-## 2. Component Ablation Results
+## 2. Component Ablation Results (limited)
 
 ### 2.1 Control Strategy Ablation
 

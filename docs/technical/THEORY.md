@@ -41,16 +41,16 @@ This ratio satisfies $S \in [0,1]$, with interpretation:
 
 ### 2.1 Plant Model
 
-The system exhibits negative plant gain characteristics. Increasing $\lambda$ increases regularization, which increases ParamBPT, thereby increasing $S$:
+The system exhibits positive plant gain: increasing $\lambda$ increases regularization, which increases ParamBPT and thus $S$:
 
 $$\frac{\partial S}{\partial \lambda} > 0$$
 
-The plant transfer function can be approximated as:
+An effective first‑order approximation is:
 
-$$G(s) = \frac{K_p}{1 + \tau s} e^{-Ls}$$
+$$G(s) = \frac{K}{1 + \tau s} e^{-Ls}$$
 
 where:
-- $K_p < 0$ is the negative plant gain
+- $K > 0$ is the (positive) plant gain
 - $\tau$ is the system time constant
 - $L$ is the transport delay (gradient computation)
 
@@ -66,9 +66,9 @@ where $e(t) = S_{\text{measured}}(t) - S^*$ is the tracking error.
 
 Due to the positivity constraint on $\lambda$, we employ multiplicative updates:
 
-$$\lambda_{k+1} = \lambda_k \exp(-u(k))$$
+$$\lambda_{k+1} = \lambda_k \, \exp(-u(k))$$
 
-This ensures $\lambda > 0$ for all iterations and provides scale-invariant control dynamics.
+With $K>0$ (plant increases $S$ when $\lambda$ increases), the negative sign in the exponent implements negative feedback: when $S>S^*$ ($u>0$), $\lambda$ decreases; when $S<S^*$ ($u<0$), $\lambda$ increases. This keeps $\lambda>0$ and yields scale‑invariant control dynamics.
 
 ## 3. Convergence Analysis
 
