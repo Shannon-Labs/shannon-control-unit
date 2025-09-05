@@ -85,7 +85,7 @@ def test_validation_files():
     import json
     
     # Check validation results
-    validation_file = Path("3b_validation_results.json")
+    validation_file = Path("results/3b_validation_results.json")
     if validation_file.exists():
         try:
             with open(validation_file) as f:

@@ -51,7 +51,7 @@ done
 
 # Upload validation artifacts
 echo "✅ Uploading validation artifacts..."
-huggingface-cli upload $REPO 3b_validation_results.json 3b_validation_results.json --repo-type model --quiet 2>&1 | tail -1
+huggingface-cli upload $REPO results/3b_validation_results.json results/3b_validation_results.json --repo-type model --quiet 2>&1 | tail -1
 
 # Upload evaluation script
 echo "🔬 Uploading evaluation script..."

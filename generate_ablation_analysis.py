@@ -236,7 +236,7 @@ def create_validation_comparison_plot(output_dir: Path) -> None:
     """Create validation results comparison using the updated 3B results."""
     
     # Load validation data
-    with open('3b_validation_results.json', 'r') as f:
+    with open('results/3b_validation_results.json', 'r') as f:
         validation_data = json.load(f)
     
     results = validation_data['results']
