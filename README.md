@@ -46,6 +46,11 @@ Set your target information ratio \( S^* \), and our PI controller automatically
 
 [View validation artifacts](./results/3b_validation_results.json) | [Evaluation protocol](./scripts/eval_bpt.py) | [Technical docs](./docs/technical/README.md)
 
+## Data & Training Setup
+
+- Dataset: subset of WikiText‑103, ~512k tokens (for fast, repeatable experiments).
+- Rationale: this started as a resource constraint; we kept it intentional because tighter budgets make regularization control more challenging and therefore more falsifiable (easier to spot over‑regularization/instability). Full 7B+ and multi‑domain validations are planned.
+
 ## Available Models
 
 | Model | Location | Training | Final BPT | Improvement |
@@ -58,6 +63,22 @@ Set your target information ratio \( S^* \), and our PI controller automatically
 ![Validation Results](assets/figures/validation_results.png)
 
 ---
+
+## Planned Comparisons (next runs)
+
+- KL‑targeting penalty (RL‑style temperature/β tuning)
+- Trust‑region‑like penalty (stability‑focused constraint)
+- Strong fixed‑λ schedules and decays (swept)
+- Optimizer interactions (AdamW vs alternatives)
+- Multi‑seed reporting with 95% CI; step‑time overhead (<1–2%)
+
+## Evidence at a Glance
+
+- HF model + data files:
+  - PI Control CSV: https://huggingface.co/hunterbown/shannon-control-unit/blob/main/pi_control.csv
+  - Fixed λ=1.0 CSV: https://huggingface.co/hunterbown/shannon-control-unit/blob/main/fixed_1.0.csv
+  - Fixed λ=5.0 CSV: https://huggingface.co/hunterbown/shannon-control-unit/blob/main/fixed_5.0.csv
+  - Validation JSON (3B): https://huggingface.co/hunterbown/shannon-control-unit/blob/main/results/3b_validation_results.json
 
 ## How SCU Training Works
 
