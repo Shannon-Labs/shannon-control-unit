@@ -1202,6 +1202,10 @@
           <p class="equation-note">
             PI loop regulates information budget. No manual tuning needed.
           </p>
+
+          <div style="margin-top: 1rem; padding: 1rem; background: var(--gray-50); border-radius: 8px; border-left: 3px solid var(--gray-300);">
+            <strong>Open research direction:</strong> We’re investigating whether there is a simple “natural operating point” for the target S* that depends on model size (M), training tokens (T), and data domain (D)—i.e., a compact relation S* ≈ f(M, T, D). Today we select S* empirically (≈1% at 1B, ≈2.9% at 3B in our setup); the goal is to predict S* from first principles and remove tuning entirely.
+          </div>
           
           <div style="margin-top: 2rem; padding: 1.5rem; background: var(--gray-50); border-radius: 8px; border-left: 3px solid var(--primary);">
             <h3 style="font-size: 1.1rem; margin-bottom: 1rem; color: var(--black);">Prior Art & What’s New</h3>

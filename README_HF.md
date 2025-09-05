@@ -133,7 +133,7 @@ Just like cruise control in your car:
 - **Result:** Automatic regularization without hyperparameter sweeps
 
 **Key Research Question:** 
-Optimal $S^*$ scaling laws are still being discovered. We found 1.0% works for 1B models and 2.88% for 3B models. The relationship between model size, training data, and optimal $S^*$ is an active area of research.
+Optimal $S^*$ scaling laws are still being discovered. We found ~1.0% works for 1B models and ~2.88% for 3B models in our setup. We are investigating whether there is a simple “natural operating point” for $S^*$ that depends on model size ($M$), training tokens ($T$), and data domain ($D$): a compact relation $S^* \approx f(M, T, D)$. This is an open question; contributions welcome.
 
 ---
 
