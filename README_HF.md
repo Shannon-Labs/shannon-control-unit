@@ -55,6 +55,14 @@ Set your target information ratio \( S^* \), and our PI controller automatically
 
 ![Validation Results](assets/figures/validation_results.png)
 
+## Data Files
+
+- Ablations (CSV):
+  - [PI Control](./ablations/pi_control.csv)
+  - [Fixed λ=1.0](./ablations/fixed_1.0.csv)
+  - [Fixed λ=5.0](./ablations/fixed_5.0.csv)
+- Validation summary (JSON): [results/3b_validation_results.json](./results/3b_validation_results.json)
+
 ## Control Telemetry
 
 ![Lambda Evolution](assets/figures/lambda_curve.png)
