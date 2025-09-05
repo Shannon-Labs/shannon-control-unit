@@ -1,69 +1,43 @@
 #!/usr/bin/env python3
 """
-Clean up unnecessary files from HuggingFace repo
+Cleanup helper for Hugging Face repo to unify ablation CSVs under ablations/.
+
+Deletes duplicate root-level files so README links to ablations/ remain consistent.
 """
-from huggingface_hub import HfApi, delete_file, list_repo_files
+from huggingface_hub import HfApi, list_repo_files, whoami
 
 REPO = "hunterbown/shannon-control-unit"
-api = HfApi()
-
-# Files to remove from HuggingFace
-files_to_remove = [
-    # Duplicate/unnecessary in root
-    "MODEL_CARD.md",  # Duplicate of README
-    "control_plots.png",  # Old plot
-    "control_plots_validated.png",  # Old plot  
-    "ce_kl_auto_metrics.jsonl",  # Training artifact
-    "train_log.csv",  # Training artifact
-    
-    # Old figures
-    "figures/control_plots_validated.png",
-    
-    # SVG files (keep only PNGs for HF)
-    "assets/figures/data_bpt_curve.svg",
-    "assets/figures/lambda_curve.svg", 
-    "assets/figures/param_bpt_curve.svg",
-    "assets/figures/pulse_test.svg",
-    "assets/figures/s_curve.svg",
-    "assets/figures/sweep_target_vs_achieved.svg",
-    "assets/figures/sweep_target_vs_valbpt.svg",
-    "assets/figures/validation_delta.svg",
-    
-    # Captions file (not needed on HF)
-    "assets/figures/captions.json",
-    
-    # Training script (not needed on HF)
-    "scripts/train_scu.py",
+FILES_TO_DELETE = [
+    "pi_control.csv",
+    "fixed_0.5.csv",
+    "fixed_1.0.csv",
+    "fixed_2.0.csv",
+    "fixed_5.0.csv",
+    # Old path for validation results (now lives under results/)
+    "3b_validation_results.json",
 ]
 
-print("Cleaning up HuggingFace repo...")
-print(f"Target: {REPO}")
-print("="*50)
+def main():
+    api = HfApi()
+    user = whoami()
+    print(f"Logged in as {user['name']}")
+    files = set(list_repo_files(REPO, repo_type="model"))
+    print(f"Repo has {len(files)} files")
+    to_delete = [f for f in FILES_TO_DELETE if f in files]
+    if not to_delete:
+        print("Nothing to delete. Repo already clean.")
+        return
+    print("Deleting:")
+    for f in to_delete:
+        print(f" - {f}")
+        api.delete_file(
+            repo_id=REPO,
+            path_in_repo=f,
+            repo_type="model",
+            commit_message="chore: unify ablations under folder; remove root duplicates"
+        )
+    print("Done.")
 
-# Get current files
-current_files = list_repo_files(REPO, repo_type="model")
+if __name__ == "__main__":
+    main()
 
-removed = []
-for file_path in files_to_remove:
-    if file_path in current_files:
-        try:
-            delete_file(
-                path_in_repo=file_path,
-                repo_id=REPO,
-                repo_type="model",
-                commit_message=f"cleanup: remove {file_path}"
-            )
-            print(f"✓ Removed: {file_path}")
-            removed.append(file_path)
-        except Exception as e:
-            print(f"✗ Failed to remove {file_path}: {e}")
-
-print("\n" + "="*50)
-print(f"Removed {len(removed)} files from HuggingFace")
-print("\nEssential files kept:")
-print("- README.md (model card)")
-print("- adapter_config.json, adapter_model.safetensors (1B adapter)")  
-print("- 3b-scu/, 3b-fixed/ (3B model variants)")
-print("- notebooks/SCU_Demo.ipynb (demo)")
-print("- assets/figures/*.png (essential plots only)")
-print("- figures/*_1b.png (HF display plots)")
