@@ -858,6 +858,69 @@
       </div>
     </section>
     
+    <!-- How it works (moved above Results) -->
+    <section id="how" class="how">
+      <div class="container">
+        <h2 class="section-title">How it works</h2>
+        <div style="max-width: 900px; margin: 0 auto 1.5rem auto;">
+          <h3 style="margin: 0 0 .5rem 0; color: var(--black);">Deterministic Optimization</h3>
+          <p style="color: var(--gray-700); line-height: 1.6; margin: 0 0 .5rem 0;">Traditional LLM training relies on expensive, brute‑force searches for optimal settings. It’s alchemy.</p>
+          <p style="color: var(--gray-700); line-height: 1.6; margin: 0 0 .5rem 0;">The SCU introduces engineering rigor. We apply proven control theory—the mathematics that stabilizes airplanes and power grids—to the unstable dynamics of LLM training.</p>
+          <p style="color: var(--gray-700); line-height: 1.6; margin: 0;">SCU uses a closed‑loop feedback system to dynamically adjust training parameters in real‑time, ensuring stability and maximizing efficiency without manual intervention.</p>
+        </div>
+        
+        <div class="how-content">
+          <div class="equation-cards">
+            <div class="equation-card">
+              Target: S = ParamBPT / (DataBPT + ParamBPT)
+            </div>
+            <div class="equation-card">
+              Update: λ ← λ · exp(−(Kp·error + Ki·I)), error = Ŝ − S*
+            </div>
+            <div class="equation-card">
+              ParamBPT: quadratic term vs N(0,σ²), nats→bits, normalized by fixed N
+            </div>
+          </div>
+          
+          <p class="equation-note">
+            PI loop regulates information budget. No manual tuning needed.
+          </p>
+          
+          <div style="margin-top: 2rem; padding: 1.5rem; background: var(--gray-50); border-radius: 8px; border-left: 3px solid var(--primary);">
+            <h3 style="font-size: 1.1rem; margin-bottom: 1rem; color: var(--black);">Prior Art & What's New</h3>
+            <div style="color: var(--gray-700); line-height: 1.6;">
+              <ul style="margin: .25rem 0 0 1.25rem; padding-left: 1rem;">
+                <li style="margin: .25rem 0;">
+                  <strong>Control Theory in ML:</strong> Prior work uses PID for process knobs (e.g., learning‑rate scheduling) or targets KL‑divergence (ControlVAE).
+                  <ul style="margin: .25rem 0 0 1rem;">
+                    <li><em>How SCU is Different:</em> We control an intrinsic information ratio <code>S</code> (ParamBPT/(DataBPT+ParamBPT)) and actuate the loss via <code>λ</code> using a bounded PI controller (with anti‑windup), holding a target information budget in real time.</li>
+                  </ul>
+                </li>
+                <li style="margin: .5rem 0 0;">
+                  <strong>Information‑Theoretic Regularization:</strong> MDL used for post‑hoc selection/pruning; the Information Bottleneck adds a static penalty.
+                  <ul style="margin: .25rem 0 0 1rem;">
+                    <li><em>How SCU is Different:</em> We transform MDL into a real‑time, differentiable target inside the training loop, dynamically meeting a precise budget.</li>
+                  </ul>
+                </li>
+                <li style="margin: .5rem 0 0;">
+                  <strong>Classical Regularization:</strong> L1/L2 (weight decay) relies on a manually‑tuned, static <code>λ</code>.
+                  <ul style="margin: .25rem 0 0 1rem;">
+                    <li><em>How SCU is Different:</em> We replace static <code>λ</code> with closed‑loop control that maintains <code>S</code> within a target band, eliminating manual sweeps.</li>
+                  </ul>
+                </li>
+                <li style="margin: .5rem 0 0;">
+                  <strong>Hyperparameter Optimization (HPO):</strong> BO/Hyperband/PBT search the outer loop with many trials.
+                  <ul style="margin: .25rem 0 0 1rem;">
+                    <li><em>How SCU is Different:</em> Inner‑loop control finds the operating point within a single run—reducing steps/GPU‑hours while improving stability.</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Legacy Section -->
     <section id="legacy" class="legacy" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 3rem 2rem; display: none;">
       <div class="container" style="max-width: 1000px;">
@@ -1164,68 +1227,7 @@
       </div>
     </section>
     
-    <!-- How it works -->
-    <section id="how" class="how">
-      <div class="container">
-        <h2 class="section-title">How it works</h2>
-        <div style="max-width: 900px; margin: 0 auto 1.5rem auto;">
-          <h3 style="margin: 0 0 .5rem 0; color: var(--black);">Deterministic Optimization</h3>
-          <p style="color: var(--gray-700); line-height: 1.6; margin: 0 0 .5rem 0;">Traditional LLM training relies on expensive, brute‑force searches for optimal settings. It’s alchemy.</p>
-          <p style="color: var(--gray-700); line-height: 1.6; margin: 0 0 .5rem 0;">The SCU introduces engineering rigor. We apply proven control theory—the mathematics that stabilizes airplanes and power grids—to the unstable dynamics of LLM training.</p>
-          <p style="color: var(--gray-700); line-height: 1.6; margin: 0;">SCU uses a closed‑loop feedback system to dynamically adjust training parameters in real‑time, ensuring stability and maximizing efficiency without manual intervention.</p>
-        </div>
-        
-        <div class="how-content">
-          <div class="equation-cards">
-            <div class="equation-card">
-              Target: S = ParamBPT / (DataBPT + ParamBPT)
-            </div>
-            <div class="equation-card">
-              Update: λ ← λ · exp(−(Kp·error + Ki·I)), error = Ŝ − S*
-            </div>
-            <div class="equation-card">
-              ParamBPT: quadratic term vs N(0,σ²), nats→bits, normalized by fixed N
-            </div>
-          </div>
-          
-          <p class="equation-note">
-            PI loop regulates information budget. No manual tuning needed.
-          </p>
-          
-          <div style="margin-top: 2rem; padding: 1.5rem; background: var(--gray-50); border-radius: 8px; border-left: 3px solid var(--primary);">
-            <h3 style="font-size: 1.1rem; margin-bottom: 1rem; color: var(--black);">Prior Art & What's New</h3>
-            <div style="color: var(--gray-700); line-height: 1.6;">
-              <ul style="margin: .25rem 0 0 1.25rem; padding-left: 1rem;">
-                <li style="margin: .25rem 0;">
-                  <strong>Control Theory in ML:</strong> Prior work uses PID for process knobs (e.g., learning‑rate scheduling) or targets KL‑divergence (ControlVAE).
-                  <ul style="margin: .25rem 0 0 1rem;">
-                    <li><em>How SCU is Different:</em> We control an intrinsic information ratio <code>S</code> (ParamBPT/(DataBPT+ParamBPT)) and actuate the loss via <code>λ</code> using a bounded PI controller (with anti‑windup), holding a target information budget in real time.</li>
-                  </ul>
-                </li>
-                <li style="margin: .5rem 0 0;">
-                  <strong>Information‑Theoretic Regularization:</strong> MDL used for post‑hoc selection/pruning; the Information Bottleneck adds a static penalty.
-                  <ul style="margin: .25rem 0 0 1rem;">
-                    <li><em>How SCU is Different:</em> We transform MDL into a real‑time, differentiable target inside the training loop, dynamically meeting a precise budget.</li>
-                  </ul>
-                </li>
-                <li style="margin: .5rem 0 0;">
-                  <strong>Classical Regularization:</strong> L1/L2 (weight decay) relies on a manually‑tuned, static <code>λ</code>.
-                  <ul style="margin: .25rem 0 0 1rem;">
-                    <li><em>How SCU is Different:</em> We replace static <code>λ</code> with closed‑loop control that maintains <code>S</code> within a target band, eliminating manual sweeps.</li>
-                  </ul>
-                </li>
-                <li style="margin: .5rem 0 0;">
-                  <strong>Hyperparameter Optimization (HPO):</strong> BO/Hyperband/PBT search the outer loop with many trials.
-                  <ul style="margin: .25rem 0 0 1rem;">
-                    <li><em>How SCU is Different:</em> Inner‑loop control finds the operating point within a single run—reducing steps/GPU‑hours while improving stability.</li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <!-- How it works (moved; old position removed) -->
     
     <!-- Legacy Section (moved here) -->
     <section id="legacy" class="legacy" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 3rem 2rem;">
