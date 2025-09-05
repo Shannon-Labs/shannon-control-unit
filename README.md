@@ -42,7 +42,7 @@ Set your target information ratio \( S^* \), and our PI controller automatically
 
 **Status:** Validated at 1B/3B scales | Seeking partners for 7B+ external validation
 
-[View validation artifacts](./3b_validation_results.json) | [Evaluation protocol](./scripts/eval_bpt.py)
+[View validation artifacts](./results/3b_validation_results.json) | [Evaluation protocol](./scripts/eval_bpt.py)
 
 ## Available Models
 
@@ -122,6 +122,14 @@ Just like cruise control in your car:
 Optimal $S^*$ scaling laws are still being discovered. We found 1.0% works for 1B models and 2.88% for 3B models. The relationship between model size, training data, and optimal $S^*$ is an active area of research.
 
 ---
+
+## Technical Documentation
+
+For researchers and practitioners interested in the theoretical foundations:
+- **[Mathematical Theory](./docs/technical/THEORY.md)** - Control theory and MDL framework
+- **[Convergence Proofs](./docs/technical/CONVERGENCE_PROOFS.md)** - Formal stability analysis
+- **[Statistical Analysis](./docs/technical/STATISTICAL_ANALYSIS.md)** - Hypothesis testing and validation
+- **[Full Technical Docs](./docs/technical/)** - Complete academic documentation
 
 ## Licensing & IP
 
