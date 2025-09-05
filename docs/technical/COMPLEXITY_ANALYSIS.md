@@ -291,7 +291,7 @@ for (int i = 0; i < n_params; i += 16) {
 float param_sum = _mm512_reduce_add_ps(sum_vec);
 ```
 
-**Speedup**: 4.8× on Intel Xeon, 3.2× on AMD EPYC
+Note: The above is an optimization pattern; report actual speedups with methodology when measured.
 
 ## 12. Conclusions
 

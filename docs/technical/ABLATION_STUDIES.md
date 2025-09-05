@@ -53,7 +53,7 @@ We systematically ablate the following SCU components:
 - A4 vs A1: t=3.67, p=0.007**
 - A5 vs A1: t=5.91, p<0.001***
 
-### 2.2 Filtering and Safety Ablation
+### 2.2 Filtering and Safety Ablation (planned)
 
 | Config | 1B BPT | Oscillation σ | Max Overshoot | Settling Time |
 |--------|--------|---------------|---------------|---------------|
@@ -69,7 +69,7 @@ We systematically ablate the following SCU components:
 
 ## 3. Hyperparameter Sensitivity
 
-### 3.1 Controller Gains Grid Search
+### 3.1 Controller Gains Grid Search (planned)
 
 | Kp | Ki | BPT | Convergence | Stability | Robustness |
 |----|-----|-----|-------------|-----------|------------|
@@ -86,7 +86,7 @@ $$\text{BPT} = 3.676 + 0.041K_p^2 + 0.28K_i^2 - 0.015K_pK_i$$
 
 R² = 0.87, indicating good model fit
 
-### 3.2 Target S* Optimization
+### 3.2 Target S* Optimization (planned)
 
 | S* Target | 1B BPT | 1B PPL | 3B BPT | 3B PPL | Notes |
 |-----------|--------|--------|--------|--------|-------|
@@ -102,7 +102,7 @@ $$S^*_{\text{opt}}(M) = 0.48M^{0.52}$$
 
 where M is model size in billions of parameters.
 
-## 4. Component Interaction Analysis
+## 4. Component Interaction Analysis (planned)
 
 ### 4.1 Two-Way Interactions
 
@@ -132,7 +132,7 @@ Full factorial: Control × EMA × Anti-windup
 | C × E × A | 2 | 0.0008 | 0.0004 | 0.35 | 0.708 | 0.01 |
 | Error | 28 | 0.0322 | 0.0012 | | | |
 
-## 5. Temporal Ablation
+## 5. Temporal Ablation (illustrative)
 
 ### 5.1 Training Dynamics
 
@@ -198,7 +198,7 @@ Mid-training dataset switch (step 250):
 | I-only | 3.721 | 3.798 | 150 steps | 3.758 |
 | Fixed-1.0 | 3.743 | 3.821 | N/A | 3.743 |
 
-## 7. Computational Cost Ablation
+## 7. Computational Cost Ablation (planned)
 
 ### 7.1 Runtime Analysis
 
@@ -214,7 +214,7 @@ Mid-training dataset switch (step 250):
 
 Overhead: 0.15% time, <0.001% memory
 
-### 7.2 Optimization Impact
+### 7.2 Optimization Impact (template)
 
 Removing optimizations:
 
@@ -226,7 +226,7 @@ Removing optimizations:
 | Python loops | 294.7 ms | 1.03× |
 | No optimization | 298.2 ms | 1.05× |
 
-## 8. Scaling Behavior
+## 8. Scaling Behavior (planned)
 
 ### 8.1 Model Size Scaling
 
@@ -253,7 +253,7 @@ Training on different data volumes:
 
 *Extrapolated
 
-## 9. Statistical Summary
+## 9. Statistical Summary (planned)
 
 ### 9.1 Effect Sizes (Cohen's d)
 

@@ -81,10 +81,10 @@ $$T_c = \min\{t : \forall \tau > t, |S_\tau - S^*| < \epsilon\}$$
 
 where ε = 0.002 (0.2 percentage points)
 
-**Typical Values**:
-- Full PI control: 150-200 steps
-- P-only: 120-180 steps (but oscillatory)
-- I-only: 300-500 steps
+Qualitative expectations (not measured here):
+- Full PI control: reaches band and maintains it
+- P-only: faster rise, more oscillation
+- I-only: slower convergence, less oscillation
 
 ### 3.2 Settling Time
 
