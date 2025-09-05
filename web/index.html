@@ -1208,15 +1208,21 @@
         <div style="margin-top: 3rem;">
           <div style="background: white; padding: 2rem; border-radius: 12px; border-left: 4px solid var(--gray-400); max-width: 1200px; margin: 0 auto;">
             <h3 style="color: var(--black); margin-bottom: 1rem;">Open Research Direction</h3>
-            <p style="color: var(--gray-700); line-height: 1.6;">
+            <p style="color: var(--gray-700); line-height: 1.6; margin-bottom: 1rem;">
               We're investigating whether there is a simple "natural operating point" for the target S* that depends on model size (M), training tokens (T), and data domain (D)—i.e., a compact relation S* ≈ f(M, T, D). Today we select S* empirically (≈1% at 1B, ≈2.9% at 3B in our setup); the goal is to predict S* from first principles and remove tuning entirely.
+            </p>
+            <p style="color: var(--gray-600); font-size: 0.9rem; font-style: italic; margin: 0;">
+              📚 <strong>Free for academic research</strong> under AGPL-3.0. Commercial use requires a license—contact us for terms.
             </p>
           </div>
           
           <div style="background: white; padding: 2rem; border-radius: 12px; border-left: 4px solid var(--primary); max-width: 1200px; margin: 2rem auto 0;">
             <h3 style="color: var(--primary); margin-bottom: 1rem;">Get Involved (7B+ Welcome)</h3>
-            <p style="color: var(--gray-700); line-height: 1.6; margin-bottom: 1rem;">
+            <p style="color: var(--gray-700); line-height: 1.6; margin-bottom: 0.5rem;">
               Validate at larger scales, try small S* targets, and share observations (stable S* band, final BPT/ppl). Please include model size (M), tokens (T), domain (D), S* target, Kp/Ki, σ, steps, and results.
+            </p>
+            <p style="color: var(--gray-600); font-size: 0.9rem; margin-bottom: 1rem;">
+              <em>Academic/research collaborations welcome under AGPL-3.0. Corporate partnerships require commercial licensing.</em>
             </p>
             <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
               <a href="https://github.com/Hmbown/shannon-control-unit/issues" target="_blank" rel="noopener" class="btn btn-secondary">Open a GitHub Issue</a>
@@ -1319,7 +1325,7 @@
         </div>
         
         <p class="reproduce-note">
-          Adapters inherit Meta Llama 3.2 license; SCU code Apache-2.0.
+          Adapters inherit Meta Llama 3.2 license; SCU code AGPL-3.0 (commercial licenses available).
         </p>
         
         <h3 style="font-size: 1.25rem; margin: 2rem 0 1rem; font-weight: 600;">Reproduce in one command</h3>
