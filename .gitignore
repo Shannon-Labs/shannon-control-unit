@@ -41,9 +41,10 @@ Thumbs.db
 outputs/
 models/
 adapters/
-ablations/
 logs/
-*.csv
+# Allow ablation data files
+!ablations/
+!ablations/*.csv
 # Allow specific demo plots
 !figures/s_curve_1b.png
 !figures/lambda_1b.png
