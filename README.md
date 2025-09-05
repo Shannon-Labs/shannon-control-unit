@@ -27,7 +27,7 @@ inference: false
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Hmbown/shannon-control-unit/blob/main/notebooks/SCU_Demo.ipynb)
 [![Website](https://img.shields.io/badge/Website-shannonlabs.dev-green)](https://shannonlabs.dev)
 
-**Model Weights:** Llama 3.2 Community License | **Code:** Apache-2.0 ([GitHub](https://github.com/Hmbown/shannon-control-unit))
+**Model Weights:** Llama 3.2 Community License | **Code:** AGPL-3.0 (Commercial licenses available)
 
 **Like cruise control maintains your speed regardless of hills, SCU maintains optimal regularization regardless of data complexity.**
 
@@ -138,7 +138,29 @@ For researchers and practitioners interested in the theoretical foundations:
 ## Licensing & IP
 
 * **Model weights:** Meta Llama 3.2 Community License (inherited from base model)
-* **SCU training code:** Apache-2.0 License ([GitHub repository](https://github.com/Hmbown/shannon-control-unit))
+* **SCU training code:** AGPL-3.0 License ([GitHub repository](https://github.com/Hmbown/shannon-control-unit)) - Commercial licenses available
 * **IP status:** U.S. patent pending (provisional filed September 2025)
 
 > Repro tips: block size 1024, batch 1, grad-accum 4, gradient checkpointing on, `use_cache=False`.
+
+
+## License
+
+**Dual Licensed for Maximum Impact:**
+
+### Open Source (AGPL-3.0)
+- ✅ Research & academic use
+- ✅ Open-source projects  
+- ✅ Personal experimentation
+- ⚠️ Modifications must be open-sourced
+- ⚠️ Network use requires source disclosure
+
+### Commercial License
+For proprietary use without AGPL restrictions:
+- No open-source requirements
+- Full support available
+- Custom terms based on use case
+
+**Contact:** hunter@shannonlabs.dev
+
+See [LICENSE](LICENSE) and [LICENSE-COMMERCIAL](LICENSE-COMMERCIAL) for details.
