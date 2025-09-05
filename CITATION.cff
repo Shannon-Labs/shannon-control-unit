@@ -1,13 +1,13 @@
 cff-version: 1.2.0
-title: Shannon Control Unit
+title: "Shannon Control Unit: Adaptive Regularization via Control Theory for LLM Training"
 message: "If you use this software, please cite it as below."
 type: software
 authors:
   - given-names: Hunter
     family-names: Bown
     email: hunter@shannonlabs.dev
-repository-code: https://huggingface.co/hunterbown/shannon-control-unit
-url: https://huggingface.co/hunterbown/shannon-control-unit
+repository-code: https://github.com/Hmbown/shannon-control-unit
+url: https://github.com/Hmbown/shannon-control-unit
 abstract: >-
   Shannon Control Unit (SCU) introduces adaptive regularization
   through control theory to language model training, using a PI
