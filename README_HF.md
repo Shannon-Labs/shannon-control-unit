@@ -78,9 +78,9 @@ Set your target information ratio \( S^* \), and our PI controller automatically
 <details>
 <summary><b>View raw data</b></summary>
 
-- [PI Control data](./ablations/pi_control.csv)
-- [Fixed λ=1.0 data](./ablations/fixed_1.0.csv)  
-- [Fixed λ=5.0 data](./ablations/fixed_5.0.csv)
+- [PI Control data](./pi_control.csv)
+- [Fixed λ=1.0 data](./fixed_1.0.csv)  
+- [Fixed λ=5.0 data](./fixed_5.0.csv)
 
 </details>
 
