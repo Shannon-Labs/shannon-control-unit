@@ -49,6 +49,14 @@ for file in ablations/*.csv; do
     huggingface-cli upload $REPO "$file" "$file" --repo-type model --quiet 2>&1 | tail -1
 done
 
+# Upload root CSVs if present (canonical links)
+for file in pi_control.csv fixed_0.5.csv fixed_1.0.csv fixed_2.0.csv fixed_5.0.csv; do
+  if [ -f "$file" ]; then
+    echo "  • Uploading $file (root)..."
+    huggingface-cli upload $REPO "$file" "$file" --repo-type model --quiet 2>&1 | tail -1
+  fi
+done
+
 # Upload validation artifacts
 echo "✅ Uploading validation artifacts..."
 huggingface-cli upload $REPO results/3b_validation_results.json results/3b_validation_results.json --repo-type model --quiet 2>&1 | tail -1
