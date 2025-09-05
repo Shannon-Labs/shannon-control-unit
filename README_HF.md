@@ -60,7 +60,7 @@ Set your target information ratio \( S^* \), and our PI controller automatically
 - Ablations (CSV):
   - [PI Control](https://huggingface.co/hunterbown/shannon-control-unit/blob/main/pi_control.csv)
   - [Fixed λ=1.0](https://huggingface.co/hunterbown/shannon-control-unit/blob/main/fixed_1.0.csv)
-  - [Fixed λ=5.0](https://huggingface.co/hunterbown/shannon-control-unit/blob/main/fixed_5.0.csv)
+  - [Fixed λ=2.0](https://huggingface.co/hunterbown/shannon-control-unit/blob/main/fixed_2.0.csv)
 - Validation summary (JSON): [results/3b_validation_results.json](https://huggingface.co/hunterbown/shannon-control-unit/blob/main/results/3b_validation_results.json)
 
 ## Planned Comparisons and Baselines
