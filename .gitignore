@@ -42,6 +42,9 @@ outputs/
 models/
 adapters/
 logs/
+# Keep repo root clean of duplicate adapter binaries
+/adapter_model.safetensors
+/adapter_config.json
 # Allow ablation data files
 !ablations/
 !ablations/*.csv

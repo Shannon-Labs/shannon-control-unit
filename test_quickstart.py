@@ -48,38 +48,36 @@ def test_model_ids():
     return True
 
 def test_adapter_files_exist():
-    """Test that adapter files exist in the expected locations."""
+    """Validate adapter artifacts are present in tracked subfolders.
+
+    Root-level adapter files are optional and may be ignored to keep the repo tidy.
+    """
     from pathlib import Path
-    
-    # Check main adapter files
-    main_files = [
-        "adapter_config.json",
-        "adapter_model.safetensors"
-    ]
-    
-    for file in main_files:
+
+    # Optional: root-level files (do not fail if missing)
+    for file in ["adapter_config.json", "adapter_model.safetensors"]:
         if Path(file).exists():
-            print(f"✓ {file} exists")
+            print(f"✓ {file} exists (root)")
         else:
-            print(f"❌ {file} missing")
-            return False
-    
-    # Check subdirectory structure
-    subdirs = ["1b-scu", "3b-scu", "3b-fixed"]
-    for subdir in subdirs:
+            print(f"ℹ️  {file} not present at repo root (expected for a clean repo)")
+
+    # Required: subdirectory adapters
+    ok = True
+    for subdir in ["1b-scu", "3b-scu", "3b-fixed"]:
         path = Path(subdir)
         if path.exists() and path.is_dir():
             adapter_config = path / "adapter_config.json"
             adapter_model = path / "adapter_model.safetensors"
-            
             if adapter_config.exists() and adapter_model.exists():
                 print(f"✓ {subdir}/ contains adapter files")
             else:
-                print(f"⚠️  {subdir}/ missing some adapter files")
+                print(f"❌ {subdir}/ missing adapter files")
+                ok = False
         else:
-            print(f"⚠️  {subdir}/ directory not found")
-    
-    return True
+            print(f"❌ {subdir}/ directory not found")
+            ok = False
+
+    return ok
 
 def test_validation_files():
     """Test that validation files exist and are readable."""
