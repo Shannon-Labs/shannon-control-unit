@@ -694,6 +694,8 @@
     .footer-links a:hover {
       color: var(--white);
     }
+
+    .nowrap { white-space: nowrap; }
     
     /* Mobile Responsive */
     @media (max-width: 768px) {
@@ -857,7 +859,7 @@
     </section>
     
     <!-- Legacy Section -->
-    <section id="legacy" class="legacy" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 5rem 2rem;">
+    <section id="legacy" class="legacy" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 3rem 2rem;">
       <div class="container" style="max-width: 1000px;">
         <h2 style="font-size: 2.5rem; margin-bottom: 2rem; color: var(--black); text-align: center;">The Legacy of Information Theory</h2>
         
@@ -893,7 +895,7 @@
         </div>
         
         <!-- Modern Connection -->
-        <div style="background: var(--white); padding: 2rem; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 2rem;">
+        <div style="background: var(--white); padding: 2rem; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 2rem; text-align: center;">
           <h3 style="color: var(--black); margin-bottom: 1rem;">Continuing the Mission</h3>
           <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1rem;">
             Hunter Bown, Shannon Labs Founder and great-grandson of Ralph Bown, applies these foundational principles to modern AI challenges.
@@ -903,7 +905,7 @@
           </p>
         </div>
             
-            <div style="background: var(--white); border-left: 4px solid var(--primary); padding: 1.5rem; border-radius: 8px; margin-top: 2rem;">
+            <div style="background: var(--white); border-left: 4px solid var(--primary); padding: 1.5rem; border-radius: 8px; margin-top: 1.5rem; text-align: center;">
               <h3 style="margin: 0 0 0.5rem 0; color: var(--primary);">Strategic Engagement</h3>
               <p style="margin: 0; line-height: 1.6;">
                 We will calculate the optimal information ratio for minimizing perplexity and bit per token, and our PI controller maintains it automatically throughout training as the system moves between states of increased and decreased entropy.
@@ -914,7 +916,7 @@
               <p style="margin-top: 1rem;">
                 <strong>If your organization spends $1B+ annually on AI training:</strong>
               </p>
-              <div style="margin-top: 0.75rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
+              <div style="margin-top: 0.75rem; display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center;">
                 <a href="https://calendly.com/hunter-shannonlabs/30min" target="_blank" style="display: inline-block; padding: 0.5rem 1rem; background: var(--primary); color: white; text-decoration: none; border-radius: 4px; font-weight: 500;">Book a Demo</a>
                 <a href="mailto:hunter@shannonlabs.dev?subject=Strategic%20Engagement%20%E2%80%94%20SCU&body=We%20spend%20over%20%241B%20annually%20on%20AI%20training.%20We%E2%80%99d%20like%20to%20discuss%20a%20strategic%20engagement%20around%20SCU.%0A%0A%E2%80%94%20" style="display: inline-block; padding: 0.5rem 1rem; color: var(--primary); text-decoration: none; border: 2px solid var(--primary); border-radius: 4px; font-weight: 500;">Email</a>
               </div>
@@ -1110,7 +1112,10 @@
             </p>
             <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 3px solid var(--primary);">
               <p style="margin: 0; font-size: 0.9rem; color: var(--gray-700);" class="tex2jax_ignore">
-                <strong>Economic Impact:</strong> At US&#36;1B training scale, 10–15% efficiency = US&#36;100–150M saved annually
+                <strong>Economic Impact:</strong>
+                <span class="nowrap">At US&#36;1B training scale</span>,
+                <span class="nowrap">10–15% efficiency</span>
+                = <span class="nowrap">US&#36;100–150M saved annually</span>
               </p>
             </div>
           </div>
