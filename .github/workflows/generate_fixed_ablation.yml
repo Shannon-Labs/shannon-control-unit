@@ -8,6 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    env:
+      TRANSFORMERS_NO_TF: '1'
+      HF_HUB_DISABLE_TELEMETRY: '1'
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
@@ -17,14 +20,19 @@ jobs:
       - name: Install deps (pinned)
         run: |
           python -m pip install --upgrade pip
+          pip install 'numpy<2'  # avoid TF/h5py incompat if pulled indirectly
           pip install torch==2.2.2 --index-url https://download.pytorch.org/whl/cpu
-          pip install transformers==4.39.3 peft==0.10.0
+          pip install transformers==4.39.3 peft==0.10.0 safetensors>=0.4.2
+          pip freeze
       - name: Generate fixed_5.0.csv
-        env:
-          TRANSFORMERS_NO_TF: '1'
         run: |
           python scripts/make_fixed_ablation.py --lambda_val 5.0 --steps 60 --out ablations/fixed_5.0.csv
           ls -lh ablations/
+      - name: Upload CSV artifact (for debugging)
+        uses: actions/upload-artifact@v4
+        with:
+          name: fixed_5_csv
+          path: ablations/fixed_5.0.csv
       - name: Commit and push
         run: |
           git config user.name "github-actions"
@@ -32,7 +40,7 @@ jobs:
           git add ablations/fixed_5.0.csv
           if git diff --cached --quiet; then echo "No changes"; else git commit -m "ci: generate fixed_5.0.csv ablation (CI)"; git push; fi
       - name: Upload to Hugging Face (optional)
-        if: env.HF_TOKEN != ''
+        if: ${{ env.HF_TOKEN != '' }}
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
@@ -45,4 +53,3 @@ repo='hunterbown/shannon-control-unit'
 api.upload_file(path_or_fileobj='ablations/fixed_5.0.csv', repo_id=repo, path_in_repo='fixed_5.0.csv', repo_type='model', commit_message='Add fixed_5.0.csv (CI)')
 print('Uploaded fixed_5.0.csv to HF root')
 PY
-
