@@ -859,7 +859,7 @@
     </section>
     
     <!-- Legacy Section -->
-    <section id="legacy" class="legacy" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 3rem 2rem;">
+    <section id="legacy" class="legacy" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 3rem 2rem; display: none;">
       <div class="container" style="max-width: 1000px;">
         <h2 style="font-size: 2.5rem; margin-bottom: 2rem; color: var(--black); text-align: center;">The Legacy of Information Theory</h2>
         
@@ -929,15 +929,7 @@
     <!-- Results -->
     <section id="results" class="results">
       <div class="container">
-        <h2 class="section-title">Time-to-Target Metrics</h2>
-        <div style="max-width: 900px; margin: 0 auto 2rem auto; color: var(--gray-800);">
-          <p style="margin-bottom: .75rem;">The SCU fundamentally changes the economics of AI development.</p>
-          <p style="margin-bottom: .5rem;"><strong>🎯 3B Results:</strong> 10.6% BPT improvement | 12.6% perplexity reduction</p>
-          <p style="margin-bottom: .5rem;"><strong>1B Results:</strong> 6.2% BPT improvement | 15.6% perplexity reduction</p>
-          <p style="margin-bottom: .5rem;"><strong>Innovation:</strong> PI control maintains optimal regularization automatically</p>
-          <p style="margin-bottom: .75rem;"><strong>Impact:</strong> No manual hyperparameter tuning, cruise control for LLMs</p>
-          <p style="font-style: italic; color: var(--gray-700);">Like cruise control for your car - set it and forget it.</p>
-        </div>
+        <h2 class="section-title">Results</h2>
         
         <div class="results-grid">
           <!-- Performance Metrics -->
@@ -971,7 +963,7 @@
           
           <!-- 3B Results -->
           <div class="metric-card">
-            <h3>🎯 Llama-3.2-3B Results (NEW)</h3>
+            <h3>Llama-3.2-3B Results (NEW)</h3>
             <table class="metrics-table">
               <thead>
                 <tr>
@@ -1001,18 +993,7 @@
             </p>
           </div>
           
-          <!-- Validation Results - Primary -->
-          <div class="metric-card" style="grid-column: span 2;">
-            <h3>Validated Performance Improvements</h3>
-            
-            <!-- Primary Validation Chart -->
-            <div class="plot-container">
-              <div class="plot-placeholder" style="max-width: 900px; margin: 0 auto;">
-                <img src="images/validation_results.png" alt="BPT and Perplexity improvements for 1B and 3B models" style="width: 100%; height: auto; max-height: 450px; object-fit: contain; border-radius: 8px;" onerror="this.src='images/validation_delta.png'">
-              </div>
-              <p class="plot-caption">Fig. 1 — Validation: -6.2% BPT / -15.6% perplexity (1B) and -10.6% BPT / -12.6% perplexity (3B)</p>
-            </div>
-          </div>
+          
           
           <!-- Ablation Study -->
           <div class="metric-card" style="grid-column: span 2;">
@@ -1123,39 +1104,7 @@
       </div>
     </section>
 
-    <!-- Why Now Section -->
-    <section id="why-now" class="why-now" style="background: var(--white); padding: 5rem 2rem; border-top: 1px solid var(--gray-200);">
-      <div class="container">
-        <h2 class="section-title" style="margin-bottom: 3rem;">The Compute Crisis is Here</h2>
-        
-        <div style="max-width: 900px; margin: 0 auto; display: grid; gap: 2rem;">
-          <div style="display: flex; gap: 2rem; align-items: start;">
-            <div style="font-size: 2rem; font-weight: bold; color: var(--primary);">01</div>
-            <div>
-              <h3 style="margin-bottom: 0.5rem;">The Optimization Imperative</h3>
-              <p style="color: var(--gray-600); line-height: 1.6;">Frontier model training costs are doubling every 6–10 months. Efficiency is now the primary bottleneck to AGI.</p>
-            </div>
-          </div>
-          
-          <div style="display: flex; gap: 2rem; align-items: start;">
-            <div style="font-size: 2rem; font-weight: bold; color: var(--primary);">02</div>
-            <div>
-              <h3 style="margin-bottom: 0.5rem;">The End of Dark Magic</h3>
-              <p style="color: var(--gray-600); line-height: 1.6;">Manual tuning is guesswork. We replaced it with deterministic control theory.</p>
-            </div>
-          </div>
-          
-          <div style="display: flex; gap: 2rem; align-items: start;">
-            <div style="font-size: 2rem; font-weight: bold; color: var(--primary);">03</div>
-            <div>
-              <h3 style="margin-bottom: 0.5rem;">The Economic Opportunity</h3>
-              <p style="color: var(--gray-600); line-height: 1.6;">For organizations investing billions in AI, a 15% efficiency gain transforms unit economics.</p>
-            </div>
-          </div>
-        </div>
-        
-      </div>
-    </section>
+    
     
     <!-- Achievements Section -->
     <section id="achievements" class="achievements" style="background: var(--gray-50); padding: 5rem 2rem;">
@@ -1269,6 +1218,46 @@
       </div>
     </section>
     
+    <!-- Legacy Section (moved here) -->
+    <section id="legacy" class="legacy" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 3rem 2rem;">
+      <div class="container" style="max-width: 1000px;">
+        <h2 style="font-size: 2.5rem; margin-bottom: 2rem; color: var(--black); text-align: center;">The Legacy of Information Theory</h2>
+        <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 3rem; text-align: center;">Shannon Labs builds on the foundational work of Claude Shannon and the innovative spirit of Bell Labs.</p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-bottom: 3rem;">
+          <div style="text-align: center;">
+            <img src="/photos/claude_shannon.jpg" alt="Claude Shannon" style="width: 100%; max-width: 200px; margin: 0 auto 1rem; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);" onerror="this.style.display='none'">
+            <div style="background: var(--white); padding: 1.5rem; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+              <h3 style="color: var(--primary); margin-bottom: 1rem;">Claude Shannon</h3>
+              <p style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 1rem;">Father of Information Theory (1916-2001)</p>
+              <p style="font-size: 0.95rem; line-height: 1.6;">Established the mathematical foundations for digital communication and computing in 1948 with &quot;A Mathematical Theory of Communication.&quot;</p>
+            </div>
+          </div>
+          <div style="text-align: center;">
+            <img src="/photos/900px-Bown.jpg" alt="Ralph Bown" style="width: 100%; max-width: 200px; margin: 0 auto 1rem; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);" onerror="this.style.display='none'">
+            <div style="background: var(--white); padding: 1.5rem; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+              <h3 style="color: var(--primary); margin-bottom: 1rem;">Ralph Bown</h3>
+              <p style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 1rem;">Director of Research, Bell Labs (1889-1971)</p>
+              <p style="font-size: 0.95rem; line-height: 1.6;">Hunter&#39;s great-grandfather. Announced the transistor at Bell Labs in 1948, revolutionizing electrical control and enabling the digital age.</p>
+            </div>
+          </div>
+        </div>
+        <div style="background: var(--white); padding: 2rem; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 2rem; text-align: center;">
+          <h3 style="color: var(--black); margin-bottom: 1rem;">Continuing the Mission</h3>
+          <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1rem;">Hunter Bown, Shannon Labs Founder and great-grandson of Ralph Bown, applies these foundational principles to modern AI challenges.</p>
+          <p style="font-size: 1.1rem; line-height: 1.8;">Just as the transistor enabled reliable control of electrical current, the Shannon Control Unit enables reliable control of information flow in neural networks.</p>
+        </div>
+        <div style="background: var(--white); border-left: 4px solid var(--primary); padding: 1.5rem; border-radius: 8px; margin-top: 1.5rem; text-align: center;">
+          <h3 style="margin: 0 0 0.5rem 0; color: var(--primary);">Strategic Engagement</h3>
+          <p style="margin: 0; line-height: 1.6;">We will calculate the optimal information ratio for minimizing perplexity and bit per token, and our PI controller maintains it automatically throughout training as the system moves between states of increased and decreased entropy.</p>
+          <p style="margin: .75rem 0 0; line-height: 1.6;">For organizations spending billions on AI infrastructure, SCU represents US$100M+ in annual savings. We&#39;re engaged with leading compute providers for validation at scale.</p>
+          <div style="margin-top: 0.75rem; display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center;">
+            <a href="https://calendly.com/hunter-shannonlabs/30min" target="_blank" style="display: inline-block; padding: 0.5rem 1rem; background: var(--primary); color: white; text-decoration: none; border-radius: 4px; font-weight: 500;">Book a Demo</a>
+            <a href="mailto:hunter@shannonlabs.dev?subject=Strategic%20Engagement%20%E2%80%94%20SCU&body=We%20spend%20over%20%241B%20annually%20on%20AI%20training.%20We%E2%80%99d%20like%20to%20discuss%20a%20strategic%20engagement%20around%20SCU.%0A%0A%E2%80%94%20" style="display: inline-block; padding: 0.5rem 1rem; color: var(--primary); text-decoration: none; border: 2px solid var(--primary); border-radius: 4px; font-weight: 500;">Email</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Reproduce -->
     <section id="reproduce" class="reproduce">
       <div class="container">
