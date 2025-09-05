@@ -44,6 +44,8 @@ Set your target information ratio \( S^* \), and our PI controller automatically
 
 [View validation artifacts](./results/3b_validation_results.json) | [Evaluation protocol](./scripts/eval_bpt.py)
 
+For a deeper dive, see the technical documentation: https://github.com/Hmbown/shannon-control-unit/tree/main/docs/technical
+
 ## Available Models
 
 | Directory | Model | S* Target | λ Control | Notes |

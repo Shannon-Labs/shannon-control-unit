@@ -25,6 +25,12 @@ We systematically ablate the following SCU components:
 - **Random seeds**: [42, 137, 256, 512, 1024]
 - **Metrics**: Final BPT, convergence time, stability
 
+### 1.3 Data and Scripts
+
+- Raw CSVs in repo: [ablations/pi_control.csv](../../ablations/pi_control.csv), [ablations/fixed_1.0.csv](../../ablations/fixed_1.0.csv), [ablations/fixed_5.0.csv](../../ablations/fixed_5.0.csv)
+- Evaluation script: [scripts/eval_bpt.py](../../scripts/eval_bpt.py)
+- Validation summary: [results/3b_validation_results.json](../../results/3b_validation_results.json)
+
 ## 2. Component Ablation Results
 
 ### 2.1 Control Strategy Ablation

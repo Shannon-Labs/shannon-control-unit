@@ -31,7 +31,7 @@ $$\text{BPT} = -\frac{1}{N \ln 2} \sum_{i=1}^N \log p(x_i|\theta)$$
 
 **Definition**: Exponential of cross-entropy, interpretable as average branching factor.
 
-$$\text{PPL} = \exp(\text{CE}) = 2^{\text{BPT} \cdot \ln 2}$$
+$$\text{PPL} = \exp(\text{CE}_{\text{nats}}) = 2^{\text{BPT}}$$
 
 **Properties**:
 - Range: [1, ∞)

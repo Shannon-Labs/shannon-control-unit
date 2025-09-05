@@ -42,7 +42,7 @@ Set your target information ratio \( S^* \), and our PI controller automatically
 
 **Status:** Validated at 1B/3B scales | Seeking partners for 7B+ external validation
 
-[View validation artifacts](./results/3b_validation_results.json) | [Evaluation protocol](./scripts/eval_bpt.py)
+[View validation artifacts](./results/3b_validation_results.json) | [Evaluation protocol](./scripts/eval_bpt.py) | [Technical docs](./docs/technical/README.md)
 
 ## Available Models
 
