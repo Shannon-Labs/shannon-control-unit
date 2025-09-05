@@ -1,5 +1,7 @@
 # Shannon Control Unit: Theoretical Foundations
 
+Hunter Bown — Shannon Labs
+
 ## 1. Mathematical Framework
 
 ### 1.1 Information-Theoretic Foundation

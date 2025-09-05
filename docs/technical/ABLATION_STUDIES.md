@@ -1,5 +1,7 @@
 # Ablation Studies for Shannon Control Unit
 
+Hunter Bown — Shannon Labs
+
 ## 1. Study Design
 
 ### 1.1 Ablation Components
@@ -295,4 +297,3 @@ Training on different data volumes:
 ---
 
 *Ablation Study Report v1.0*
-*Experimental Analysis Division, Shannon Labs*

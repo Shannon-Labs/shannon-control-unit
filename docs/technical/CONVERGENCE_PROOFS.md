@@ -1,5 +1,7 @@
 # Convergence Analysis of the Shannon Control Unit
 
+Hunter Bown — Shannon Labs
+
 ## 1. Problem Formulation
 
 Consider the adaptive regularization system with state variables:

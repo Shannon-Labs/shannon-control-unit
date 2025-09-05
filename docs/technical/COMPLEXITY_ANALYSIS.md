@@ -1,5 +1,7 @@
 # Computational Complexity Analysis of Shannon Control Unit
 
+Hunter Bown — Shannon Labs
+
 ## 1. Asymptotic Complexity
 
 ### 1.1 Time Complexity Per Training Step
@@ -319,4 +321,3 @@ SCU remains efficient for:
 ---
 
 *Technical Report: Complexity Analysis v1.0*
-*Performance Engineering Division, Shannon Labs*

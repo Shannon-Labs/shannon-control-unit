@@ -1,5 +1,7 @@
 # Statistical Analysis of Shannon Control Unit Performance
 
+Hunter Bown — Shannon Labs
+
 ## 1. Experimental Design
 
 ### 1.1 Factorial Design

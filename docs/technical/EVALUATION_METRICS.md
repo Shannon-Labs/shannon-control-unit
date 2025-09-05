@@ -1,5 +1,7 @@
 # Evaluation Metrics for Shannon Control Unit
 
+Hunter Bown — Shannon Labs
+
 ## 1. Primary Metrics
 
 ### 1.1 Bits-Per-Token (BPT)
@@ -309,4 +311,3 @@ def validate_training(metrics):
 ---
 
 *Evaluation Protocol v1.0*
-*Metrics and Standards Division, Shannon Labs*
