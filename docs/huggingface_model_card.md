@@ -25,7 +25,7 @@ inference: false
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Hmbown/shannon-control-unit/blob/main/notebooks/SCU_Demo.ipynb)
 [![Website](https://img.shields.io/badge/Website-shannonlabs.dev-green)](https://shannonlabs.dev)
 
-**Model Weights:** Llama 3.2 Community License | **Code:** Apache-2.0 ([GitHub](https://github.com/Hmbown/shannon-control-unit))
+**Model Weights:** Llama 3.2 Community License | **Code:** AGPL-3.0 for research/academia — commercial licenses available ([GitHub](https://github.com/Hmbown/shannon-control-unit))
 
 **Like cruise control maintains your speed regardless of hills, SCU maintains optimal regularization regardless of data complexity.**
 
@@ -149,7 +149,7 @@ Optimal $S^*$ scaling laws are still being discovered. We found 1.0% works for 1
 ## Licensing & IP
 
 * **Model weights:** Meta Llama 3.2 Community License (inherited from base model)
-* **SCU training code:** Apache-2.0 License ([GitHub repository](https://github.com/Hmbown/shannon-control-unit))
+* **SCU training code:** AGPL-3.0 (research/academia). Commercial licenses available ([GitHub repository](https://github.com/Hmbown/shannon-control-unit))
 * **IP status:** U.S. patent pending (provisional filed September 2025)
 
 > Repro tips: block size 1024, batch 1, grad-accum 4, gradient checkpointing on, `use_cache=False`.

@@ -40,7 +40,7 @@ readme = textwrap.dedent(
 
     ## Licensing & IP
     - Adapters/models: Meta Llama 3.2 Community License
-    - SCU training code: Apache-2.0
+    - SCU training code: AGPL-3.0 (research/academia). Commercial licenses available.
     - U.S. patent pending (provisional filed September 2025)
     """
 )
@@ -52,7 +52,7 @@ api.upload_file(
     repo_id=REPO,
     path_in_repo="README.md",
     repo_type="model",
-    commit_message="Update model card: Colab badge, validation, figures, licensing"
+    commit_message="Update model card: Colab badge, validation, figures, AGPL/commercial licensing"
 )
 
 print("Uploaded notebook, figures, and updated model card to:", REPO)
