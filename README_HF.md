@@ -135,6 +135,12 @@ Just like cruise control in your car:
 **Key Research Question:** 
 Optimal $S^*$ scaling laws are still being discovered. We found ~1.0% works for 1B models and ~2.88% for 3B models in our setup. We are investigating whether there is a simple “natural operating point” for $S^*$ that depends on model size ($M$), training tokens ($T$), and data domain ($D$): a compact relation $S^* \approx f(M, T, D)$. This is an open question; contributions welcome.
 
+## Get Involved (7B+ welcome)
+
+- Validate at larger scales (7B+), try small S* targets, and share observations (stable S* band, final BPT/ppl).
+- Include: model size (M), tokens (T), domain (D), S* target, Kp/Ki, σ, steps, and results.
+- Where: open an issue at https://github.com/Hmbown/shannon-control-unit/issues or email hunter@shannonlabs.dev.
+
 ---
 
 ## Licensing & IP

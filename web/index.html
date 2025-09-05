@@ -1203,6 +1203,14 @@
           <div style="margin-top: 1rem; padding: 1rem; background: var(--gray-50); border-radius: 8px; border-left: 3px solid var(--gray-300);">
             <strong>Open research direction:</strong> We’re investigating whether there is a simple “natural operating point” for the target S* that depends on model size (M), training tokens (T), and data domain (D)—i.e., a compact relation S* ≈ f(M, T, D). Today we select S* empirically (≈1% at 1B, ≈2.9% at 3B in our setup); the goal is to predict S* from first principles and remove tuning entirely.
           </div>
+
+          <div style="margin-top: 1rem; padding: 1rem; background: var(--gray-50); border-radius: 8px; border-left: 3px solid var(--primary);">
+            <strong>Get involved (7B+ welcome):</strong> Validate at larger scales, try small S* targets, and share observations (stable S* band, final BPT/ppl). Please include model size (M), tokens (T), domain (D), S* target, Kp/Ki, σ, steps, and results.
+            <div style="margin-top: .75rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+              <a href="https://github.com/Hmbown/shannon-control-unit/issues" target="_blank" rel="noopener" class="btn btn-secondary">Open a GitHub issue</a>
+              <a href="mailto:hunter@shannonlabs.dev?subject=SCU%20S*%20Observation&body=Model%20(M)%3A%0ATokens%20(T)%3A%0ADomain%20(D)%3A%0AS*%20target%3A%0AKp/Ki%3A%0ASigma%3A%0ASteps%3A%0AStable%20band%3A%0AFinal%20BPT/PPL%3A%0A" class="btn btn-secondary" style="background: transparent; border: 1px solid var(--gray-300); color: var(--black);">Email results</a>
+            </div>
+          </div>
           
           <div style="margin-top: 2rem; padding: 1.5rem; background: var(--gray-50); border-radius: 8px; border-left: 3px solid var(--primary);">
             <h3 style="font-size: 1.1rem; margin-bottom: 1rem; color: var(--black);">Prior Art & What’s New</h3>
