@@ -42,7 +42,7 @@ Set your target information ratio \( S^* \), and our PI controller automatically
 
 **Status:** Validated at 1B/3B scales | Seeking partners for 7B+ external validation
 
-[View validation artifacts](https://github.com/Hmbown/shannon-control-unit/blob/main/3b_validation_results.json) | [Evaluation protocol](https://github.com/Hmbown/shannon-control-unit/blob/main/scripts/eval_bpt.py)
+[View validation artifacts](./3b_validation_results.json) | [Evaluation protocol](./scripts/eval_bpt.py)
 
 ## Available Models
 
@@ -78,9 +78,9 @@ Set your target information ratio \( S^* \), and our PI controller automatically
 <details>
 <summary><b>View raw data</b></summary>
 
-- [PI Control data](https://github.com/Hmbown/shannon-control-unit/blob/main/ablations/pi_control.csv)
-- [Fixed λ=1.0 data](https://github.com/Hmbown/shannon-control-unit/blob/main/ablations/fixed_1.0.csv)  
-- [Fixed λ=5.0 data](https://github.com/Hmbown/shannon-control-unit/blob/main/ablations/fixed_5.0.csv)
+- [PI Control data](./ablations/pi_control.csv)
+- [Fixed λ=1.0 data](./ablations/fixed_1.0.csv)  
+- [Fixed λ=5.0 data](./ablations/fixed_5.0.csv)
 
 </details>
 
