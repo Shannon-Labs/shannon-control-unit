@@ -1,3 +1,4 @@
+<!---
 ---
 license: llama3.2
 library_name: peft
@@ -17,6 +18,7 @@ language:
   - en
 inference: false
 ---
+-->
 
 # Shannon Control Unit (SCU) — Cruise Control for LLM Training
 

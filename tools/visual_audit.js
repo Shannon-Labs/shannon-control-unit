@@ -90,7 +90,7 @@ test.describe('Shannon Control Unit Visual Audit', () => {
           await page.waitForSelector(platform.waitFor, { timeout: 30000 });
           
           // Take screenshot
-          const screenshotPath = `screenshots/${platform.name}_${viewport.name}.png`;
+          const screenshotPath = `assets/screenshots/${platform.name}_${viewport.name}.png`;
           await page.screenshot({ 
             path: screenshotPath,
             fullPage: true 

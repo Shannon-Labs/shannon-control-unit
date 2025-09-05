@@ -44,8 +44,8 @@
 - `assets/figures/data/fixed_*.csv` - Individual fixed lambda configurations
 
 ### Analysis Tools
-- `generate_ablation_analysis.py` - Professional visualization generator
-- `test_quickstart.py` - Validation script for user experience
+- `viz/generate_ablation_analysis.py` - Professional visualization generator
+- `scripts/test_quickstart.py` - Validation script for user experience
 
 ---
 

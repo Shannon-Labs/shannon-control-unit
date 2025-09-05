@@ -15,7 +15,7 @@
 - Setup: `python -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt`
 - Quick training demo: `python scripts/train_scu.py --quickstart --adapter_out adapters/quickstart`
 - Generate figures: `python -m viz.cli --root outputs --out assets/figures --which s_curve,lambda,validation`
-- Validate 3B models: `./run_3b_validation.sh` (auto-selects `cuda`/`mps`).
+- Validate 3B models: `scripts/run_3b_validation.sh` (auto-selects `cuda`/`mps`).
 - Load test (CPU): `python test_model_loading.py` (downloads base + applies local adapters).
 
 ## Coding Style & Naming
@@ -40,4 +40,3 @@
 - GPU strongly recommended (CUDA); Mac `mps` supported. `bitsandbytes` is disabled on macOS.
 - Data paths default to `data/train.txt` and `data/val.txt`; update via flags or `configs/default.yaml`.
 - For HF publishing, run `huggingface-cli login` then `python tools/hf_sync.py`.
-
