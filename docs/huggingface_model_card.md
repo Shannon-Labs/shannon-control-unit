@@ -33,7 +33,7 @@ Set your target information ratio \( S^* \), and our PI controller automatically
 
 **Validated Results:**
 
-| Model | Metric | Baseline | SCU | Improvement |
+| Model | Metric | Cross-Entropy Baseline | SCU | Improvement |
 |-------|--------|----------|-----|-------------|
 | **Llama-3.2-1B** | BPT | 3.920 | 3.676 | **-6.2%** |
 | | Perplexity | 15.14 | 12.78 | **-15.6%** |
@@ -150,6 +150,17 @@ Optimal $S^*$ scaling laws are still being discovered. We found 1.0% works for 1
 
 * **Model weights:** Meta Llama 3.2 Community License (inherited from base model)
 * **SCU training code:** AGPL-3.0 (research/academia). Commercial licenses available ([GitHub repository](https://github.com/Hmbown/shannon-control-unit))
+
+## Planned Comparisons and Baselines
+
+- Optimal fixed regularization (search best constant λ)
+- Scheduled regularization (cosine/linear, tuned)
+- Adaptive KL control (target a fixed KL to base)
+- Sensitivity: S*, Kp, Ki, σ; multi‑seed; step‑time overhead (<1–2%)
+
+## Limitations / Threats
+
+Validated at 1B/3B LoRA with a ~512k‑token subset; not yet at 70B+ or full‑parameter training. Baseline fairness is critical (must beat best tuned fixed‑λ). Downstream tasks will be reported to ensure regularization does not reduce utility.
 * **IP status:** U.S. patent pending (provisional filed September 2025)
 
 > Repro tips: block size 1024, batch 1, grad-accum 4, gradient checkpointing on, `use_cache=False`.

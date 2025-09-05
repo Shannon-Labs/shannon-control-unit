@@ -80,6 +80,14 @@ Set your target information ratio \( S^* \), and our PI controller automatically
   - Fixed λ=5.0 CSV: https://huggingface.co/hunterbown/shannon-control-unit/blob/main/fixed_5.0.csv
   - Validation JSON (3B): https://huggingface.co/hunterbown/shannon-control-unit/blob/main/results/3b_validation_results.json
 
+## Limitations
+
+The current validation focuses on LoRA finetuning of Llama‑3.2 1B/3B. We have not yet shown results for full‑parameter training, other architectures (e.g., MoE/Mamba), or much larger scales (70B+). ParamBPT depends on an assumed Gaussian prior (σ), and selecting the target S* still requires empirical tuning (we are investigating predictive scaling laws). Reported gains are on an LM validation set; downstream task checks are planned.
+
+## Threats to Validity
+
+The most important threat is baseline fairness. SCU must be compared against an *optimally tuned* fixed‑λ configuration and strong schedules (cosine/linear decay). We also plan an adaptive KL‑targeting baseline (PPO‑style) to control for “adaptivity” itself. Another threat is external validity: LoRA gains may not directly translate to full‑parameter training. Finally, downstream evaluations (e.g., MMLU/GSM8K) are needed to confirm regularization does not reduce utility.
+
 ## How SCU Training Works
 
 ![S-ratio Tracking](assets/figures/s_curve.png)

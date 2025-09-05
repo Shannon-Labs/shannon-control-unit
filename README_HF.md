@@ -63,6 +63,15 @@ Set your target information ratio \( S^* \), and our PI controller automatically
   - [Fixed λ=5.0](https://huggingface.co/hunterbown/shannon-control-unit/blob/main/fixed_5.0.csv)
 - Validation summary (JSON): [results/3b_validation_results.json](https://huggingface.co/hunterbown/shannon-control-unit/blob/main/results/3b_validation_results.json)
 
+## Planned Comparisons and Baselines
+
+To rigorously validate the SCU approach, we plan to compare against the following baselines, reporting means and 95% CIs across multiple seeds with fixed token budgets:
+
+- Optimal fixed regularization (grid/Bayesian search for the best constant λ)
+- Scheduled regularization (tuned λ decay: linear, cosine)
+- Adaptive KL control (controller targeting a fixed KL from the base model)
+- Hyperparameter sensitivity (S*, Kp, Ki, σ) and step‑time overhead (<1–2%)
+
 ## Control Telemetry
 
 ![Lambda Evolution](assets/figures/lambda_curve.png)
@@ -138,6 +147,12 @@ Optimal $S^*$ scaling laws are still being discovered. We found ~1.0% works for 
 
 * **Model weights:** Meta Llama 3.2 Community License (inherited from base model)
 * **SCU training code:** AGPL-3.0 (research/academia). Commercial licenses available ([GitHub repository](https://github.com/Hmbown/shannon-control-unit))
+
+## Limitations and Threats to Validity
+
+Current results are for LoRA finetunes of Llama‑3.2 1B/3B on a ~512k‑token WikiText‑103 subset. We have not yet shown results for full‑parameter training or 70B+. SCU must be compared against *optimally tuned* fixed‑λ and strong schedules, as well as adaptive KL targeting, with multi‑seed reporting and downstream checks (e.g., MMLU/GSM8K) to ensure utility is not reduced.
+
+**Positioning:** SCU is a training‑time mechanism that adjusts λ to maintain a target information ratio S*; it is distinct from inference‑time uncertainty/refinement loops that modify generation without changing the model’s weights.
 * **IP status:** U.S. patent pending (provisional filed September 2025)
 
 > Repro tips: block size 1024, batch 1, grad-accum 4, gradient checkpointing on, `use_cache=False`.
