@@ -55,12 +55,6 @@ Set your target information ratio \( S^* \), and our PI controller automatically
 
 ![Validation Results](assets/figures/validation_results.png)
 
-## Control Telemetry
-
-![Lambda Evolution](assets/figures/lambda_curve.png)
-
-**Adaptive λ(t):** Real-time regularization strength adjustments in response to S-ratio deviations
-
 ---
 
 ## How SCU Training Works
