@@ -1,0 +1,53 @@
+# Optimal full-run configuration based on test results
+# Using Qwen3-1.7B-Base (close to 1B, proven to work well)
+
+# Model
+base_model: "./Qwen3-1.7B-Base"
+adapter_out: "adapters/full_run_optimal"
+
+# Control parameters - proven from tests
+target_s: 0.01  # 1% compression ratio (worked well)
+kp: 0.8         # Proportional gain (proven)
+ki: 0.15        # Integral gain (proven)
+deadband: 0.002 # ±0.2pp deadband (proven)
+lambda_init: 1.0
+lambda_min: 0.0001
+lambda_max: 10.0  # Let it explore full range
+
+# Training - OPTIMAL SETTINGS
+prior_sigma: 0.01
+epochs: 1
+steps: 150  # Good balance: long enough to see control behavior
+batch_size: 4  # Original config value, our system can handle it
+lr: 5e-5  # Original learning rate
+block_size: 1024  # Proven safe
+grad_accum: 1
+weight_decay: 0.0
+seed: 42
+
+# LoRA configuration - full power
+lora_r: 16  # Full rank from original config
+lora_alpha: 32
+lora_dropout: 0.05
+lora_targets:
+  - q_proj
+  - v_proj
+  - k_proj
+  - o_proj
+  - gate_proj
+  - up_proj
+  - down_proj
+
+# Data - more substantial
+train_data: "data/train.txt"
+val_data: "data/val.txt"
+max_texts: 2000  # 10x more data than medium test
+val_split: 0.1
+
+# Logging
+log_csv: "logs/full_run_optimal_training.csv"
+log_interval: 5  # Log every 5 steps for detailed tracking
+
+# Device settings - optimized for MPS
+use_4bit: false  # MPS works better without 4-bit
+mixed_precision: "no"  # Stable on MPS

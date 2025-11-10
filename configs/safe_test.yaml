@@ -1,0 +1,46 @@
+# Ultra-conservative configuration for safe testing
+# Model
+base_model: "meta-llama/Llama-3.2-1B"
+adapter_out: "adapters/safe_test_adapter"
+
+# Control parameters
+target_s: 0.01  # 1% compression ratio
+kp: 0.8         # Proportional gain
+ki: 0.15        # Integral gain
+deadband: 0.002 # ±0.2pp deadband
+lambda_init: 1.0
+lambda_min: 0.0001
+lambda_max: 10.0
+
+# Training - VERY CONSERVATIVE
+prior_sigma: 0.01
+epochs: 1
+steps: 10  # Only 10 steps for testing!
+batch_size: 1  # Minimal batch size
+lr: 1e-5  # Lower learning rate
+block_size: 1024  # Smaller context window
+grad_accum: 1
+weight_decay: 0.0
+seed: 42
+
+# LoRA configuration - reduced for memory
+lora_r: 8  # Half the normal rank
+lora_alpha: 16
+lora_dropout: 0.05
+lora_targets:
+  - q_proj
+  - v_proj
+
+# Data - use smaller subset
+train_data: "data/train.txt"
+val_data: "data/val.txt"
+max_texts: 100  # Limit to first 100 texts
+val_split: 0.1
+
+# Logging
+log_csv: "logs/safe_test_training.csv"
+log_interval: 1  # Log every step
+
+# Device settings - CONSERVATIVE
+use_4bit: false  # Disable 4-bit for MPS safety
+mixed_precision: "no"  # Disable mixed precision for stability

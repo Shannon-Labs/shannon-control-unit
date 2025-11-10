@@ -1,0 +1,12 @@
+{
+  "max_steps": 100,
+  "save_steps": 50,
+  "eval_steps": 50,
+  "logging_steps": 10,
+  "warmup_steps": 10,
+  "dataset_name": "wikitext",
+  "dataset_config": "wikitext-103-raw-v1",
+  "run_validation": false,
+  "load_best_model_at_end": false,
+  "fp16": false
+}

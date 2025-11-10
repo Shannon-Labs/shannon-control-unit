@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shannon Pricing — Anomaly Detection & Language Models</title>
+    
+    <!-- IBM Plex Fonts for Bell Labs Authority -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Bell Labs Design System -->
+    <link rel="stylesheet" href="/css/bell-labs-design.css">
+    
+    <style>
+        /* Pricing-specific overrides */
+        :root {
+            --gold-500: #D4AF37;
+            --free: #00FF88;
+        }
+
+        /* Art Deco divider */
+        .deco-divider { display:flex; align-items:center; justify-content:center; gap:10px; margin:2rem auto; }
+        .deco-line { height:2px; background: linear-gradient(90deg, transparent, var(--gold-500), transparent); width:160px; }
+        .deco-step { width:14px; height:14px; border:2px solid var(--gold-500); transform: rotate(45deg); box-shadow: 0 0 12px rgba(212,175,55,0.35); }
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .pricing-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .pricing-header p {
+            font-size: 1.2rem;
+            color: var(--accent);
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .demo-section {
+            background: rgba(0, 212, 255, 0.05);
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 3rem 0;
+            text-align: center;
+        }
+        
+        .demo-section h3 {
+            color: var(--accent);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .promo-banner {
+            background: linear-gradient(135deg, var(--warning), var(--gold-500));
+            color: var(--dark);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+        
+        .promo-banner h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.4rem;
+        }
+        
+        .usage-details {
+            background: rgba(0, 102, 255, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        
+        .usage-details strong {
+            color: var(--accent);
+        }
+        
+        .pilot-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--gold-500);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .pilot-section h3 {
+            color: var(--gold-500);
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .bill-example {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--silver-500);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .bill-example .line {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.25rem 0;
+        }
+        
+        .bill-example .total {
+            border-top: 2px solid var(--accent);
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+        
+        .tier-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tier-badge.free {
+            background: var(--free);
+            color: var(--dark);
+        }
+        
+        .tier-badge.popular {
+            background: var(--accent);
+            color: var(--dark);
+        }
+        
+        .pricing-card {
+            background: var(--white);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--border-radius-lg);
+            padding: var(--space-xl);
+            transition: all var(--transition-base);
+            position: relative;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .pricing-card.featured {
+            border-color: var(--accent);
+            transform: scale(1.05);
+        }
+        
+        .pricing-card.featured::before {
+            content: 'MOST POPULAR';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: var(--dark);
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-5px);
+        }
+        
+        .tier-name {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+        
+        .price {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+        
+        .price span {
+            font-size: 1rem;
+            font-weight: normal;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .features {
+            list-style: none;
+            padding: 0;
+            margin: 2rem 0;
+        }
+        
+        .features li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+        }
+        
+        .features li::before {
+            content: '✓';
+            color: var(--success);
+            font-weight: bold;
+            margin-right: 0.75rem;
+            font-size: 1.2rem;
+        }
+        
+        .features li.disabled {
+            color: rgba(255, 255, 255, 0.4);
+        }
+        
+        .features li.disabled::before {
+            content: '✗';
+            color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .cta-button {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 102, 255, 0.5);
+        }
+        
+        .cta-button.secondary {
+            background: transparent;
+            border: 2px solid var(--primary);
+        }
+        
+        .cta-button.secondary:hover {
+            background: var(--primary);
+        }
+        
+        .comparison-table {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .comparison-table h2 {
+            text-align: center;
+            color: var(--accent);
+            margin-bottom: 2rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th {
+            text-align: left;
+            padding: 1rem;
+            border-bottom: 2px solid var(--accent);
+            color: var(--accent);
+        }
+        
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .check {
+            color: var(--success);
+            font-weight: bold;
+        }
+        
+        .cross {
+            color: rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Grid Background -->
+    <div class="grid-background"></div>
+    
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="/" class="nav-logo">
+                <span class="logo-text">SHANNON</span>
+            </a>
+            <button class="nav-menu-btn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/models.html">Models</a>
+                <a href="/results.html">Benchmarks</a>
+                <a href="/docs.html">API Docs</a>
+                <a href="/pricing.html" class="active">Pricing</a>
+                <a href="/manifesto.html">Manifesto</a>
+                <a href="/faq.html">FAQ</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section with Bell Labs Background -->
+    <section class="hero">
+        <div class="hero-background"></div>
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Window-Based <span class="highlight">Pricing</span></h1>
+            <p class="hero-subtitle">Pay only for what you process. Start free, scale infinitely.</p>
+            <div class="deco-divider" aria-hidden="true">
+                <div class="deco-line"></div>
+                <div class="deco-step"></div>
+                <div class="deco-line"></div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="container">
+
+        
+        <div class="pricing-grid">
+            <!-- Open Source Tier -->
+            <div class="pricing-card">
+                <span class="tier-badge free">OPEN SOURCE</span>
+                <h3 class="tier-name">Community</h3>
+                <div class="price">$0 <span>/ forever</span></div>
+                <p>Core engines for builders & researchers</p>
+                <ul class="features">
+                    <li>Shannon anomaly detection engine</li>
+                    <li>NCD implementation</li>
+                    <li>CLI interface</li>
+                    <li>Evaluation harness</li>
+                    <li>Sample adapters</li>
+                    <li>MIT License</li>
+                    <li>Community support</li>
+                    <li class="disabled">Shannon LLM models</li>
+                    <li class="disabled">API access</li>
+                    <li class="disabled">Enterprise features</li>
+                    <li class="disabled">Priority support</li>
+                    <li class="disabled">SLAs</li>
+                </ul>
+                <a href="https://github.com/hmbown/shannon-control-unit" class="cta-button secondary">Get Started</a>
+            </div>
+            
+            <!-- Starter Tier -->
+            <div class="pricing-card">
+                <h3 class="tier-name">Starter</h3>
+                <div class="price">$499 <span>/ month</span></div>
+                <p>Perfect for startups and small teams</p>
+                <div class="usage-details">
+                    <strong>100M windows/month included</strong><br>
+                    Then $0.008 per 1M windows
+                </div>
+                <ul class="features">
+                    <li>Everything in Community</li>
+                    <li>Hosted API</li>
+                    <li>Advanced compressors</li>
+                    <li>1 detection profile</li>
+                    <li>Basic dashboard</li>
+                    <li>Email support</li>
+                    <li class="disabled">SSO</li>
+                    <li class="disabled">Drift & threshold automation</li>
+                    <li class="disabled">Custom connectors</li>
+                </ul>
+                <div class="bill-example">
+                    <div class="line"><span>Base plan:</span><span>$499</span></div>
+                    <div class="line"><span>150M windows used:</span><span>$0.40</span></div>
+                    <div class="line total"><span>Monthly total:</span><span>$499.40</span></div>
+                </div>
+                <a class="cta-button" href="mailto:hunter@shannonlabs.dev?subject=Shannon%20Starter">Start Free Trial</a>
+            </div>
+            
+            <!-- Growth Tier -->
+            <div class="pricing-card featured">
+                <h3 class="tier-name">Growth</h3>
+                <div class="price">$2,500 <span>/ month</span></div>
+                <p>For mid-market SOCs ready to scale</p>
+                <div class="usage-details">
+                    <strong>1B windows/month included</strong><br>
+                    Then $0.006 per 1M windows
+                </div>
+                <ul class="features">
+                    <li>Everything in Starter</li>
+                    <li>3 detection profiles</li>
+                    <li>SSO authentication</li>
+                    <li>Drift & threshold automation</li>
+                    <li>3 standard connectors</li>
+                    <li>Advanced dashboard</li>
+                    <li>99.9% uptime SLA</li>
+                    <li>Priority email support</li>
+                </ul>
+                <div class="bill-example">
+                    <div class="line"><span>Base plan:</span><span>$2,500</span></div>
+                    <div class="line"><span>1.5B windows used:</span><span>$3.00</span></div>
+                    <div class="line total"><span>Monthly total:</span><span>$2,503.00</span></div>
+                </div>
+                <a class="cta-button" href="mailto:hunter@shannonlabs.dev?subject=Shannon%20Growth">Start Free Trial</a>
+            </div>
+            
+            <!-- Enterprise Tier -->
+            <div class="pricing-card">
+                <h3 class="tier-name">Enterprise</h3>
+                <div class="price">$7,500 <span>/ month</span></div>
+                <p>For large organizations & regulated industries</p>
+                <div class="usage-details">
+                    <strong>5B windows/month included</strong><br>
+                    Then $0.004 per 1M windows
+                </div>
+                <ul class="features">
+                    <li>Everything in Growth</li>
+                    <li>Unlimited profiles</li>
+                    <li>Custom connectors</li>
+                    <li>VPC/on-prem deployment</li>
+                    <li>99.95% uptime SLA</li>
+                    <li>24/7 priority support</li>
+                    <li>Dedicated success manager</li>
+                    <li>Custom training & onboarding</li>
+                </ul>
+                <div class="bill-example">
+                    <div class="line"><span>Base plan:</span><span>$7,500</span></div>
+                    <div class="line"><span>7B windows used:</span><span>$8.00</span></div>
+                    <div class="line total"><span>Monthly total:</span><span>$7,508.00</span></div>
+                </div>
+                <a class="cta-button" href="mailto:hunter@shannonlabs.dev?subject=Shannon%20Enterprise">Contact Sales</a>
+            </div>
+        </div>
+
+        <!-- LLM Coming Soon Section -->
+        <div class="demo-section">
+            <h3>Shannon Language Models - Coming Soon</h3>
+            <p style="font-size: 1.2rem; margin: 1rem 0;">World's first MDL-optimized LLMs with built-in anomaly detection</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0;">
+                <div>
+                    <strong style="color: var(--accent);">4 Models</strong>
+                    <p>0.6B to 8B parameters</p>
+                </div>
+                <div>
+                    <strong style="color: var(--accent);">3.5 BPT</strong>
+                    <p>Training performance</p>
+                </div>
+                <div>
+                    <strong style="color: var(--accent);">60% Faster</strong>
+                    <p>Inference with entropy gating</p>
+                </div>
+                <div>
+                    <strong style="color: var(--accent);">Built-in Detection</strong>
+                    <p>No extra models needed</p>
+                </div>
+            </div>
+            <p style="color: var(--accent); font-size: 1.1rem; margin-top: 2rem;">Models will be available on HuggingFace soon. Join the waitlist to be notified.</p>
+            <a href="mailto:hunter@shannonlabs.dev?subject=Shannon%20LLM%20Waitlist" class="cta-button" style="display: inline-block; width: auto; padding: 1rem 2rem;">Join Waitlist</a>
+        </div>
+
+        <!-- Pilot Program Section -->
+        <div class="pilot-section">
+            <h3>Pilot Program</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+                <div>
+                    <h4 style="color: var(--accent);">Free Pilot (10-14 days)</h4>
+                    <p>Get a free pilot when you provide:</p>
+                    <ul style="text-align: left;">
+                        <li>Public reference & case study</li>
+                        <li>Logo usage rights</li>
+                        <li>Anonymized performance metrics</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="color: var(--accent);">Private Pilot</h4>
+                    <p>Keep your results confidential</p>
+                    <ul style="text-align: left;">
+                        <li>$7,500 one-time fee</li>
+                        <li>Full NDA protection</li>
+                        <li>10-14 day evaluation period</li>
+                    </ul>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 2rem;">
+                <a href="mailto:hunter@shannonlabs.dev?subject=Shannon%20Pilot%20Program" class="cta-button secondary" style="display: inline-block; width: auto; padding: 1rem 2rem;">Request Pilot</a>
+            </p>
+        </div>
+        
+        <div class="comparison-table">
+            <h2>What's a Window?</h2>
+            <p style="text-align: center; margin-bottom: 2rem; color: var(--silver-100);">
+                A window is a chunk of data (log, event, packet) that Shannon analyzes. Most security events are 1-10KB, meaning:
+            </p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Events/Day</th>
+                        <th>Windows/Month</th>
+                        <th>Recommended Tier</th>
+                        <th>Est. Monthly Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>100,000</td>
+                        <td>~3M</td>
+                        <td>Starter</td>
+                        <td>$499</td>
+                    </tr>
+                    <tr>
+                        <td>1,000,000</td>
+                        <td>~30M</td>
+                        <td>Starter</td>
+                        <td>$499</td>
+                    </tr>
+                    <tr>
+                        <td>10,000,000</td>
+                        <td>~300M</td>
+                        <td>Growth</td>
+                        <td>$2,500</td>
+                    </tr>
+                    <tr>
+                        <td>50,000,000</td>
+                        <td>~1.5B</td>
+                        <td>Growth</td>
+                        <td>$2,503</td>
+                    </tr>
+                    <tr>
+                        <td>100,000,000</td>
+                        <td>~3B</td>
+                        <td>Enterprise</td>
+                        <td>$7,500</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="text-align:center; color:var(--silver-300); margin-top:1rem;">
+                Actual window count depends on data size and processing configuration. 
+                <a href="docs.html" style="color: var(--accent);">Learn more →</a>
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        function startCheckout(tier) {
+            // In production, this would call your API to create a Stripe checkout session
+            if (window.location.hostname === 'localhost') {
+                alert('Checkout would start for ' + tier + ' tier');
+            } else {
+                window.location.href = '/api/checkout/start?tier=' + tier;
+            }
+        }
+        
+        function contactSales() {
+            window.location.href = 'mailto:hunter@shannonlabs.dev?subject=Shannon Enterprise Inquiry';
+        }
+    </script>
+</body>
+</html>

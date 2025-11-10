@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shannon OSS vs Commercial | Information-Theoretic Anomaly Detection</title>
+  <style>
+    :root {
+      --primary: #0052E0;
+      --primary-dark: #0041B3;
+      --primary-light: #3B7FFF;
+      --bg: #000000;
+      --white: #FFFFFF;
+      --gray-100: #1A1A1A;
+      --gray-200: #2D2D2D;
+      --gray-300: #404040;
+      --gray-400: #595959;
+      --gray-500: #737373;
+      --gray-600: #8C8C8C;
+      --gray-700: #A6A6A6;
+      --gray-800: #BFBFBF;
+      --gray-900: #D9D9D9;
+      --success: #10B981;
+      --warning: #F59E0B;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--white);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--gray-100);
+      z-index: 100;
+      padding: 1.5rem 2rem;
+    }
+
+    nav .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: var(--gray-600);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: var(--primary);
+    }
+
+    main {
+      padding-top: 100px;
+      min-height: 100vh;
+    }
+
+    .hero {
+      padding: 4rem 2rem;
+      text-align: center;
+      background: linear-gradient(135deg, rgba(0, 82, 224, 0.1) 0%, transparent 100%);
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      font-size: 1.25rem;
+      color: var(--gray-600);
+      max-width: 800px;
+      margin: 0 auto 3rem;
+    }
+
+    .comparison-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      gap: 2rem;
+    }
+
+    .edition-card {
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      border-radius: 16px;
+      padding: 2rem;
+      transition: all 0.3s;
+    }
+
+    .edition-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--primary);
+      box-shadow: 0 12px 24px rgba(0, 82, 224, 0.1);
+    }
+
+    .edition-header {
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--gray-200);
+      margin-bottom: 2rem;
+    }
+
+    .edition-title {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .edition-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .badge-oss {
+      background: var(--gray-200);
+      color: var(--gray-700);
+    }
+
+    .badge-commercial {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .edition-price {
+      font-size: 1.125rem;
+      color: var(--gray-600);
+    }
+
+    .features {
+      margin-bottom: 2rem;
+    }
+
+    .feature-category {
+      margin-bottom: 1.5rem;
+    }
+
+    .feature-category h3 {
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gray-500);
+      margin-bottom: 0.75rem;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      color: var(--gray-700);
+    }
+
+    .feature-icon {
+      margin-right: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .check {
+      color: var(--success);
+    }
+
+    .cross {
+      color: var(--gray-400);
+    }
+
+    .metrics-comparison {
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .metric-row:last-child {
+      border-bottom: none;
+    }
+
+    .metric-label {
+      color: var(--gray-600);
+    }
+
+    .metric-value {
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .metric-better {
+      color: var(--success);
+    }
+
+    .cta-button {
+      display: block;
+      width: 100%;
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.3s;
+      border: 2px solid transparent;
+    }
+
+    .btn-oss {
+      background: var(--gray-200);
+      color: var(--white);
+      border-color: var(--gray-300);
+    }
+
+    .btn-oss:hover {
+      background: var(--gray-300);
+      border-color: var(--gray-400);
+    }
+
+    .btn-commercial {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .btn-commercial:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(0, 82, 224, 0.2);
+    }
+
+    .use-cases {
+      max-width: 1200px;
+      margin: 4rem auto;
+      padding: 0 2rem;
+    }
+
+    .use-cases h2 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .use-case-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .use-case-card {
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .use-case-title {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+    }
+
+    .use-case-description {
+      color: var(--gray-600);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .comparison-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      nav ul {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <div class="logo">Shannon</div>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="results.html">Benchmarks</a></li>
+        <li><a href="comparison.html" class="active">OSS vs Commercial</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="manifesto.html">Manifesto</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <h1>Choose Your Shannon Edition</h1>
+      <p class="subtitle">
+        Open-source NCD for developers who want to experiment, or commercial LD-CBCES 
+        with VAE adaptation for production-critical anomaly detection
+      </p>
+    </div>
+
+    <div class="comparison-grid">
+      <!-- OSS Edition -->
+      <div class="edition-card">
+        <div class="edition-header">
+          <div class="edition-badge badge-oss">OPEN SOURCE</div>
+          <h2 class="edition-title">Shannon OSS (cbces)</h2>
+          <div class="edition-price">Free Forever • MIT License</div>
+        </div>
+
+        <div class="features">
+          <div class="feature-category">
+            <h3>Core Technology</h3>
+            <div class="feature-item">
+              <span class="feature-icon check">✓</span>
+              <span>NCD-based anomaly detection</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon check">✓</span>
+              <span>zstd compression engine</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon check">✓</span>
+              <span>Windowed baseline statistics</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon check">✓</span>
+              <span>Z-score thresholding</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon cross">✗</span>
+              <span>VAE representation learning</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon cross">✗</span>
+              <span>Domain adaptation</span>
+            </div>
+          </div>
+
+          <div class="metrics-comparison">
+            <h3>Performance Metrics</h3>
+            <div class="metric-row">
+              <span class="metric-label">Security Win Rate</span>
+              <span class="metric-value">58%</span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-label">Wednesday CIC-IDS F1</span>
+              <span class="metric-value">0.285</span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-label">Cost Reduction</span>
+              <span class="metric-value">Basic</span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-label">False Positive Rate</span>
+              <span class="metric-value">Moderate</span>
+            </div>
+          </div>
+
+          <div class="feature-category">
+            <h3>Best For</h3>
+            <div class="feature-item">
+              <span class="feature-icon check">✓</span>
+              <span>Experimentation & research</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon check">✓</span>
+              <span>Simple anomaly detection</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon check">✓</span>
+              <span>Educational purposes</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon check">✓</span>
+              <span>Non-critical monitoring</span>
+            </div>
+          </div>
+        </div>
+
+        <a href="https://github.com/shannonlabs/cbces" class="cta-button btn-oss">
+          View on GitHub →
+        </a>
+      </div>
+
+      <!-- Commercial Edition -->
+      <div class="edition-card">
+        <div class="edition-header">
+          <div class="edition-badge badge-commercial">COMMERCIAL</div>
+          <h2 class="edition-title">Shannon API</h2>
+          <div class="edition-price">Starting at $99/month</div>
+        </div>
+
+        <div class="features">
+          <div class="feature-category">
+            <h3>Core Technology</h3>
+            <div class="feature-item">
+              <span class="feature-icon check">✓</span>
+              <span>Full LD-CBCES engine</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon check">✓</span>
+              <span>Advanced compression (levels 1-22)</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon check">✓</span>
+              <span>Adaptive baseline learning</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon check">✓</span>
+              <span>Multi-threshold detection</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon check metric-better">✓</span>
+              <span>VAE representation learning</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon check metric-better">✓</span>
+              <span>Domain-specific adaptation</span>
+            </div>
+          </div>
+
+          <div class="metrics-comparison">
+            <h3>Performance Metrics</h3>
+            <div class="metric-row">
+              <span class="metric-label">Security Win Rate</span>
+              <span class="metric-value metric-better">92%</span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-label">Wednesday CIC-IDS F1</span>
+              <span class="metric-value metric-better">0.837</span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-label">Cost Reduction</span>
+              <span class="metric-value metric-better">98%</span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-label">False Positive Rate</span>
+              <span class="metric-value metric-better">Ultra-low</span>
+            </div>
+          </div>
+
+          <div class="feature-category">
+            <h3>Best For</h3>
+            <div class="feature-item">
+              <span class="feature-icon check">✓</span>
+              <span>Production deployments</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon check">✓</span>
+              <span>Financial fraud detection</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon check">✓</span>
+              <span>Cybersecurity monitoring</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon check">✓</span>
+              <span>Industrial IoT & chip fab</span>
+            </div>
+          </div>
+        </div>
+
+        <a href="pricing.html" class="cta-button btn-commercial">
+          Get API Access →
+        </a>
+      </div>
+    </div>
+
+    <div class="use-cases">
+      <h2>Domain-Specific Performance</h2>
+      
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <h3 class="use-case-title">Cybersecurity</h3>
+          <p class="use-case-description">
+            <strong>OSS:</strong> 58% win rate, good for basic threat detection<br>
+            <strong>Commercial:</strong> 92% win rate, catches sophisticated attacks
+          </p>
+        </div>
+
+        <div class="use-case-card">
+          <h3 class="use-case-title">Financial Services</h3>
+          <p class="use-case-description">
+            <strong>OSS:</strong> Basic fraud patterns<br>
+            <strong>Commercial:</strong> Adapts to evolving fraud with VAE learning
+          </p>
+        </div>
+
+        <div class="use-case-card">
+          <h3 class="use-case-title">Industrial IoT</h3>
+          <p class="use-case-description">
+            <strong>OSS:</strong> Simple threshold monitoring<br>
+            <strong>Commercial:</strong> Predictive maintenance with 22X better accuracy
+          </p>
+        </div>
+
+        <div class="use-case-card">
+          <h3 class="use-case-title">Healthcare</h3>
+          <p class="use-case-description">
+            <strong>OSS:</strong> Basic anomaly flagging<br>
+            <strong>Commercial:</strong> Clinical-grade detection with domain tuning
+          </p>
+        </div>
+
+        <div class="use-case-card">
+          <h3 class="use-case-title">Gene Expression</h3>
+          <p class="use-case-description">
+            <strong>OSS:</strong> Statistical outliers only<br>
+            <strong>Commercial:</strong> Complex pattern recognition with 22X improvement
+          </p>
+        </div>
+
+        <div class="use-case-card">
+          <h3 class="use-case-title">Chip Manufacturing</h3>
+          <p class="use-case-description">
+            <strong>OSS:</strong> Basic yield monitoring<br>
+            <strong>Commercial:</strong> Predictive defect detection with adaptation
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -4,9 +4,6 @@ __pycache__/
 *$py.class
 *.so
 .Python
-env/
-venv/
-ENV/
 build/
 develop-eggs/
 dist/
@@ -19,12 +16,29 @@ parts/
 sdist/
 var/
 wheels/
+pip-wheel-metadata/
+share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv
+
+# PyTorch
+*.pt
+*.pth
+*.ckpt
+checkpoints/
+lightning_logs/
 
 # Jupyter
 .ipynb_checkpoints
+*/.ipynb_checkpoints/*
 
 # IDE
 .vscode/
@@ -32,59 +46,165 @@ wheels/
 *.swp
 *.swo
 *~
+.DS_Store
+
+# Logs
+*.log
+logs/
+wandb/
+runs/
+
+# Data (protect raw datasets)
+*.csv
+!ablations/*.csv
+!results/*.csv
+data/*.txt
+!data/val.txt
+
+# Model outputs
+outputs/
+saved_models/
+*.safetensors
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+.cache/
 
 # OS
 .DS_Store
 Thumbs.db
 
-# Project specific
-outputs/
-models/
-adapters/
-logs/
-# Keep repo root clean of duplicate adapter binaries
-/adapter_model.safetensors
-/adapter_config.json
-# Allow ablation data files
-!ablations/
-!ablations/*.csv
-# Allow specific demo plots
-!figures/s_curve_1b.png
-!figures/lambda_1b.png
-!figures/control_curves_1b.png
-!figures/.gitkeep
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
 
-# Data (except sample files)
-data/*.txt
-!data/train.txt
-!data/val.txt
-data/*.jsonl
-data/*.json
+# Documentation builds
+docs/_build/
+site/
 
-# Temp files
-*.tmp
-*.bak
-*.log
+# Environment
+.env
+.env.local
+*.env
+
+# HuggingFace cache
+.huggingface/
+
+# Node (for web development)
+node_modules/
+package-lock.json
+.next/
+
+# Vercel
 .vercel
 
-# Private outreach materials
-scu_outreach/
+# Model output directories
+*output*/
+*output_test/
+*output_safe/
+*cache/
 .hf_cache/
 
-# Website cleanup - hide unused pages and backups
-web/_pricing_backup.html
-web/collaborate.html
-web/comparison.html  
-web/dashboard.html
-web/deep-dive.html
-web/demo.html
-web/docs.html
-web/faq.html
-web/how-it-works.html
-web/index_*.html
-web/manifesto.html
-web/models.html
-web/test-visualization.html
-web/waitlist.html
-web/css/deprecated/
-web/js/deprecated/
+# Model files and checkpoints
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+checkpoints/
+lightning_logs/
+saved_models/
+outputs/
+
+# Data files (except specific ablations/results)
+*.csv
+!ablations/*.csv
+!results/*.csv
+data/*.txt
+!data/val.txt
+
+# Temporary and cache files
+.cache/
+tmp/
+temp/
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Local model directories
+Qwen3-1.7B-Base/
+adapters/
+
+# Log files
+*.log
+logs/
+wandb/
+runs/
+
+# Environment files
+.env
+.env.local
+*.env
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv
+
+# Jupyter
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Documentation builds
+docs/_build/
+site/
+
+# HuggingFace cache
+.huggingface/
+
+# Node (for web development)
+node_modules/
+package-lock.json
+.next/

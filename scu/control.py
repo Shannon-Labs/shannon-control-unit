@@ -159,12 +159,18 @@ def calculate_param_bpt(
     
     for name, param in model.named_parameters():
         if param.requires_grad and "lora" in name.lower():
+            # Skip meta device parameters (offloaded to disk)
+            if param.device.type == 'meta':
+                continue
+                
             # Sum of squares in float32 for stability
             param_sum += (param.data.float() ** 2).sum().item()
             param_count += param.numel()
     
     if param_count == 0:
-        return 0.0
+        # Return a small default value to avoid division by zero
+        # This happens when all parameters are on meta device
+        return 1e-6
     
     # Convert to bits (divide by ln(2)) and normalize by tokens
     param_bpt = param_sum / (2 * sigma**2 * tokens_per_epoch * math.log(2))

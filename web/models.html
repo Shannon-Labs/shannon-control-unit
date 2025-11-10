@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shannon LLMs - Information-Theoretic Language Models</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/clean-design.css">
+    <style>
+        :root {
+            --primary: #0052E0;
+            --text: #000000;
+            --bg: #ffffff;
+            --gray: #6b7280;
+            --light-gray: #f3f4f6;
+            --border: #e5e7eb;
+        }
+
+        .models-hero {
+            text-align: center;
+            padding: 80px 20px 60px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .models-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .models-subtitle {
+            font-size: 1.25rem;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .model-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .model-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .model-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .model-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--primary);
+            color: white;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .model-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .model-size {
+            color: var(--gray);
+            margin-bottom: 1rem;
+        }
+
+        .model-specs {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+
+        .model-specs li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .model-specs li:last-child {
+            border-bottom: none;
+        }
+
+        .spec-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .spec-value {
+            font-weight: 500;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .model-use-cases {
+            margin-top: 1.5rem;
+        }
+
+        .model-use-cases h4 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .use-case-tag {
+            display: inline-block;
+            padding: 4px 8px;
+            background: var(--light-gray);
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin: 4px 4px 4px 0;
+        }
+
+        .features-section {
+            background: var(--light-gray);
+            padding: 60px 20px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature {
+            text-align: center;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            border-radius: 8px;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .feature h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .feature p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .integration-section {
+            padding: 60px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .integration-section h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2rem;
+        }
+
+        .code-example {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        .code-example pre {
+            margin: 0;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .code-comment {
+            color: #6a9955;
+        }
+
+        .code-string {
+            color: #ce9178;
+        }
+
+        .code-keyword {
+            color: #569cd6;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #0052E0 0%, #003299 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: transform 0.2s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .cta-button.primary {
+            background: white;
+            color: var(--primary);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        @media (max-width: 768px) {
+            .models-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .model-grid {
+                grid-template-columns: 1fr;
+                padding: 40px 20px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="index.html" class="logo">Shannon</a>
+            <button class="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/models.html" class="active">Models</a>
+                <a href="/results.html">Benchmarks</a>
+                <a href="/docs.html">API Docs</a>
+                <a href="/pricing.html">Pricing</a>
+                <a href="/manifesto.html">Manifesto</a>
+                <a href="/faq.html">FAQ</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="models-hero">
+        <h1>Shannon Control Unit (SCU) Research</h1>
+        <p class="models-subtitle">Developing automatic capacity control for neural networks. Research methodology for training LLMs with information-theoretic principles.</p>
+        <div style="background: linear-gradient(135deg, #0052E0, #003DA5); padding: 1.5rem; border-radius: 8px; margin: 2rem auto; max-width: 700px; box-shadow: 0 4px 20px rgba(0,82,224,0.2);">
+            <h3 style="margin: 0 0 0.5rem 0; color: white; font-weight: 600;">🔬 Research Focus: Shannon Control Unit (SCU)</h3>
+            <p style="margin: 0 0 1rem 0; color: rgba(255,255,255,0.95); line-height: 1.6;">
+                We're researching automatic capacity control for neural networks — a potential "transistor moment" for AI. 
+                The SCU methodology aims to maintain precise information capacity during training, potentially eliminating manual hyperparameter tuning.
+            </p>
+            <p style="margin: 0; color: rgba(255,255,255,0.85); font-size: 0.9rem;">
+                <strong>Status:</strong> Early research phase - exploring training methodologies. Not yet production-ready.
+            </p>
+        </div>
+        <div class="hero-metrics">
+            <div class="metric">
+                <div class="metric-value">3.5 BPT</div>
+                <div class="metric-label">Target Performance</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">60%</div>
+                <div class="metric-label">Faster Inference</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">4</div>
+                <div class="metric-label">Model Variants</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="model-grid">
+        <div class="model-card">
+            <span class="model-badge">Edge Optimized</span>
+            <h3 class="model-name">Shannon-Q-Tiny</h3>
+            <p class="model-size">0.6B Parameters</p>
+            <ul class="model-specs">
+                <li>
+                    <span class="spec-label">Architecture</span>
+                    <span class="spec-value">Qwen-based</span>
+                </li>
+                <li>
+                    <span class="spec-label">Context</span>
+                    <span class="spec-value">4K tokens</span>
+                </li>
+                <li>
+                    <span class="spec-label">Speed</span>
+                    <span class="spec-value">120 tok/s</span>
+                </li>
+                <li>
+                    <span class="spec-label">Memory</span>
+                    <span class="spec-value">1.2GB</span>
+                </li>
+            </ul>
+            <div class="model-use-cases">
+                <h4>Best For</h4>
+                <span class="use-case-tag">Mobile Apps</span>
+                <span class="use-case-tag">IoT Devices</span>
+                <span class="use-case-tag">Real-time Processing</span>
+                <span class="use-case-tag">Edge Deployment</span>
+            </div>
+        </div>
+
+        <div class="model-card">
+            <span class="model-badge">SCU-Scaled</span>
+            <h3 class="model-name">Shannon-3B</h3>
+            <p class="model-size">3.21B Parameters</p>
+            <ul class="model-specs">
+                <li>
+                    <span class="spec-label">Architecture</span>
+                    <span class="spec-value">Qwen-based</span>
+                </li>
+                <li>
+                    <span class="spec-label">Context</span>
+                    <span class="spec-value">8K tokens</span>
+                </li>
+                <li>
+                    <span class="spec-label">Speed</span>
+                    <span class="spec-value">85 tok/s</span>
+                </li>
+                <li>
+                    <span class="spec-label">Memory</span>
+                    <span class="spec-value">3.4GB</span>
+                </li>
+            </ul>
+            <div class="model-use-cases">
+                <h4>Best For</h4>
+                <span class="use-case-tag">Web Applications</span>
+                <span class="use-case-tag">Chatbots</span>
+                <span class="use-case-tag">Code Analysis</span>
+                <span class="use-case-tag">Local Deployment</span>
+            </div>
+        </div>
+
+        <div class="model-card">
+            <span class="model-badge">Production Ready</span>
+            <h3 class="model-name">Shannon-M-Medium</h3>
+            <p class="model-size">7B Parameters</p>
+            <ul class="model-specs">
+                <li>
+                    <span class="spec-label">Architecture</span>
+                    <span class="spec-value">Mistral-based</span>
+                </li>
+                <li>
+                    <span class="spec-label">Context</span>
+                    <span class="spec-value">32K tokens</span>
+                </li>
+                <li>
+                    <span class="spec-label">Speed</span>
+                    <span class="spec-value">45 tok/s</span>
+                </li>
+                <li>
+                    <span class="spec-label">Memory</span>
+                    <span class="spec-value">14GB</span>
+                </li>
+            </ul>
+            <div class="model-use-cases">
+                <h4>Best For</h4>
+                <span class="use-case-tag">Enterprise Apps</span>
+                <span class="use-case-tag">RAG Systems</span>
+                <span class="use-case-tag">Complex Analysis</span>
+                <span class="use-case-tag">API Services</span>
+            </div>
+        </div>
+
+        <div class="model-card">
+            <span class="model-badge">Enterprise Scale</span>
+            <h3 class="model-name">Shannon-L-Medium</h3>
+            <p class="model-size">8B Parameters</p>
+            <ul class="model-specs">
+                <li>
+                    <span class="spec-label">Architecture</span>
+                    <span class="spec-value">Llama-based</span>
+                </li>
+                <li>
+                    <span class="spec-label">Context</span>
+                    <span class="spec-value">128K tokens</span>
+                </li>
+                <li>
+                    <span class="spec-label">Speed</span>
+                    <span class="spec-value">40 tok/s</span>
+                </li>
+                <li>
+                    <span class="spec-label">Memory</span>
+                    <span class="spec-value">16GB</span>
+                </li>
+            </ul>
+            <div class="model-use-cases">
+                <h4>Best For</h4>
+                <span class="use-case-tag">Long Context</span>
+                <span class="use-case-tag">Document Analysis</span>
+                <span class="use-case-tag">Code Generation</span>
+                <span class="use-case-tag">Research Tasks</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shannon Control Unit Breakthrough Section -->
+    <section style="background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%); padding: 80px 20px; border-top: 1px solid var(--border);">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem; color: var(--text);">
+                The Information Transistor: Shannon Control Unit (SCU)
+            </h2>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-bottom: 4rem;">
+                <div>
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--primary);">Before SCU</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 0.5rem 0; color: var(--gray);">❌ Manual hyperparameter tuning</li>
+                        <li style="padding: 0.5rem 0; color: var(--gray);">❌ Unpredictable capacity usage</li>
+                        <li style="padding: 0.5rem 0; color: var(--gray);">❌ Training instability (BPT → 783)</li>
+                        <li style="padding: 0.5rem 0; color: var(--gray);">❌ Overfitting at scale</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--primary);">After SCU</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 0.5rem 0; color: #10B981;">✅ Automatic λ adjustment</li>
+                        <li style="padding: 0.5rem 0; color: #10B981;">✅ Precise capacity control (S=3%)</li>
+                        <li style="padding: 0.5rem 0; color: #10B981;">✅ Stable convergence (BPT=3.86)</li>
+                        <li style="padding: 0.5rem 0; color: #10B981;">✅ Scales to any model size</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div style="background: white; border: 1px solid var(--border); border-radius: 8px; padding: 2rem; margin-bottom: 3rem;">
+                <h3 style="margin-bottom: 1rem;">The Transistor Analogy</h3>
+                <p style="color: var(--gray); line-height: 1.8; margin-bottom: 1rem;">
+                    Just as the transistor enabled modern electronics by providing reliable, automatic control of current flow,
+                    the Shannon Control Unit enables modern AI by providing reliable, automatic control of information flow.
+                </p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+                    <div style="text-align: center; padding: 1rem; background: var(--light-gray); border-radius: 6px;">
+                        <strong>Small Models (1B)</strong><br>
+                        <span style="color: var(--gray); font-size: 0.9rem;">Can work without SCU (like simple circuits)</span>
+                    </div>
+                    <div style="text-align: center; padding: 1rem; background: linear-gradient(135deg, #E0F2FE, #DBEAFE); border-radius: 6px;">
+                        <strong>Large Models (3B+)</strong><br>
+                        <span style="color: var(--primary); font-size: 0.9rem;">REQUIRE SCU for stability (like complex systems)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center;">
+                <a href="https://github.com/hmbown/shannon-control-unit" class="cta-button primary" style="display: inline-block; margin: 0 0.5rem;">
+                    View on GitHub
+                </a>
+                <a href="https://huggingface.co/hunterbown" class="cta-button secondary" style="display: inline-block; margin: 0 0.5rem; background: var(--primary); color: white; border: none;">
+                    Try on HuggingFace
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="features-section">
+        <div class="features-grid">
+            <div class="feature">
+                <div class="feature-icon">🧬</div>
+                <h3>MDL-Optimized</h3>
+                <p>First LLMs trained with Minimum Description Length principles for optimal compression and generation.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">⚡</div>
+                <h3>60% Faster</h3>
+                <p>Entropy gating enables dynamic compute allocation, achieving 60% faster inference than standard models.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🛡️</div>
+                <h3>Built-in Anomaly Detection</h3>
+                <p>Native anomaly detection without extra models. Detect hallucinations and adversarial inputs in real-time.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📊</div>
+                <h3>Compression-Native</h3>
+                <p>Models that understand information density. Generate more informative outputs with fewer tokens.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔬</div>
+                <h3>Information-Theoretic</h3>
+                <p>Based on Shannon's information theory and Kolmogorov complexity for principled AI development.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🚀</div>
+                <h3>Production Ready</h3>
+                <p>Battle-tested on security datasets. Proven performance across 19 real-world benchmarks.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="integration-section">
+        <h2>Research Update</h2>
+        <div style="text-align: center; padding: 2rem; background: var(--light-gray); border-radius: 8px; margin: 2rem 0;">
+            <p style="font-size: 1.1rem; margin-bottom: 1rem; color: var(--text);">
+                Shannon Control Unit (SCU) is currently in active research phase. 
+            </p>
+            <p style="color: var(--gray); margin-bottom: 1.5rem;">
+                We're developing automatic capacity control for neural networks with proven results on 1B and 3B models. 8B training in progress.
+            </p>
+            <p style="color: var(--gray); font-size: 0.9rem;">
+                <strong>Current Status:</strong> Training methodology development • Patent filed September 2025
+            </p>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <h2>Follow Shannon Research</h2>
+        <p>Stay updated on our progress developing automatic capacity control for neural networks.</p>
+        <div class="cta-buttons">
+            <a href="mailto:hunter@shannonlabs.dev?subject=Shannon%20Research%20Updates" class="cta-button primary">Get Updates</a>
+            <a href="https://huggingface.co/hunterbown" class="cta-button secondary">Follow on HuggingFace</a>
+            <a href="https://github.com/hmbown/shannon-control-unit" class="cta-button secondary">View GitHub</a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h4>Product</h4>
+                <a href="models.html">Language Models</a>
+                <a href="results.html">Anomaly Detection</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="docs.html">API Docs</a>
+            </div>
+            <div class="footer-column">
+                <h4>Company</h4>
+                <a href="manifesto.html">Manifesto</a>
+                <a href="faq.html">FAQ</a>
+                <a href="mailto:hmbown@gmail.com">Contact</a>
+            </div>
+            <div class="footer-column">
+                <h4>Resources</h4>
+                <a href="https://github.com/hmbown/shannon-control-unit">GitHub</a>
+                <a href="https://huggingface.co/hunterbown">HuggingFace</a>
+                <a href="https://arxiv.org">Research Paper</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Shannon. Information through compression.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

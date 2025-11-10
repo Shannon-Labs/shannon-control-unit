@@ -157,13 +157,13 @@ Research direction (open): find a compact relation $S^* \approx f(M, T, D)$ that
 
 ---
 
-## Technical Documentation
+## Documentation
 
-For researchers and practitioners interested in the theoretical foundations:
-- **[Mathematical Theory](./docs/technical/THEORY.md)** - Control theory and MDL framework
-- **[Convergence Proofs](./docs/technical/CONVERGENCE_PROOFS.md)** - Formal stability analysis
-- **[Statistical Analysis](./docs/technical/STATISTICAL_ANALYSIS.md)** - Hypothesis testing and validation
-- **[Full Technical Docs](./docs/technical/)** - Complete academic documentation
+- **[Getting Started & Examples](./examples/)** - Quick start guides and code examples
+- **[API Documentation](./docs/)** - Complete API reference and usage guide
+- **[Technical Details](./docs/technical/)** - Deep technical documentation (in development)
+- **[Contributing](./CONTRIBUTING.md)** - How to contribute to the project
+- **[Changelog](./CHANGELOG.md)** - Version history and roadmap
 
 ## Licensing & IP
 

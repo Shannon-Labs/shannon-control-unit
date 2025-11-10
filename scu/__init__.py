@@ -15,6 +15,19 @@ from .data import (
     prepare_dataset
 )
 
+from .mpc_controller import (
+    ControllerBase,
+    MPCController,
+    PIController
+)
+
+from .metrics import (
+    MetricBase,
+    S_Ratio,
+    AttentionEntropy,
+    GradientOrthogonality
+)
+
 __version__ = "1.0.0"
 __all__ = [
     "update_lambda",
@@ -25,5 +38,12 @@ __all__ = [
     "tokenize_and_chunk",
     "load_texts_from_file",
     "create_data_iterator",
-    "prepare_dataset"
+    "prepare_dataset",
+    "ControllerBase",
+    "MPCController",
+    "PIController",
+    "MetricBase",
+    "S_Ratio",
+    "AttentionEntropy",
+    "GradientOrthogonality"
 ]

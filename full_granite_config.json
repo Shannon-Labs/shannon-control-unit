@@ -1,0 +1,18 @@
+{
+  "max_steps": 4000,
+  "save_steps": 400,
+  "eval_steps": 200,
+  "logging_steps": 20,
+  "warmup_steps": 100,
+  "dataset_name": "wikitext",
+  "dataset_config": "wikitext-103-raw-v1",
+  "max_steps": 500,
+  "run_validation": false,
+  "load_best_model_at_end": false,
+  "fp16": false,
+  "dataloader_num_workers": 0,
+  "gradient_accumulation_steps": 4,
+  "batch_size": 2,
+  "learning_rate": 2e-4,
+  "save_total_limit": 3
+}

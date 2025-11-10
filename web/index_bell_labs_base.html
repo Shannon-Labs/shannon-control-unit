@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>An Information‑Theoretic Approach for the AI Era • Shannon</title>
+  <meta name="description" content="Shannon is a practical, privacy‑first anomaly signal built on normalized compression distance (NCD). Complement ML; measure structure, don't memorize data." />
+  
+  <!-- IBM Plex Fonts for Bell Labs Authority -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Bell Labs Design System -->
+  <link rel="stylesheet" href="/css/bell-labs-design.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+  <style>
+    /* Custom overrides for Manifesto page */
+    :root {
+      /* Bell Labs-Inspired Palette */
+      --black:#000; --white:#fff;
+      --gray-50:#FAFAFA; --gray-100:#F5F5F5; --gray-200:#E5E5E5; --gray-300:#D4D4D4; --gray-400:#A3A3A3; --gray-500:#737373; --gray-600:#525252; --gray-700:#404040; --gray-800:#262626; --gray-900:#171717; --gray-950:#0A0A0A;
+      /* Accent Colors */
+      --primary:#0052E0; --primary-dark:#003DA5; --primary-light:#1A6AFF; --success:#10B981;
+      --bronze:#8B6508; --copper:#B87333; --warm-gray:#8B8680;
+      
+      /* Typography System - IBM Research Modern */
+      --font-display:'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body:'IBM Plex Serif', 'Georgia', serif;
+      --font-sans:'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono:'IBM Plex Mono', 'SF Mono', Monaco, monospace;
+      
+      /* Modular Scale (1.250 ratio - Major Third) */
+      --text-xs: 0.64rem;
+      --text-sm: 0.8rem;
+      --text-base: 1rem;
+      --text-lg: 1.25rem;
+      --text-xl: 1.563rem;
+      --text-2xl: 1.953rem;
+      --text-3xl: 2.441rem;
+      --text-4xl: 3.052rem;
+      --text-5xl: 3.815rem;
+      
+      /* Spacing Scale */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-2xl: 3rem;
+      --space-3xl: 4rem;
+      
+      /* Bell Labs Grid Pattern */
+      --grid-size: 20px;
+      --grid-color: rgba(0, 82, 224, 0.03);
+      
+      /* Back-compat tokens */
+      --accent:var(--primary);
+      --silver-100:var(--gray-700); --silver-300:var(--gray-600); --silver-500:var(--gray-500);
+    }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    
+    /* Base Typography */
+    body { 
+      font-family:var(--font-body); 
+      background:var(--white); 
+      color:var(--gray-900); 
+      line-height:1.7; 
+      font-size: var(--text-base);
+      -webkit-font-smoothing:antialiased; 
+      -moz-osx-font-smoothing:grayscale;
+      text-rendering: optimizeLegibility;
+      font-feature-settings: "kern" 1, "liga" 1;
+      position: relative;
+      min-height: 100vh;
+    }
+    
+    /* Hero with Bell Labs Building */
+    .hero-background {
+      background-image: url('/photos/Bell_Labs_Holmdel,_NJ.jpg');
+    }
+    
+    .shannon-portrait {
+      margin-top: 3rem;
+      text-align: center;
+    }
+    
+    .shannon-portrait img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 3px solid var(--white);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      filter: grayscale(100%);
+      transition: all 0.3s;
+    }
+    
+    .shannon-portrait img:hover {
+      filter: grayscale(0%);
+      transform: scale(1.05);
+    }
+    
+    .portrait-caption {
+      margin-top: 1rem;
+      font-size: var(--text-sm);
+      color: var(--gray-600);
+      font-style: italic;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    /* Bell Labs Grid Background Pattern */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px),
+        linear-gradient(180deg, var(--grid-color) 1px, transparent 1px);
+      background-size: var(--grid-size) var(--grid-size);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+    }
+    
+    /* Selection Colors */
+    ::selection {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    /* Enhanced Navigation with Bell Labs Authority */
+    .nav { 
+      position:fixed; 
+      inset:0 0 auto; 
+      background:rgba(255,255,255,0.98); 
+      backdrop-filter:blur(20px) saturate(180%); 
+      z-index:9999; 
+      padding:1.25rem 2rem; 
+      border-bottom:1px solid var(--gray-200);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    } 
+    .nav-content{ 
+      max-width:1400px; 
+      margin:0 auto; 
+      display:flex; 
+      justify-content:space-between; 
+      align-items:center; 
+    }
+    .nav-logo{ 
+      font-family: var(--font-display);
+      font-size:1.25rem; 
+      font-weight:700; 
+      color:var(--black); 
+      text-decoration:none; 
+      letter-spacing:0.05em;
+      text-transform: uppercase;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .nav-logo:hover {
+      letter-spacing: 0.08em;
+    }
+    .nav-links{ 
+      display:flex; 
+      gap:2.5rem; 
+    }
+    .nav-links a{ 
+      font-family: var(--font-sans);
+      color:var(--gray-600); 
+      text-decoration:none; 
+      transition:all .2s cubic-bezier(0.4, 0, 0.2, 1); 
+      font-size:var(--text-sm); 
+      font-weight:500; 
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      position: relative;
+    }
+    .nav-links a::before {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .nav-links a:hover::before { 
+      width: 100%;
+    }
+    .nav-links a:hover{ 
+      color:var(--primary); 
+    }
+    .nav-links a.is-active{ 
+      color:var(--primary); 
+    }
+    .nav-links a.is-active::after{ 
+      content:''; 
+      position:absolute; 
+      left:0; 
+      right:0; 
+      bottom:-2px; 
+      height:2px; 
+      background:var(--primary); 
+    }
+    .nav a:focus-visible{ 
+      outline:2px solid var(--primary); 
+      outline-offset:4px; 
+    }
+
+    /* Skip link */
+    .skip-link{ position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden; }
+    .skip-link:focus{ left:1rem; top:1rem; width:auto; height:auto; background:var(--primary); color:white; padding:.5rem .75rem; border-radius:.5rem; z-index:1001; }
+
+    /* Hero Section with Bell Labs Grandeur */
+    .manifesto-hero{ 
+      margin-top:73px;
+      padding:var(--space-3xl) var(--space-xl); 
+      text-align:center; 
+      min-height:80vh; 
+      display:flex; 
+      flex-direction:column; 
+      justify-content:center; 
+      align-items:center;
+      position: relative;
+      background: linear-gradient(180deg, var(--white) 0%, var(--gray-50) 100%);
+      overflow: hidden;
+    }
+    
+    /* Hero Background Pattern - Bell Labs Window Grid */
+    .manifesto-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 40px,
+        rgba(0, 82, 224, 0.02) 40px,
+        rgba(0, 82, 224, 0.02) 41px
+      ),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 40px,
+        rgba(0, 82, 224, 0.02) 40px,
+        rgba(0, 82, 224, 0.02) 41px
+      );
+      opacity: 0.5;
+      animation: gridFloat 20s ease-in-out infinite;
+    }
+    
+    @keyframes gridFloat {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(-10px, -10px); }
+    }
+    
+    .manifesto-title{ 
+      font-family: var(--font-display);
+      font-size: var(--text-5xl); 
+      font-weight:300; 
+      color:var(--black); 
+      margin-bottom:var(--space-lg); 
+      letter-spacing:-0.02em;
+      line-height: 1.1;
+      max-width: 900px;
+      animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      z-index: 1;
+    }
+    
+    .manifesto-title strong {
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .manifesto-subtitle{ 
+      font-family: var(--font-body);
+      font-size: var(--text-lg); 
+      color:var(--gray-700); 
+      margin-bottom:var(--space-md);
+      font-style: italic;
+      animation: fadeInUp 0.8s 0.2s cubic-bezier(0.4, 0, 0.2, 1) both;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .manifesto-meta{ 
+      font-family: var(--font-sans);
+      color:var(--gray-500); 
+      font-size:var(--text-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      animation: fadeInUp 0.8s 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .manifesto-date{ 
+      color:var(--primary); 
+      margin-top:var(--space-sm); 
+      font-weight:600;
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      animation: fadeInUp 0.8s 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+      position: relative;
+      z-index: 1;
+    }
+    
+    /* Scroll Indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: bounce 2s infinite;
+      cursor: pointer;
+    }
+    
+    .scroll-indicator svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--gray-400);
+    }
+    
+    @keyframes fadeInUp {
+      from { 
+        opacity: 0; 
+        transform: translateY(20px);
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+      40% { transform: translateX(-50%) translateY(-10px); }
+      60% { transform: translateX(-50%) translateY(-5px); }
+    }
+
+    /* Content */
+    .manifesto-content{ max-width:900px; margin:0 auto; padding:2rem; }
+
+    /* TL;DR Card */
+    .tldr-card{ margin:2rem auto 3rem; padding:2rem; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; max-width:700px; }
+    .tldr-card h3{ color:var(--black); margin-bottom:1rem; font-size:1.2rem; font-weight:600; }
+    .tldr-card ul{ list-style:none; padding:0; }
+    .tldr-card li{ margin-bottom:.8rem; padding-left:1.5rem; position:relative; color:var(--gray-700); }
+    .tldr-card li:before{ content:"→"; position:absolute; left:0; color:var(--primary); font-weight:600; }
+
+    /* Quotes */
+    .epigraph{ margin:3rem auto; padding:2rem; background:var(--gray-50); border-left:3px solid var(--primary); border-radius:0; max-width:700px; }
+    .epigraph p{ font-size:1.05rem; font-style:italic; color:var(--gray-700); margin-bottom:1rem; }
+    .epigraph .author{ text-align:right; color:var(--gray-600); font-weight:500; font-size:.875rem; }
+
+    /* Sections */
+    .section{ margin:3rem 0; }
+    .section-title{ font-size:1.8rem; color:var(--black); margin-bottom:1.5rem; padding-bottom:.75rem; border-bottom:1px solid var(--gray-200); font-weight:700; }
+    .subsection-title{ font-size:1.25rem; color:var(--black); margin:1.5rem 0 1rem; font-weight:600; }
+
+    /* Prose */
+    .manifesto-content p{ margin-bottom:1.25rem; color:var(--gray-700); font-size:1rem; line-height:1.8; }
+    .lead-sentence{ font-size:1.1rem; font-weight:500; color:var(--black); margin-bottom:1.25rem; }
+    .transition{ font-style:italic; color:var(--gray-600); margin:2rem 0; text-align:center; }
+
+    /* Figures */
+    figure.figure{ margin:2rem 0; padding:1.5rem; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; display:flex; align-items:center; gap:1.25rem; transition:.2s ease; }
+    figure.figure:hover{ box-shadow:0 4px 12px rgba(0,0,0,0.08); transform:translateY(-2px); }
+    .figure img{ width:150px; height:150px; object-fit:cover; border-radius:8px; border:1px solid var(--gray-300); }
+    .figure figcaption h3{ color:var(--black); margin-bottom:.25rem; font-weight:600; }
+    .figure figcaption p{ color:var(--gray-600); }
+
+    /* Code */
+    .code-block{ background:var(--gray-900); border-radius:8px; padding:1.25rem; margin:1.5rem 0; overflow-x:auto; }
+    .code-block pre{ color:#10B981; font-family:var(--font-mono); font-size:.875rem; margin:0; }
+    .code-caption{ text-align:center; color:var(--gray-600); font-size:.875rem; margin-top:.5rem; font-style:italic; }
+
+    /* Lists */
+    .manifesto-content ul, .manifesto-content ol{ margin:1.25rem 0; padding-left:1.5rem; }
+    .manifesto-content li{ margin-bottom:.7rem; color:var(--gray-700); }
+
+    /* Divider */
+    .divider{ height:1px; background:var(--gray-200); margin:2.5rem auto; max-width:900px; }
+
+    /* Callout Box */
+    .callout-box{ margin:1.5rem 0; padding:1.25rem; background:var(--gray-50); border-left:3px solid var(--gray-400); border-radius:4px; }
+    .callout-box h4{ color:var(--gray-700); margin-bottom:.5rem; font-size:.95rem; font-weight:600; }
+    .callout-box p, .callout-box ul{ color:var(--gray-600); font-size:.9rem; }
+    .callout-box ul{ margin:.5rem 0; padding-left:1.25rem; }
+
+    /* Note Box */
+    .note-box{ margin:2rem 0; padding:1.5rem; background:var(--gray-50); border-left:3px solid var(--primary); border-radius:4px; }
+    .note-box h4{ color:var(--black); margin-bottom:.5rem; font-size:1rem; font-weight:600; }
+    .note-box p{ color:var(--gray-700); font-size:.95rem; }
+
+    /* CTA */
+    .cta-container{ display:flex; gap:1rem; margin:1.5rem 0; flex-wrap:wrap; justify-content:center; }
+    .cta{ padding:.7rem 1.25rem; font-size:.9rem; font-weight:600; border:none; border-radius:6px; cursor:pointer; transition:.2s ease; text-decoration:none; display:inline-block; }
+    .cta-primary{ background:var(--primary); color:#fff; }
+    .cta-primary:hover{ background:var(--primary-dark); transform:translateY(-1px); box-shadow:0 4px 12px rgba(0,82,224,.25); }
+    .cta-secondary{ background:transparent; color:var(--gray-700); border:1px solid var(--gray-300); }
+    .cta-secondary:hover{ border-color:var(--gray-400); background:var(--gray-50); }
+
+    /* Footer */
+    .footer{ padding:2.5rem 2rem; text-align:center; border-top:1px solid var(--gray-200); margin-top:3rem; background:var(--gray-50); }
+    .footer-links{ display:flex; gap:2rem; justify-content:center; margin-bottom:1rem; }
+    .footer-links a{ color:var(--gray-600); text-decoration:none; transition:color .2s ease; font-size:.875rem; font-weight:500; }
+    .footer-links a:hover{ color:var(--primary); }
+    .footer small{ color:var(--gray-600); display:block; margin-top:.5rem; }
+
+    /* Progress */
+    .scroll-progress{ position:fixed; top:0; left:0; height:3px; width:0%; background:linear-gradient(90deg,var(--primary),#00B8E6); z-index:9999; transition:width .1s linear; }
+
+    /* Footnote */
+    .footnote{ font-size:.85rem; color:var(--gray-600); margin-top:.5rem; }
+    .footnote a{ color:var(--primary); text-decoration:none; }
+    .footnote a:hover{ text-decoration:underline; }
+
+    @media (max-width:768px){
+      .manifesto-title{ font-size:2rem; }
+      .section-title{ font-size:1.6rem; }
+      figure.figure{ flex-direction:column; text-align:center; }
+      .nav-links{ display:none; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Grid Background -->
+  <div class="grid-background"></div>
+  
+  <div class="scroll-progress" aria-hidden="true"></div>
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <nav class="nav" role="navigation" aria-label="Primary">
+    <div class="nav-content">
+      <a href="/" class="nav-logo">SHANNON</a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/models.html">Models</a>
+        <a href="/results.html">Benchmarks</a>
+        <a href="/docs.html">API Docs</a>
+        <a href="/pricing.html">Pricing</a>
+        <a href="/manifesto.html" class="is-active" aria-current="page">Manifesto</a>
+        <a href="/faq.html">FAQ</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero manifesto-hero">
+    <div class="hero-background"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <h1 class="hero-title manifesto-title">An Information‑Theoretic Approach <span class="highlight">for the AI Era</span></h1>
+      <p class="hero-subtitle manifesto-subtitle">Compression reveals structure; NCD measures shared information content.</p>
+      <p class="manifesto-meta">Measured claims · Reproducible results · Complementary to ML</p>
+      <p class="manifesto-date">Updated September 2025</p>
+      <div class="shannon-portrait">
+        <img src="/photos/ClaudeShannon_MFO3807.jpg" alt="Claude Shannon" />
+        <p class="portrait-caption">Claude Shannon (1916-2001) · Father of Information Theory</p>
+      </div>
+    </div>
+  </header>
+
+  <main id="content" class="manifesto-content">
+
+    <section class="epigraph" aria-label="Epigraph">
+      <p>"The fundamental problem of communication is that of reproducing at one point either exactly or approximately a message selected at another point."</p>
+      <p class="author">—Claude Shannon, BSTJ 27(3), 1948, p. 379</p>
+    </section>
+
+    <!-- TL;DR Card -->
+    <div class="tldr-card">
+      <h3>TL;DR</h3>
+      <ul>
+        <li><strong>What Shannon is:</strong> A compression-based anomaly signal—fast, privacy-first, no training required.</li>
+        <li><strong>What it isn't:</strong> A replacement for deep learning or semantic understanding.</li>
+        <li><strong>Where it helps:</strong> Drift/outlier triage, similarity search, hybrid cost cuts with ΔRecall guardrails.</li>
+      </ul>
+    </div>
+
+    <p class="transition">If today's stacks excel at fitting patterns, our bottleneck is measuring structure.</p>
+
+    <!-- Section 1: Problem -->
+    <section class="section" aria-labelledby="problem">
+      <h2 id="problem" class="section-title">Problem: Pattern-Fitting vs. Structure</h2>
+      
+      <p class="lead-sentence">Modern AI improvises brilliantly—at growing cost and energy. Teams still need a ruler: a small, auditable measure of structure that works on day one.</p>
+
+      <p>Modern AI systems are astonishingly capable. They also cost hundreds of millions to train<sup class="footnote">[<a href="#energy-note">1</a>]</sup> and consume growing energy—IEA projects data-center electricity ~doubling by 2030, with AI driving half the increase. Shannon offers a complementary primitive: ten lines of code, zero training required.</p>
+
+      <p>The current AI paradigm excels at statistical pattern replication. But pattern-fitting and structure-measuring are different primitives. One improvises; the other adjudicates.</p>
+
+      <h3 class="subsection-title">Not Anti-AI, Just Orthogonal</h3>
+      <p>Shannon isn't anti-AI; it's orthogonal. If transformers improvise, Shannon adjudicates: a sturdy ruler for structure that scales with data, not parameters. Use it where a ruler belongs.</p>
+    </section>
+
+    <p class="transition">The ruler we use is older than transformers: compression.</p>
+
+    <!-- Section 2: The Primitive -->
+    <section class="section" aria-labelledby="primitive">
+      <h2 id="primitive" class="section-title">The Primitive: NCD in One Picture + 10 Lines</h2>
+      
+      <p class="lead-sentence">If two objects share structure, compressing them together saves space. That savings becomes a distance.</p>
+
+      <div class="code-block"><pre><code class="language-python">def ncd(a, b):
+    Ca = compress(a)
+    Cb = compress(b)
+    Cab = compress(a + b)  # Length-prefixed pair encoding
+    return (Cab - min(Ca, Cb)) / max(Ca, Cb)  # Cilibrasi–Vitányi 2005</code></pre></div>
+      <p class="code-caption">NCD (Cilibrasi & Vitányi, IEEE Trans. Info. Theory 2005): compressor-based, feature-free similarity metric. Values may exceed 1 slightly due to compressor artifacts.</p>
+
+      <figure class="figure">
+        <img src="photos/ClaudeShannon_MFO3807.jpg" alt="Claude Shannon" loading="lazy" />
+        <figcaption>
+          <h3>Claude Shannon</h3>
+          <p>Founded information theory in 1948, quantifying information as reduction in uncertainty.</p>
+        </figcaption>
+      </figure>
+
+      <figure class="figure">
+        <img src="photos/Andrej_Nikolajewitsch_Kolmogorov.jpg" alt="Andrey Kolmogorov" loading="lazy" />
+        <figcaption>
+          <h3>Andrey Kolmogorov</h3>
+          <p>Formalized algorithmic complexity: the length of the shortest program (on a fixed universal prefix Turing machine) that outputs the object and halts.</p>
+        </figcaption>
+      </figure>
+    </section>
+
+    <p class="transition">A primitive only matters if it performs when it counts.</p>
+
+    <!-- Section 3: Proof & Limits -->
+    <section class="section" aria-labelledby="proof">
+      <h2 id="proof" class="section-title">Proof & Limits: CIC-IDS Results + Scope</h2>
+      
+      <p class="lead-sentence">On standard datasets we match/beat unsupervised baselines with simple profiles. We also publish failure modes.</p>
+
+      <p>We validate on contemporary datasets (CIC-IDS-2017, CIC-IDS-2018) against standard unsupervised baselines (IsolationForest, OCSVM, LOF) using default configs. Key results from our <a href="datasets/eval_results.json">full evaluation</a>:</p>
+      
+      <ul>
+        <li><strong>CIC-IDS-2017 Wednesday:</strong> Shannon F1=0.837 vs Cosine F1=0.285 (2.9X better)</li>
+        <li><strong>KDD99 Real:</strong> Shannon F1=0.849 vs Cosine F1=0.764</li>
+        <li><strong>CIC-IDS-2018:</strong> Evaluation in progress, results forthcoming</li>
+        <li><strong>Hybrid Prefilter:</strong> Up to 98% cost reduction with ΔRecall ≤3% on select datasets</li>
+      </ul>
+
+      <div class="cta-container">
+        <a href="/results.html" class="cta cta-primary">See Full Results</a>
+      </div>
+
+      <h3 class="subsection-title">The Claim, Bounded</h3>
+      <p><strong>Claim:</strong> NCD is a practical, domain-agnostic signal for drift and anomaly triage.<br>
+      <strong>Not a claim:</strong> Replacement for deep learning or semantic understanding.</p>
+      
+      <h3 class="subsection-title">Known Limits</h3>
+      <ul>
+        <li>Compressor choice matters; we tune profiles conservatively</li>
+        <li>Short sequences blur the signal; we use windowing and smoothing</li>
+        <li>Cross‑modal similarity is exploratory; workload‑dependent</li>
+      </ul>
+
+      <h3 class="subsection-title">Failure Transparency</h3>
+      <p>We publish all results, including failures. The hybrid prefilter shows high ΔRecall (>40%) on some datasets like Wednesday workingHours and system_logs, indicating misalignment between the prefilter proxy and anomaly signal. Full failure analysis available in our <a href="datasets/eval_results.json">evaluation results</a>.</p>
+    </section>
+
+    <p class="transition">With a trustworthy signal, integration is straightforward.</p>
+
+    <!-- Section 4: Where It Fits -->
+    <section class="section" aria-labelledby="applications">
+      <h2 id="applications" class="section-title">Where It Fits: Hybrid ROI & Applications</h2>
+      
+      <p class="lead-sentence">Use NCD to gate obvious benign traffic and escalate the rest to ML—with published z-thresholds, pass rates, and ΔRecall budgets.</p>
+
+      <ul>
+        <li><strong>Anomaly triage:</strong> Surface drift and outliers rapidly, no labels required</li>
+        <li><strong>Similarity search:</strong> Rank neighbors by compression distance</li>
+        <li><strong>Privacy-preserving analysis:</strong> Minimal parsing; data stays local</li>
+        <li><strong>Hybrid prefilter:</strong> 98% cost reduction with configurable ΔRecall guardrails</li>
+      </ul>
+
+      <p>In production: gate obvious benign traffic cheaply, escalate anomalies to ML. Publish your thresholds and pass rates for auditability.</p>
+    </section>
+
+    <p class="transition">This wasn't abstract: it came from a concrete teaching problem and one strange question.</p>
+
+    <!-- Section 5: Story (Tight) -->
+    <section class="section" aria-labelledby="story">
+      <h2 id="story" class="section-title">Story: From "Is Math Alive?" to Marching Band</h2>
+      
+      <p class="lead-sentence">"Claude, super weird question—is math alive?" That curiosity, plus a marching-band trick, led to a ten-line distance that keeps surfacing structure in messy data.</p>
+
+      <p>The question pulled me into Kolmogorov complexity—the shortest program that reproduces an object. Meanwhile, teaching 200-person marching band had shown me something profound: naming patterns compresses complexity. When students couldn't handle "Bang Bang" (Jessie J with Ariana Grande & Nicki Minaj, July 2014), I named the parts—"Melody, you are Arianna; Rhythm, you are Thunder"—and suddenly they could carry the structure in working memory. <strong>Intelligence isn't accumulating facts; it's compression efficiency.</strong></p>
+
+      <div class="callout-box">
+        <h4>The Full Naming Moment</h4>
+        <ul>
+          <li>"Melody—you are now Arianna"</li>
+          <li>"Harmony—you are now Marcus"</li>
+          <li>"Countermelody—you are now Jessie"</li>
+          <li>"Rhythm—you are now Thunder"</li>
+        </ul>
+        <p>Names became compression algorithms for musical parts.</p>
+      </div>
+
+      <p>After 72 hours of weekend experimentation, those insights crystallized into NCD—a practical measure of shared structure via compression.</p>
+    </section>
+
+    <p class="transition">Tools are choices; values are constraints.</p>
+
+    <!-- Section 6: Principles & Governance -->
+    <section class="section" aria-labelledby="principles">
+      <h2 id="principles" class="section-title">Principles & Governance</h2>
+      
+      <p class="lead-sentence">Measured claims; privacy by default; reproducibility; complement—don't replace; law-aware guardrails.</p>
+
+      <ul>
+        <li><strong>Measured claims only:</strong> Show numbers with intervals and provenance</li>
+        <li><strong>Privacy by default:</strong> No training on customer data required</li>
+        <li><strong>Reproducible by design:</strong> Single‑command evaluations; pinned commits</li>
+        <li><strong>Complement, don't replace:</strong> Interop with the ML you already trust</li>
+        <li><strong>Law-aware:</strong> As a law student, I see our tools sprint while guardrails jog—Shannon provides Day 1 auditability</li>
+      </ul>
+    </section>
+
+    <p class="transition">If the primitive is small and open, how do we build a business?</p>
+
+    <!-- Section 7: Open & Business Model -->
+    <section class="section" aria-labelledby="business">
+      <h2 id="business" class="section-title">Open Source & Business Model</h2>
+      
+      <p class="lead-sentence">Open artifacts create the "Bell Labs hallway"; the product is integration, SLAs, and ΔRecall outcomes—not secrecy around a distance.</p>
+
+      <p>Jon Gertner's <em>The Idea Factory</em> captured how Bell Labs scaled ideas by removing friction between disciplines. Today, open artifacts—reproducible evals, compressors, configs—play that role. We commercialize through:</p>
+      
+      <ul>
+        <li>Integration expertise and operational excellence</li>
+        <li>ΔRecall budgets and pass-rate SLAs</li>
+        <li>Hybrid pipeline optimization</li>
+        <li>Enterprise support and custom profiles</li>
+      </ul>
+
+      <figure class="figure">
+        <img src="photos/900px-Bown.jpg" alt="Ralph Bown Sr. at Bell Labs" loading="lazy" />
+        <figcaption>
+          <h3>Ralph Bown Sr.</h3>
+          <p>My great-grandfather, Bell Labs Research Director, led the June 30, 1948 press conference publicly announcing the transistor (invented Dec 1947). Shannon honors that ethos: ship primitives that scale.</p>
+        </figcaption>
+      </figure>
+    </section>
+
+    <p class="transition">If a ruler helps, pick it up.</p>
+
+    <!-- Section 8: Call to Action -->
+    <section class="section" aria-labelledby="cta">
+      <h2 id="cta" class="section-title">Call to Action</h2>
+      
+      <p class="lead-sentence">Run the pipeline, inspect results, and decide where Shannon best complements your stack.</p>
+
+      <div class="cta-container">
+        <a href="https://github.com/hmbown/shannon-control-unit" class="cta cta-primary">Run It Now</a>
+        <a href="/docs.html" class="cta cta-secondary">View Documentation</a>
+        <a href="/docs.html" class="cta cta-secondary">Read Docs</a>
+        <a href="mailto:hunter@shannonlabs.dev" class="cta cta-secondary">Contact</a>
+      </div>
+    </section>
+
+    <section class="epigraph">
+      <p>"Compression isn't prophecy. It's a ruler. Use it where a ruler belongs."</p>
+      <p class="author">—Hunter Bown</p>
+    </section>
+
+    <!-- Footnotes -->
+    <div class="divider"></div>
+    <div id="energy-note" class="note-box">
+      <h4>[1] Model Training Costs & Energy</h4>
+      <p><strong>Disclosed costs (order of magnitude: tens to hundreds of millions):</strong><br>
+      • GPT-3 (2020): ~$4-5M compute estimate (Lambda Labs, Epoch AI)<br>
+      • GPT-4 (2023): >$100M per OpenAI CEO (Sam Altman at MIT)<br>
+      • Gemini 1.0 Ultra (2023): $191M compute estimate (Stanford AI Index 2024)<br>
+      • Claude 3.5/3.7 Sonnet (2024-25): "few tens of millions" (Anthropic CEO Dario Amodei)<br>
+      • GPT-5, Gemini 1.5/2.0: Costs undisclosed<br>
+      <em>Note: These are compute costs only, not full program costs including engineering, data, or failed runs.</em></p>
+      
+      <p><strong>Energy projection:</strong> IEA Energy & AI 2025: data-center electricity ~doubling to ~945 TWh by 2030; AI-accelerated servers drive ~50% of net increase.</p>
+      
+      <p><strong>Key sources:</strong> Shannon BSTJ 27(3) p.379; Cilibrasi & Vitányi IEEE Trans IT 2005; Stanford AI Index 2024; IEA Energy & AI 2025.<br>
+      <strong>Our data:</strong> <a href="datasets/eval_results.json">eval_results.json</a></p>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/results.html">Results</a>
+      <a href="/docs.html">Docs</a>
+      <a href="/faq.html">FAQ</a>
+      <a href="https://github.com/hmbown/shannon-control-unit">GitHub</a>
+      <a href="mailto:hunter@shannonlabs.dev">Contact</a>
+    </div>
+    <small>From the great‑grandson of Ralph Bown Sr., who helped introduce the transistor to the world. An information‑theoretic approach for the AI era.</small>
+  </footer>
+
+  <script>
+    // Scroll progress bar
+    const bar=document.querySelector('.scroll-progress');
+    document.addEventListener('scroll',()=>{
+      const h=document.documentElement; const sc=h.scrollTop; const max=h.scrollHeight-h.clientHeight; const pct=Math.max(0,Math.min(1,sc/max));
+      bar.style.width=(pct*100).toFixed(2)+'%';
+    });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html>

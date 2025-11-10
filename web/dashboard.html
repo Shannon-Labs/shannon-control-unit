@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shannon Dashboard - Cognitive Analytics</title>
+    <style>
+        :root {
+            --primary: #0066FF;
+            --dark: #0A0E27;
+            --darker: #060815;
+            --light: #E8F4FF;
+            --accent: #00D4FF;
+            --success: #00FF88;
+            --warning: #FFD700;
+            --danger: #FF4444;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0A0E27 0%, #1a1f3a 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            background: var(--darker);
+            border-right: 1px solid rgba(0, 212, 255, 0.2);
+            padding: 2rem 0;
+        }
+        
+        .sidebar-logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .nav-item {
+            display: block;
+            padding: 1rem 2rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            border-left-color: var(--accent);
+        }
+        
+        .nav-item.active {
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--accent);
+            border-left-color: var(--accent);
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .user-tier {
+            background: var(--accent);
+            color: var(--dark);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+        }
+        
+        .stat-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+        
+        .stat-change {
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+        
+        .stat-change.positive {
+            color: var(--success);
+        }
+        
+        .stat-change.negative {
+            color: var(--danger);
+        }
+        
+        /* Charts Section */
+        .charts-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .chart-container {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        
+        .chart-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        .chart-placeholder {
+            height: 300px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #anomaly-stream {
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Activity Log */
+        .activity-log {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        
+        .log-entry {
+            padding: 0.75rem;
+            border-left: 3px solid var(--accent);
+            background: rgba(0, 0, 0, 0.3);
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
+        }
+        
+        .log-entry.anomaly {
+            border-color: var(--warning);
+            background: rgba(255, 215, 0, 0.1);
+        }
+        
+        .log-entry.critical {
+            border-color: var(--danger);
+            background: rgba(255, 68, 68, 0.1);
+        }
+        
+        .log-time {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        /* API Key Section */
+        .api-key-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .api-key-display {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .api-key-input {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-family: monospace;
+        }
+        
+        .copy-button {
+            padding: 0.75rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-button:hover {
+            background: var(--accent);
+            transform: scale(1.05);
+        }
+        
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .action-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .action-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 102, 255, 0.5);
+        }
+        
+        .action-btn.secondary {
+            background: transparent;
+            border: 2px solid var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-logo">SHANNON</div>
+            <nav>
+                <a href="#overview" class="nav-item active">Overview</a>
+                <a href="#anomalies" class="nav-item">Anomaly Detection</a>
+                <a href="#laws" class="nav-item">Law Discovery</a>
+                <a href="#biomedical" class="nav-item">Biomedical</a>
+                <a href="#api" class="nav-item">API Keys</a>
+                <a href="#usage" class="nav-item">Usage & Billing</a>
+                <a href="#settings" class="nav-item">Settings</a>
+                <a href="index.html" class="nav-item">← Back to Site</a>
+            </nav>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h1>Dashboard</h1>
+                <div class="user-info">
+                    <span>user@example.com</span>
+                    <span class="user-tier">PROFESSIONAL</span>
+                    <button onclick="logout()" style="background: none; border: 1px solid var(--accent); color: var(--accent); padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">Logout</button>
+                </div>
+            </div>
+            
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Events Processed</div>
+                    <div class="stat-value">2.4M</div>
+                    <div class="stat-change positive">↑ 12% from yesterday</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Anomalies Detected</div>
+                    <div class="stat-value">47</div>
+                    <div class="stat-change negative">↑ 3 critical</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Average Latency</div>
+                    <div class="stat-value">0.8ms</div>
+                    <div class="stat-change positive">↓ 0.2ms improvement</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Compression Ratio</div>
+                    <div class="stat-value">27.3x</div>
+                    <div class="stat-change">Optimal</div>
+                </div>
+            </div>
+            
+            <!-- Charts Section -->
+            <div class="charts-section">
+                <div class="chart-container">
+                    <h3 class="chart-title">Real-Time Anomaly Stream</h3>
+                    <div class="chart-placeholder">
+                        <canvas id="anomaly-stream"></canvas>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <h3 class="chart-title">Detection Confidence</h3>
+                    <div style="text-align: center; padding: 4rem 0;">
+                        <div style="font-size: 4rem; font-weight: bold; color: var(--success);">99.7%</div>
+                        <div style="color: rgba(255, 255, 255, 0.7);">Correlation with Entropy</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Activity Log -->
+            <div class="activity-log">
+                <h3 class="chart-title">Recent Activity</h3>
+                <div class="log-entry">
+                    <div>Normal pattern detected in production API</div>
+                    <div class="log-time">2 minutes ago</div>
+                </div>
+                <div class="log-entry anomaly">
+                    <div>Unusual spike in database queries - investigating</div>
+                    <div class="log-time">15 minutes ago</div>
+                </div>
+                <div class="log-entry critical">
+                    <div>Critical: Potential DDoS pattern detected</div>
+                    <div class="log-time">47 minutes ago</div>
+                </div>
+                <div class="log-entry">
+                    <div>System baseline updated successfully</div>
+                    <div class="log-time">1 hour ago</div>
+                </div>
+            </div>
+            
+            <!-- API Key Section -->
+            <div class="api-key-section">
+                <h3 class="chart-title">Your API Key</h3>
+                <p style="color: rgba(255, 255, 255, 0.7); margin-top: 0.5rem;">Use this key to authenticate API requests</p>
+                <div class="api-key-display">
+                    <input type="text" class="api-key-input" value="sha_live_4e7f3a2b9c1d5e8f..." readonly id="apiKey">
+                    <button class="copy-button" onclick="copyApiKey()">Copy</button>
+                </div>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="action-btn" onclick="runTest()">Run Test Detection</button>
+                <button class="action-btn secondary" onclick="viewDocs()">View Documentation</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Animate the stream
+        const canvas = document.getElementById('anomaly-stream');
+        const ctx = canvas.getContext('2d');
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+        
+        let data = [];
+        for (let i = 0; i < 100; i++) {
+            data.push(50 + Math.sin(i * 0.1) * 20 + Math.random() * 5);
+        }
+        
+        function drawStream() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.strokeStyle = '#00D4FF';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            
+            data.forEach((value, index) => {
+                const x = (index / data.length) * canvas.width;
+                const y = canvas.height - (value / 100) * canvas.height;
+                
+                if (index === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            });
+            
+            ctx.stroke();
+            
+            // Add new data point
+            const newPoint = 50 + Math.sin(data.length * 0.1) * 20 + Math.random() * 5;
+            data.push(newPoint);
+            if (data.length > 100) data.shift();
+            
+            requestAnimationFrame(drawStream);
+        }
+        
+        drawStream();
+        
+        function copyApiKey() {
+            const input = document.getElementById('apiKey');
+            input.select();
+            document.execCommand('copy');
+            alert('API key copied to clipboard!');
+        }
+        
+        function runTest() {
+            alert('Running anomaly detection test...');
+        }
+        
+        function viewDocs() {
+            window.location.href = '/docs';
+        }
+        
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = '/';
+            }
+        }
+    </script>
+</body>
+</html>

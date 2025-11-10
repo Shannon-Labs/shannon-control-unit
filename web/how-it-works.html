@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Shannon Works - Understanding vs Memorization</title>
+    <meta name="description" content="Learn how Shannon's MDL approach creates smaller, smarter language models that understand patterns instead of memorizing data.">
+    
+    <style>
+        :root {
+            --primary: #0052E0;
+            --primary-dark: #003eb0;
+            --secondary: #00D4AA;
+            --black: #000000;
+            --white: #FFFFFF;
+            --gray-100: #F7F8FA;
+            --gray-200: #E8ECF2;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-800: #1F2937;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+        }
+
+        nav {
+            background: var(--white);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--gray-200);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--black);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--gray-600);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--gray-600);
+            margin-bottom: 3rem;
+            font-weight: 400;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin: 3rem 0;
+        }
+
+        .comparison-card {
+            padding: 2rem;
+            border-radius: 12px;
+            border: 2px solid var(--gray-200);
+            background: var(--gray-100);
+        }
+
+        .comparison-card.highlight {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(0,82,224,0.05) 0%, rgba(0,212,170,0.05) 100%);
+        }
+
+        .comparison-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .comparison-card.highlight .comparison-title {
+            color: var(--primary);
+        }
+
+        .analogy-section {
+            background: var(--gray-100);
+            padding: 3rem;
+            border-radius: 16px;
+            margin: 3rem 0;
+        }
+
+        .analogy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .analogy-box {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+        }
+
+        .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .code-comparison {
+            background: var(--gray-800);
+            color: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .code-block {
+            margin: 1rem 0;
+        }
+
+        .code-label {
+            color: var(--success);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .result-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--gray-100);
+            border-radius: 12px;
+        }
+
+        .result-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: 3rem;
+            border-radius: 16px;
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .btn-white {
+            background: var(--white);
+            color: var(--primary);
+        }
+
+        .btn-white:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--white);
+            color: var(--white);
+        }
+
+        .btn-outline:hover {
+            background: var(--white);
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .comparison-grid,
+            .analogy-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">Shannon</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="how-it-works.html">How It Works</a>
+                <a href="results.html">Results</a>
+                <a href="docs.html">Docs</a>
+                <a href="https://github.com/hmbown/shannon-control-unit" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Understanding vs Memorization</h1>
+        <p class="subtitle">The fundamental difference in how Shannon trains language models</p>
+
+        <div class="comparison-grid">
+            <div class="comparison-card">
+                <h3 class="comparison-title">Standard LLMs</h3>
+                <p><strong>Optimize for:</strong> Prediction accuracy only</p>
+                <p><strong>Loss function:</strong> Cross-entropy (how wrong was I?)</p>
+                <p><strong>Result:</strong> Models that memorize patterns</p>
+                <p><strong>Size trend:</strong> Bigger is always better</p>
+                <p><strong>Parameters:</strong> 175B → 1.7T → ???</p>
+            </div>
+            <div class="comparison-card highlight">
+                <h3 class="comparison-title">Shannon</h3>
+                <p><strong>Optimize for:</strong> Total description length</p>
+                <p><strong>Loss function:</strong> Data + Model complexity</p>
+                <p><strong>Result:</strong> Models that understand principles</p>
+                <p><strong>Size trend:</strong> Smaller, smarter models</p>
+                <p><strong>Philosophy:</strong> Compression = Understanding</p>
+            </div>
+        </div>
+
+        <div class="analogy-section">
+            <h2>The Simple Analogy</h2>
+            <div class="analogy-grid">
+                <div class="analogy-box">
+                    <div class="icon">📚</div>
+                    <h3>The Memorizing Student</h3>
+                    <p>Standard LLMs are like students who memorize the textbook word-for-word. They can recite any page perfectly, but ask them to explain the concept differently? They struggle.</p>
+                </div>
+                <div class="analogy-box">
+                    <div class="icon">🧑‍🏫</div>
+                    <h3>The Understanding Teacher</h3>
+                    <p>Shannon models are like teachers who truly understand. They compress knowledge into principles. They can explain thermodynamics with a few equations instead of memorizing every example.</p>
+                </div>
+            </div>
+        </div>
+
+        <h2>The Code Difference</h2>
+        <div class="code-comparison">
+            <div class="code-block">
+                <div class="code-label"># Standard LLM Training</div>
+                <pre>loss = cross_entropy(predictions, labels)  # Just prediction error
+loss.backward()</pre>
+            </div>
+            <div class="code-block">
+                <div class="code-label"># Shannon Training</div>
+                <pre>data_bits = cross_entropy(predictions, labels)  # Prediction error
+param_bits = parameter_complexity(model)        # Model complexity
+loss = data_bits + λ * param_bits              # Total description length
+loss.backward()</pre>
+            </div>
+        </div>
+        <p style="text-align: center; color: var(--gray-600); margin-top: 1rem;">
+            That <code>λ * param_bits</code> term changes everything. It's the "price" of complexity.
+        </p>
+
+        <h2 style="margin-top: 3rem;">Why This Matters</h2>
+        <div class="results-grid">
+            <div class="result-card">
+                <div class="result-number">92%</div>
+                <p><strong>Win Rate in Security</strong></p>
+                <p>Better anomaly detection by understanding "normal"</p>
+            </div>
+            <div class="result-card">
+                <div class="result-number">98%</div>
+                <p><strong>Cost Reduction</strong></p>
+                <p>Smaller models with same performance</p>
+            </div>
+            <div class="result-card">
+                <div class="result-number">10x</div>
+                <p><strong>Better Compression</strong></p>
+                <p>Understanding means finding simpler rules</p>
+            </div>
+        </div>
+
+        <h2 style="margin-top: 3rem;">The MDL Principle</h2>
+        <p><strong>Minimum Description Length (MDL)</strong> says the best model is the one that provides the shortest description of the data.</p>
+        
+        <p style="margin-top: 1rem;">Think of it like file compression:</p>
+        <ul style="margin: 1rem 0; padding-left: 2rem;">
+            <li>A random file can't be compressed (no patterns)</li>
+            <li>A file of all zeros compresses to tiny size (simple pattern)</li>
+            <li><strong>Good models find compressible patterns in data</strong></li>
+        </ul>
+
+        <p>Shannon implements this by making the model "pay" in bits:</p>
+        <ul style="margin: 1rem 0; padding-left: 2rem;">
+            <li>Bits to store the model weights (parameter cost)</li>
+            <li>Bits to store the prediction errors (data cost)</li>
+            <li><strong>Total = Parameter Bits + Data Bits</strong> ← Minimize this!</li>
+        </ul>
+
+        <div class="cta-section">
+            <h2>Ready to Try Smarter Models?</h2>
+            <p>Experience the difference between memorization and understanding</p>
+            <div class="cta-buttons">
+                <a href="https://huggingface.co/hunterbown/shannon" class="btn btn-white">Try on Hugging Face</a>
+                <a href="results.html" class="btn btn-outline">View Results</a>
+            </div>
+        </div>
+
+        <h2 style="margin-top: 3rem;">The Philosophy</h2>
+        <div style="background: var(--gray-100); padding: 2rem; border-radius: 12px; margin-top: 1rem;">
+            <p style="font-size: 1.2rem; font-style: italic; text-align: center;">
+                "Intelligence IS compression. Understanding means finding the simple rules behind complex data."
+            </p>
+            <p style="text-align: center; margin-top: 1rem; color: var(--gray-600);">
+                Named after Claude Shannon, who proved that information, compression, and communication are fundamentally the same thing.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
