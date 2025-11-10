@@ -136,6 +136,12 @@ class Granite1BSCUConfig:
     enable_lambda_tracking: bool = True
     enable_control_frequency_analysis: bool = True
 
+    # CUDA-specific optimizations
+    use_torch_compile: bool = False  # Enable torch.compile for performance
+    use_4bit_quantization: bool = False  # Enable 4-bit quantization
+    use_streaming: bool = False  # Use streaming for large datasets
+    preprocessing_num_workers: int = 4  # Workers for data preprocessing
+
 
 @dataclass
 class Granite1BModelCardConfig:
