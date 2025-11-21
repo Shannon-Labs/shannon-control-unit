@@ -63,6 +63,8 @@ runs/
 data/*.txt
 !data/val.txt
 data/slimpajama_subset.jsonl
+data/*.jsonl
+data/*.json
 
 # Model output directories
 *output*/
@@ -107,6 +109,18 @@ package-lock.json
 # Vercel
 .vercel
 
-# Local model directories
+# Local model directories - models should be on HuggingFace
 Qwen3-1.7B-Base/
-adapters/
+models/
+*.safetensors
+*.bin
+
+# Keep adapter configs but ignore model files
+adapters/*/adapter_model.safetensors
+adapters/*/model.safetensors
+adapters/*/pytorch_model.bin
+
+# Large tokenizer files (use HuggingFace instead)
+*/tokenizer.json
+*/merges.txt
+*/vocab.json
