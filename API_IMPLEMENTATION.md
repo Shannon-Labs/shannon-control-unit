@@ -149,6 +149,7 @@ class JobMetadata(BaseModel):
     error_message: Optional[str] = None
     current_phase: Optional[TrainingPhase] = None
     progress_percent: float = 0.0
+    adapter_path: Optional[str] = None
 
 class AdapterArtifact(BaseModel):
     """Trained adapter metadata."""
@@ -656,6 +657,7 @@ class JobQueueManager:
                 base_model TEXT NOT NULL,
                 config_json TEXT NOT NULL,
                 status TEXT NOT NULL,
+                progress_percent REAL DEFAULT 0.0,
                 priority INTEGER DEFAULT 0,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 started_at TIMESTAMP,
@@ -763,7 +765,8 @@ class JobQueueManager:
                 job_id, 
                 JobStatus.COMPLETED, 
                 completed_at=datetime.now(),
-                adapter_path=str(artifact.local_path)
+                adapter_path=str(artifact.local_path),
+                progress_percent=100.0
             )
             
             self.logger.info(f"Job {job_id} completed successfully")
@@ -792,7 +795,7 @@ class JobQueueManager:
         if not row:
             return None
         
-        (job_id, base_model, config_json, status, priority, created_at, 
+        (job_id, base_model, config_json, status, progress_percent, priority, created_at, 
          started_at, completed_at, error_message, adapter_path) = row
         
         config = TrainingConfig(**json.loads(config_json))
@@ -802,11 +805,13 @@ class JobQueueManager:
             base_model=base_model,
             config=config,
             status=JobStatus(status),
+            progress_percent=float(progress_percent or 0.0),
             priority=priority,
             created_at=datetime.fromisoformat(created_at),
             started_at=datetime.fromisoformat(started_at) if started_at else None,
             completed_at=datetime.fromisoformat(completed_at) if completed_at else None,
-            error_message=error_message
+            error_message=error_message,
+            adapter_path=adapter_path
         )
     
     def list_jobs(self, status: Optional[JobStatus] = None, limit: int = 50) -> list:
@@ -898,11 +903,25 @@ class JobQueueManager:
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         
-        cursor.execute("""
-            UPDATE jobs 
-            SET progress_percent = MIN(100.0, (? / 1000.0) * 100)
-            WHERE job_id = ?
-        """, (step, job_id))
+        # Derive target steps from stored config (fallback to 1000)
+        cursor.execute("SELECT config_json FROM jobs WHERE job_id = ?", (job_id,))
+        row = cursor.fetchone()
+
+        target_steps = 1000
+        if row:
+            try:
+                stored_config = json.loads(row[0])
+                if stored_config.get("steps"):
+                    target_steps = max(1, int(stored_config["steps"]))
+            except Exception:
+                # Do not block progress updates on malformed config
+                target_steps = 1000
+        
+        progress = min(100.0, (step / target_steps) * 100.0)
+        cursor.execute(
+            "UPDATE jobs SET progress_percent = ? WHERE job_id = ?",
+            (progress, job_id)
+        )
         
         conn.commit()
         conn.close()
@@ -932,10 +951,11 @@ class JobQueueManager:
 
 ```python
 from fastapi import FastAPI, HTTPException, BackgroundTasks
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
 from pydantic import BaseModel
 from typing import Optional, List
 from datetime import datetime
+from pathlib import Path
 import uvicorn
 
 from .types import TrainingConfig, JobStatus
@@ -978,6 +998,7 @@ class JobStatusResponse(BaseModel):
     started_at: Optional[datetime] = None
     completed_at: Optional[datetime] = None
     progress_percent: float
+    adapter_path: Optional[str] = None
     error_message: Optional[str] = None
 
 
@@ -1046,8 +1067,46 @@ async def get_job_status(job_id: str):
         created_at=status.created_at,
         started_at=status.started_at,
         completed_at=status.completed_at,
-        progress_percent=0.0,  # TODO: implement progress tracking
+        progress_percent=status.progress_percent,
+        adapter_path=status.adapter_path,
         error_message=status.error_message
+    )
+
+
+@app.get("/jobs/{job_id}/adapter")
+async def download_adapter(job_id: str, background_tasks: BackgroundTasks):
+    """Download the trained adapter artifact as a zip file."""
+    
+    if not queue_manager:
+        raise HTTPException(status_code=503, detail="Service not ready")
+    
+    status = queue_manager.get_job_status(job_id)
+    if not status or not status.adapter_path:
+        raise HTTPException(status_code=404, detail=f"Adapter for job {job_id} not found")
+    
+    adapter_path = Path(status.adapter_path)
+    if not adapter_path.exists():
+        raise HTTPException(status_code=404, detail="Adapter path is missing on disk")
+    
+    # If directory, stream zipped archive on the fly
+    if adapter_path.is_dir():
+        import tempfile
+        import shutil
+        tmp_dir = Path(tempfile.mkdtemp())
+        archive_base = tmp_dir / f"{job_id}_adapter"
+        archive_file = shutil.make_archive(str(archive_base), "zip", adapter_path)
+        archive_path = Path(archive_file)
+        filename = f"{job_id}_adapter.zip"
+        # Cleanup temp archive after response is sent
+        background_tasks.add_task(lambda p=tmp_dir: shutil.rmtree(p, ignore_errors=True))
+    else:
+        archive_path = adapter_path
+        filename = adapter_path.name
+    
+    return FileResponse(
+        path=str(archive_path),
+        filename=filename,
+        media_type="application/octet-stream"
     )
 
 
@@ -1739,15 +1798,30 @@ class SCUClient:
     def get_adapter(self, job_id: str, output_dir: Path):
         """Download trained adapter to local directory."""
         
-        # TODO: Implement adapter download
-        # For now, adapters are saved locally in job output dir
-        status = self.get_job_status(job_id)
-        adapter_path = status.get("adapter_path")
+        url = f"{self.api_url}/jobs/{job_id}/adapter"
+        output_dir = Path(output_dir)
+        output_dir.mkdir(parents=True, exist_ok=True)
         
-        if not adapter_path:
-            raise ValueError(f"No adapter found for job {job_id}")
+        response = self.session.get(url, stream=True)
+        if response.status_code == 404:
+            raise ValueError(f"No adapter available for job {job_id}")
+        response.raise_for_status()
         
-        return Path(adapter_path)
+        # Derive filename from content-disposition or fall back to job id
+        filename = None
+        content_disp = response.headers.get("content-disposition", "")
+        if "filename=" in content_disp:
+            filename = content_disp.split("filename=")[-1].strip().strip('"')
+        if not filename:
+            filename = f"{job_id}_adapter.zip"
+        
+        adapter_file = output_dir / filename
+        with open(adapter_file, "wb") as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                if chunk:
+                    f.write(chunk)
+        
+        return adapter_file
     
     def health_check(self) -> bool:
         """Check if API service is healthy."""
