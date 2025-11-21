@@ -26,7 +26,7 @@ inference: false
 
 **Abstract**
 
-Shannon Control Unit (SCU) applies closed-loop control to large-scale language model training. Treating regularization strength ($\lambda$) as an actuator and the Minimum Description Length (MDL) information ratio ($S$) as the controlled variable, SCU uses a proportional–integral (PI) controller to maintain a target ($S^*$) throughout optimization. This feedback stabilizes model complexity without manual hyperparameter sweeps. On Llama 3.2 (1B, 3B) fine-tuning, SCU improves bits-per-token by 6–12% over tuned fixed-$\lambda$ baselines while preserving training stability.
+Shannon Control Unit (SCU) applies closed-loop control to large-scale language model training. Treating regularization strength ($\lambda$) as an actuator and the Minimum Description Length (MDL) information ratio ($S$) as the controlled variable, SCU uses a proportional-integral (PI) controller to maintain a target ($S^*$) throughout optimization. This feedback stabilizes model complexity without manual hyperparameter sweeps. On Llama 3.2 (1B, 3B) fine-tuning, SCU improves bits-per-token by 6-12% over tuned fixed-$\lambda$ baselines while preserving training stability.
 
 ---
 
