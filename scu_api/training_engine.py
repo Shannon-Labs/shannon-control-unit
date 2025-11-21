@@ -244,18 +244,10 @@ class TrainingEngine:
                 tokenizer.pad_token = tokenizer.eos_token
             FastLanguageModel.for_training(
                 model,
-                r=16,
-                lora_alpha=32,
-                lora_dropout=0.05,
-                target_modules=[
-                    "q_proj",
-                    "k_proj",
-                    "v_proj",
-                    "o_proj",
-                    "gate_proj",
-                    "up_proj",
-                    "down_proj",
-                ],
+                r=self.config.lora_r,
+                lora_alpha=self.config.lora_alpha,
+                lora_dropout=self.config.lora_dropout,
+                target_modules=self.config.lora_target_modules,
             )
         else:
             quantization_config = None
@@ -286,18 +278,10 @@ class TrainingEngine:
 
             peft_config = LoraConfig(
                 task_type=TaskType.CAUSAL_LM,
-                r=16,
-                lora_alpha=32,
-                lora_dropout=0.05,
-                target_modules=[
-                    "q_proj",
-                    "v_proj",
-                    "k_proj",
-                    "o_proj",
-                    "gate_proj",
-                    "up_proj",
-                    "down_proj",
-                ],
+                r=self.config.lora_r,
+                lora_alpha=self.config.lora_alpha,
+                lora_dropout=self.config.lora_dropout,
+                target_modules=self.config.lora_target_modules,
                 inference_mode=False,
             )
 

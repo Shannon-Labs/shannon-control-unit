@@ -5,6 +5,11 @@ This module exposes the FastAPI app at `scu_api.server.app` and a thin client
 """
 
 from scu_api.config import TrainingConfig  # noqa: F401
-from scu_api.training_engine import TrainingEngine  # noqa: F401
+from scu_api.client.sync_client import SCUClient  # noqa: F401
 
-__all__ = ["TrainingConfig", "TrainingEngine"]
+try:  # Avoid forcing heavy deps (torch/peft) on lightweight clients
+    from scu_api.training_engine import TrainingEngine  # type: ignore  # noqa: F401
+except Exception:  # pragma: no cover
+    TrainingEngine = None  # type: ignore
+
+__all__ = ["TrainingConfig", "TrainingEngine", "SCUClient"]

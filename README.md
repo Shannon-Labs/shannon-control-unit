@@ -83,6 +83,30 @@ model = PeftModel.from_pretrained(base, "hunterbown/shannon-control-unit", subfo
 
 For reproduction scripts and training details, see [`examples/`](./examples/) and [`scripts/`](./scripts/).
 
+### Training API + CLI (MVP)
+```bash
+# Install with server + CLI extras
+pip install -e .[dev,server]
+
+# Launch API server (FastAPI + SQLite-backed job queue)
+python -m scu_api.server
+
+# Health + auto-config
+scu health
+scu auto-config --model-id gpt2 --train-data data/train.txt
+
+# Submit training via CLI (wait and download artifacts)
+scu train --base-model sshleifer/tiny-gpt2 --train-data data/train.txt --steps 5 --wait
+scu status <job-id>
+scu jobs
+scu download <job-id> --output adapters/
+```
+
+Notes:
+- The job queue persists to SQLite (`jobs.db`) and exposes `/jobs`, `/jobs/{id}`, and `/jobs/{id}/adapter`.
+- CLI auto-config merges suggested settings with your overrides; defaults map to `TrainingConfig`.
+- `SCUClient` is exported at package root for SDK usage if you prefer Python over the CLI.
+
 ## 7. Citation
 
 If you use SCU in your research, please cite:
