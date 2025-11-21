@@ -1,0 +1,52 @@
+I need to pivot the content strategy for shannonlabs.dev. We are building the "Home of Sovereign AI."
+
+The design must remain "Bell Labs Brutalist" (High signal, monochromatic, academic), but the content needs to be updated with specific technical breakthroughs and the "Sovereign" thesis.
+
+Here is the new content map. Please implement this structure:
+
+1. THE HERO SECTION: "THE TRANSISTOR MOMENT"
+   - Subhead: "Independent Discovery of Entropy Stabilization (SCU)."
+   - The Timeline Visual (Keep this): Sept 02 (My Patent) vs Nov 19 (Tencent EntroPIC).
+   - Add a Badge/Tag: "Status: Operating / Validated."
+
+2. THE SYSTEM ARCHITECTURE (The 4 Pillars of Sovereignty):
+   - Use a grid layout. Each card represents a biological function of the Sovereign AI.
+
+   [Card 1: THE BODY - SCU]
+   - "Shannon Control Unit"
+   - Tech: Closed-loop PI Control for Entropy Stabilization.
+   - Insight: "Static schedules are vacuum tubes. This is the transistor."
+   - Validation: "Prov. Patent 63/868,930."
+
+   [Card 2: THE MIND - HEGELION]
+   - "Dialectical Reasoning Engine"
+   - Tech: Recursive Thesis -> Antithesis -> Synthesis.
+   - Insight: "Moving beyond next-token prediction to structural reasoning."
+
+   [Card 3: THE SENSES - DRIFTLOCK]
+   - "Compression-Based Anomaly Detection"
+   - Tech: Normalized Compression Distance (NCD) without training data.
+   - Insight: "Detecting drift to understand the outlier, not just quash it."
+
+   [Card 4: THE VOICE - DRIFTLOCK CHOIR] (***UPDATED SPECS***)
+   - "Chronometric Interferometry"
+   - Tech: Wireless timing synchronization via 'Missing Fundamental' harmonic tuning.
+   - Performance: ~90 Femtosecond Precision (Fiber speeds, wirelessly).
+   - Legacy: "Advancing Ralph Bown's 'System for Transmitting Intelligence' (Bell Labs)."
+
+3. THE MANIFESTO SECTION: "CODIFYING SOVEREIGNTY"
+   - Use a serif font (like a legal filing).
+   - Text:
+     "We are approaching the convergence of International Law and Control Theory.
+     In law school, we study the 'Reasonable Person Standard.' But as we march toward AGI, the legal definition of 'Reasonable' will not be written in court rulings, but in weight updates.
+     We are building the architecture for Sovereign AI: Entities that are self-stabilizing (SCU), self-reasoning (Hegelion), and self-synchronizing (Choir).
+     I am an anomaly building an anomaly detector. This is an open invitation to the future."
+
+4. FOOTER:
+   - "Shannon Labs: The Anomaly Detector."
+   - Links: GitHub, Twitter, LinkedIn.
+   - "Est. 2025. Dallas, TX."
+
+DESIGN NOTES:
+- The "Choir" section needs to look dangerous. 90 femtoseconds is nearly light-speed sync. Make that metric stand out.
+- Keep the vibe purely "Research Lab." No marketing fluff.

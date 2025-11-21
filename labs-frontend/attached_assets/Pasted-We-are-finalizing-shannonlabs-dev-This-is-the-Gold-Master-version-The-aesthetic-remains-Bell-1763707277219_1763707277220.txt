@@ -1,0 +1,91 @@
+We are finalizing shannonlabs.dev. This is the "Gold Master" version.
+
+
+
+The aesthetic remains "Bell Labs Brutalist" (High signal, academic, monochromatic), but we need to elevate the narrative to honor the founder's legacy.
+
+
+
+CORE CHANGE:
+
+This is no longer just a personal site. It is the digital home of "Shannon Labs," built on the principles of Ralph Bown (Director of Research, Bell Labs, 1952).
+
+
+
+STRUCTURE & CONTENT UPDATES:
+
+
+
+1. HERO SECTION: "THE ARCHITECTURE OF SOVEREIGN AI"
+
+   - Headline: SHANNON LABS.
+
+   - Subhead: "The Architecture of Sovereign AI."
+
+   - Metadata line: "Est. 2025 | Dallas, TX | Operating under the Bown Principles."
+
+
+
+2. NEW SECTION: "THE INSTITUTIONAL DNA" (The North Star)
+
+   - Place this immediately after the Hero.
+
+   - Use the specific quote from Ralph Bown's 1952 speech ("Vitality of a Research Institution"):
+
+     > "The vitality of a research organization is only a composite of the spirit of the people in it... It is the uncovering of new knowledge or the achieving of new understandings."
+
+     > — Ralph Bown, Director of Research, Bell Labs (1952).
+
+   - Context: "Continuing the legacy of transmitting intelligence from 1948 to 2025."
+
+
+
+3. THE SYSTEM GRID (The 4 Pillars):
+
+   - Keep the Grid layout, but update the "Driftlock Choir" card specifically:
+
+   - [Card 4: DRIFTLOCK CHOIR]
+
+     - Title: DRIFTLOCK CHOIR
+
+     - Subtitle: "Chronometric Interferometry"
+
+     - Text: "2025 Extension of Ralph Bown’s 1948 Patent for 'Transmitting Intelligence.' Solving 6G synchronization with ~90fs precision."
+
+     - Action: Link to the GitHub Repo.
+
+
+
+4. THE MANIFESTO: "THE RENAISSANCE PROTOCOL"
+
+   - Title: "THE RENAISSANCE PROTOCOL"
+
+   - Text:
+
+     "I am building the 'Patent-Attorney-Inventor-Musician' profile—a Renaissance approach for the AGI era.
+
+     I hold an MBA and am currently informing the law as a 2L, but the ideas are moving faster than the semester.
+
+     I have three commercially viable software architectures (SCU, Driftlock, Hegelion) and one massive hardware research thesis (Choir).
+
+     This is not a pivot; it is an evolution. I am building the lab that the 'Inventor' leg of the stool requires.
+
+     The ideas aren't stopping, and neither am I."
+
+
+
+5. FOOTER:
+
+   - "Shannon Labs."
+
+
+
+   - Links: GitHub, Twitter, LinkedIn.
+
+
+
+DESIGN NOTES:
+
+- Remove "JD Candidate" from the main header/hero. It diminishes the "Research Lab" vibe. Keep it in the Manifesto text only.
+
+- Ensure the typography for the Ralph Bown quote feels historical yet timeless (Serif, italicized).

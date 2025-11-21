@@ -14,8 +14,8 @@ jobs:
           test -f notebooks/SCU_Demo.ipynb
       - name: Check figures exist
         run: |
-          test -f web/images/s_curve.png
-          test -f web/images/lambda_curve.png
+          test -f assets/figures/s_curve.png
+          test -f assets/figures/lambda_curve.png
       - name: Verify trainer CSV header contract
         run: |
           grep -F "['step', 'data_bpt', 'param_bpt', 'total_bpt', 'S', 'lambda', 'I', 'wall_time_s']" scripts/train_scu.py

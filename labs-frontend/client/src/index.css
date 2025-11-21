@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-serif: 'EB Garamond', serif;
+
+  --color-background: #F5F5F0;
+  --color-foreground: #0A0A0A;
+  
+  --color-border: #0A0A0A;
+  --color-input: #0A0A0A;
+  --color-ring: #0A0A0A;
+  
+  --color-primary: #0A0A0A;
+  --color-primary-foreground: #F5F5F0;
+  
+  --color-secondary: #ffffff;
+  --color-secondary-foreground: #000000;
+  
+  --color-muted: #ffffff;
+  --color-muted-foreground: #000000;
+  
+  --color-accent: #000000;
+  --color-accent-foreground: #ffffff;
+  
+  --color-destructive: #000000;
+  --color-destructive-foreground: #ffffff;
+
+  --radius: 0px;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply font-serif antialiased bg-background text-foreground selection:bg-black selection:text-white;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-sans uppercase tracking-wider;
+  }
+}
+
+@layer utilities {
+  .font-mono-tight {
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: -0.02em;
+  }
+  
+  /* Brutalist Hover Effect */
+  .hover-invert {
+    @apply transition-none duration-0;
+  }
+  .hover-invert:hover {
+    @apply bg-black text-white;
+  }
+  
+  /* Step Animation Utility - mimicking "zero smooth ease-in-out" */
+  .animate-step {
+    animation-timing-function: steps(1, end);
+  }
+
+  /* Print adjustments */
+  @media print {
+    body {
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+    .no-print {
+      display: none;
+    }
+  }
+}

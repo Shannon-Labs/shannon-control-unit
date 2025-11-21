@@ -1,0 +1,65 @@
+We are building the final "Gold Master" version of shannonlabs.dev.
+
+DESIGN DIRECTION: "THE NEW BELL LABS"
+- Aesthetic: Stark, academic, institutional. High contrast (Black/White).
+- Typography: Use a distinct Serif (like 'Times New Roman' or 'Playfair Display') for the historical quotes and headers to evoke the 1950s Bell Labs era. Use Monospace for the technical specs.
+- Layout: Remove any confusing "[Q1]" tags. Use clean lines and borders.
+
+SECTION 1: HERO - "THE ARCHITECTURE"
+- Headline (Massive Serif): SHANNON LABS
+- Subhead (Monospace): THE ARCHITECTURE OF SOVEREIGN AI.
+- Metadata: "Est. 2025 | Dallas, TX | Status: Operating"
+- (Note: Do NOT put "JD Candidate" here. This is the Institution's face).
+
+SECTION 2: THE NORTH STAR (Ralph Bown Legacy)
+- Design this block to look like an archival document or a plaque.
+- Quote: "The vitality of a research organization is only a composite of the spirit of the people in it... It is the uncovering of new knowledge or the achieving of new understandings."
+- Attribution: — Ralph Bown, Director of Research, Bell Labs (1952).
+- Context Line: "Continuing the legacy of transmitting intelligence from 1948 to 2025."
+
+SECTION 3: THE SYSTEM GRID (The 4 Pillars)
+- Display as a 2x2 Grid. Each card must be clickable to its repo.
+- Use these EXACT links and copy:
+
+   [Card 1: THE BODY]
+   - Title: SHANNON CONTROL UNIT
+   - Link: https://github.com/Shannon-Labs/shannon-control-unit
+   - Text: "Entropy Stabilization via Closed-Loop PI Control. Validated at 1B/3B scales. Priority Date: Sept 02, 2025."
+
+   [Card 2: THE MIND]
+   - Title: HEGELION
+   - Link: https://github.com/Hmbown/Hegelion
+   - Text: "Dialectical Reasoning Engine. Recursive Thesis → Antithesis → Synthesis. Structuring thought beyond prediction."
+
+   [Card 3: THE SENSES]
+   - Title: DRIFTLOCK
+   - Link: https://driftlock.net
+   - Text: "Compression-Based Anomaly Detection. Deterministic engine using entropy deltas to understand data drift without training."
+
+   [Card 4: THE VOICE]
+   - Title: DRIFTLOCK CHOIR
+   - Link: https://github.com/Hmbown/DRIFTLOCKCHOIR
+   - Text: "Chronometric Interferometry. 2025 Extension of Ralph Bown’s 1948 Patent. Wireless sync at ~90fs precision. 
+   - Current Objective: Bench validation of the hardware layer at scale (Target: Fort Mason)."
+
+SECTION 4: THE MANIFESTO - "THE RENAISSANCE PROTOCOL"
+- Design this to read like a letter from the founder.
+- Content:
+  "I am building the 'Patent-Attorney-Inventor-Musician' profile—a Renaissance approach for the AGI era.
+  I am currently a 2L at SMU Law and hold an MBA, but these ideas are moving faster than the semester.
+  I have three commercially viable software architectures (SCU, Driftlock, Hegelion) and one massive hardware research thesis (Choir).
+  I am not leaving the law; I am informing it. But the Inventor leg of the stool needs a lab.
+  To validate Chronometric Interferometry, I need to be around builders who think at this frequency.
+  The ideas aren't stopping, and neither am I."
+
+SECTION 5: FOOTER
+- "Innovate or Die." (Monospace).
+- Links: 
+  - GitHub (https://github.com/Shannon-Labs)
+  - Twitter (https://twitter.com/hunterimbown)
+  - LinkedIn (https://www.linkedin.com/in/hunter-bown-59687660/)
+
+TECHNICAL REQUIREMENTS:
+- Ensure all external links open in a new tab.
+- Mobile responsive (stack the grid on mobile).
+- Use a paper-like off-white background (#F5F5F0) with jet black text (#0A0A0A) for that "printed journal" feel.

@@ -1,0 +1,81 @@
+**Role:** Act as a Senior Creative Technologist & Frontend Engineer specializing in "High-Signal Brutalism" and academic aesthetics.
+
+**Task:** Build a single-page personal research website (`shannonlabs.dev`) for Hunter Bown. This is NOT a portfolio; it is a "Living Research Archive" and a legal dossier. It must feel like a serious laboratory interface, not a marketing site.
+
+**Identity & Vibe:**
+- **Subject:** Hunter Bown | MBA | JD Candidate (2L, SMU Dedman Law) | Independent Researcher.
+- **Aesthetic:** "Brutalist Academic." Think arXiv meets a classified legal dossier.
+- **Typography:**
+  - Headers/UI: `Inter` or `JetBrains Mono` (Uppercase, tracking-wide).
+  - Body Text: `EB Garamond` or `Times New Roman` (High readability, academic feel).
+- **Palette:** Strictly Black (#000000) and White (#FFFFFF). No greys, no colors. Use 1px borders for everything.
+- **Motion:** Zero "smooth" ease-in-out. Use "step" animations or instant cuts. The site should feel raw and fast.
+
+---
+
+### **Site Structure (Single Page Scroll)**
+
+#### **1. HEADER (Sticky)**
+- **Left:** `HUNTER BOWN [MBA] [JD CANDIDATE 2L]`
+- **Right:** `[GITHUB] [TWITTER] [LINKEDIN]` (Text links only, no icons).
+- **Border:** 1px solid black bottom border.
+
+#### **2. HERO SECTION: "THE TRANSISTOR MOMENT"**
+- **Layout:** Split screen (50/50).
+- **Headline:** Large, serif typography: "The Transistor Moment."
+- **Visual:** A raw comparison table or side-by-side div:
+  - **Left:** "My Provisional Patent (Sept 02, 2025)" -> Display a placeholder rectangle labeled `[FIG 1. PATENT RECEIPT]`.
+  - **Right:** "Industry Validation (Nov 19, 2025)" -> Display a placeholder rectangle labeled `[FIG 2. TENCENT PAPER]`.
+- **Caption:** "Independent discovery of Entropy Stabilization via Control Theory (SCU) 78 days prior to major lab publication."
+
+#### **3. THE STACK: "SYSTEM ARCHITECTURE"**
+- **Layout:** A 2x2 Grid. Each cell is a "Card" with a 1px solid border.
+- **Style:** Look like technical spec sheets.
+- **Content:**
+
+  **[Q1] THE BODY: Shannon Control Unit (SCU)**
+  - *Subtitle:* "Closed-Loop PI Control for LLM Training"
+  - *Tech Specs:* "Treats Regularization (λ) as an actuator and MDL Information Ratio (S) as the controlled variable. Stabilizes complexity without hyperparameter sweeps."
+  - *Stat:* "6-12% BPT improvement on Llama 3.2."
+
+  **[Q2] THE MIND: Hegelion**
+  - *Subtitle:* "Dialectical Reasoning Framework"
+  - *Tech Specs:* "MCP Server implementation of Thesis → Antithesis → Synthesis. Uses a 'Council of Critics' (Logician, Empiricist, Ethicist) to force structural novelty over probabilistic retrieval."
+  - *Stat:* "Optimizes for conflict, not helpfulness."
+
+  **[Q3] THE SENSES: Driftlock**
+  - *Subtitle:* "Compression-Based Anomaly Detection"
+  - *Tech Specs:* "Deterministic engine (`cbad-core`) using Normalized Compression Distance (NCD) and entropy deltas to flag outliers without training data."
+  - *Stat:* "Math detects it. Gemini explains it."
+
+  **[Q4] THE VOICE: Driftlock Choir**
+  - *Subtitle:* "Chronometric Interferometry"
+  - *Tech Specs:* "Wireless timing synchronization via intentional carrier frequency offsets. Uses beat patterns to encode propagation delay."
+  - *Stat:* "24.65ps RMS precision (Simulation)."
+
+#### **4. THE ESSAY: "THE ANOMALY DETECTOR"**
+- **Layout:** Narrow central column (max-width: 65ch).
+- **Typography:** Large Serif (20px+). Look like a legal brief.
+- **Content:**
+  > **Title:** The Anomaly Detector
+  > **Subtitle:** Why a Concussed Law Student is Architecting Sovereign AI
+  >
+  > "I’m a Millennial. I grew up on IRC and MapleStory. But what’s happening now is the convergence of Law, Entropy, and Sovereignty.
+  >
+  > In law school, we study the 'Reasonable Person Standard.' But as we march toward AGI, the definition of 'reason' is being rewritten by weights and biases. My work exists at this intersection: using control theory to stabilize the mind (SCU), dialectics to sharpen the reasoning (Hegelion), and interferometry to synchronize the senses (Choir).
+  >
+  > This is not a portfolio. This is a dossier of independent discovery."
+
+#### **5. FOOTER**
+- Simple copyright: `© 2025 SHANNON LABS. ALL RIGHTS RESERVED.`
+- `[EMAIL]` `[PGP KEY]`
+
+---
+
+### **Technical Requirements**
+- **Framework:** React / Next.js
+- **Styling:** Tailwind CSS.
+- **Specific CSS:**
+  - Use `border-collapse` for grids.
+  - Use `mix-blend-mode: difference` for hover effects (white text on black box).
+  - Ensure print styles are perfect (the site should print like a PDF document).
