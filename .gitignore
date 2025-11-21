@@ -29,12 +29,15 @@ ENV/
 env/
 .venv
 
-# PyTorch
+# PyTorch / Model files
 *.pt
 *.pth
 *.ckpt
+*.safetensors
 checkpoints/
 lightning_logs/
+saved_models/
+outputs/
 
 # Jupyter
 .ipynb_checkpoints
@@ -46,7 +49,6 @@ lightning_logs/
 *.swp
 *.swo
 *~
-.DS_Store
 
 # Logs
 *.log
@@ -54,17 +56,20 @@ logs/
 wandb/
 runs/
 
-# Data (protect raw datasets)
+# Data files (except specific ablations/results)
 *.csv
 !ablations/*.csv
 !results/*.csv
 data/*.txt
 !data/val.txt
+data/slimpajama_subset.jsonl
 
-# Model outputs
-outputs/
-saved_models/
-*.safetensors
+# Model output directories
+*output*/
+*output_test/
+*output_safe/
+*cache/
+.hf_cache/
 
 # Temporary files
 tmp/
@@ -102,109 +107,6 @@ package-lock.json
 # Vercel
 .vercel
 
-# Model output directories
-*output*/
-*output_test/
-*output_safe/
-*cache/
-.hf_cache/
-
-# Model files and checkpoints
-*.pt
-*.pth
-*.ckpt
-*.safetensors
-checkpoints/
-lightning_logs/
-saved_models/
-outputs/
-
-# Data files (except specific ablations/results)
-*.csv
-!ablations/*.csv
-!results/*.csv
-data/*.txt
-!data/val.txt
-
-# Temporary and cache files
-.cache/
-tmp/
-temp/
-*.tmp
-.DS_Store
-Thumbs.db
-
 # Local model directories
 Qwen3-1.7B-Base/
 adapters/
-
-# Log files
-*.log
-logs/
-wandb/
-runs/
-
-# Environment files
-.env
-.env.local
-*.env
-
-# IDE files
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# Python cache
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-pip-wheel-metadata/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
-
-# Virtual environments
-venv/
-ENV/
-env/
-.venv
-
-# Jupyter
-.ipynb_checkpoints
-*/.ipynb_checkpoints/*
-
-# Testing
-.pytest_cache/
-.coverage
-htmlcov/
-.tox/
-
-# Documentation builds
-docs/_build/
-site/
-
-# HuggingFace cache
-.huggingface/
-
-# Node (for web development)
-node_modules/
-package-lock.json
-.next/

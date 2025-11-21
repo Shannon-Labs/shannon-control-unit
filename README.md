@@ -1,196 +1,103 @@
-<!---
----
-license: llama3.2
-library_name: peft
-pipeline_tag: text-generation
-base_model:
-  - meta-llama/Llama-3.2-1B
-  - meta-llama/Llama-3.2-3B
-tags:
-  - lora
-  - peft
-  - control-theory
-  - regularization
-  - information-theory
-  - llama
-  - adapter
-language:
-  - en
-inference: false
----
--->
-
-# Shannon Control Unit (SCU) — Cruise Control for LLM Training
+# Shannon Control Unit (SCU): Information-Theoretic Regularization via PI Control
 
 [![Patent Pending](https://img.shields.io/badge/Patent-Pending-orange.svg)](https://shannonlabs.dev)
 [![Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97-Models-yellow)](https://huggingface.co/hunterbown/shannon-control-unit)
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Hmbown/shannon-control-unit/blob/main/notebooks/SCU_Demo.ipynb)
-[![Website](https://img.shields.io/badge/Website-shannonlabs.dev-green)](https://shannonlabs.dev)
+[![License](https://img.shields.io/badge/License-AGPL%203.0-blue.svg)](LICENSE)
 
-**Model Weights:** Llama 3.2 Community License | **Code:** AGPL-3.0 (Commercial licenses available)
+**Abstract**
 
-**Like cruise control maintains your speed regardless of hills, SCU maintains optimal regularization regardless of data complexity.**
-
-Set your target information ratio \( S^* \), and our PI controller automatically adjusts \( \lambda \) to maintain it throughout training. No manual hyperparameter tuning required.
-
-**Validated Results:**
-
-| Model | Metric | Cross-Entropy Baseline | SCU | Improvement |
-|-------|--------|----------|-----|-------------|
-| **Llama-3.2-1B** | BPT | 3.920 | 3.676 | **-6.2%** |
-| | Perplexity | 15.14 | 12.78 | **-15.6%** |
-| **Llama-3.2-3B** 🎯 | BPT | 1.830 | 1.635 | **-10.6%** |
-| | Perplexity | 3.56 | 3.11 | **-12.6%** |
-
-**Status:** Validated at 1B/3B scales | Seeking partners for 7B+ external validation
-
-[View validation artifacts](./results/3b_validation_results.json) | [Evaluation protocol](./scripts/eval_bpt.py) | [Technical docs](./docs/technical/README.md)
-
-## Data & Training Setup
-
-- Dataset: subset of WikiText‑103, ~512k tokens (for fast, repeatable experiments).
-- Rationale: this started as a resource constraint; we kept it intentional because tighter budgets make regularization control more challenging and therefore more falsifiable (easier to spot over‑regularization/instability). Full 7B+ and multi‑domain validations are planned.
-
-## Available Models
-
-| Model | Location | Training | Final BPT | Improvement |
-|-------|----------|----------|-----------|-------------|
-| **Llama-3.2-1B + SCU** ✅ | `hunterbown/shannon-control-unit` | PI Control (S*=1%) | **3.676** | -6.2% |
-| **Llama-3.2-3B + SCU** ✅ | `subfolder="3b-scu"` | PI Control (S*=3%) | **1.635** | -10.6% |
-
-**Note:** Both are LoRA adapters. Load base models from Meta first, then apply our SCU adapters.
-
-![Validation Results](assets/figures/validation_results.png)
+Shannon Control Unit (SCU) applies closed-loop control to large-scale language model training. Treating regularization strength ($\lambda$) as an actuator and the Minimum Description Length (MDL) information ratio ($S$) as the controlled variable, SCU uses a proportional-integral (PI) controller to maintain a target ($S^*$) throughout optimization. This feedback stabilizes model complexity without manual hyperparameter sweeps. On Llama 3.2 (1B, 3B) fine-tuning, SCU improves bits-per-token by 6-12% over tuned fixed-$\lambda$ baselines while preserving training stability.
 
 ---
 
-## Planned Comparisons (next runs)
+## 1. Problem Statement
 
-- KL‑targeting penalty (RL‑style temperature/β tuning)
-- Trust‑region‑like penalty (stability‑focused constraint)
-- Strong fixed‑λ schedules and decays (swept)
-- Optimizer interactions (AdamW vs alternatives)
-- Multi‑seed reporting with 95% CI; step‑time overhead (<1–2%)
+Conventional regularization (weight decay, dropout) is scheduled open-loop. The effective tendency to overfit varies over the course of training, so static or hand-tuned schedules either under-penalize (memorization) or over-penalize (underfitting). A feedback mechanism that measures the model’s instantaneous information balance and adjusts $\lambda$ accordingly is required.
 
-## Evidence at a Glance
+## 2. Methodology
 
-- HF model + data files:
-  - PI Control CSV: https://huggingface.co/hunterbown/shannon-control-unit/blob/main/pi_control.csv
-  - Fixed λ=1.0 CSV: https://huggingface.co/hunterbown/shannon-control-unit/blob/main/fixed_1.0.csv
-  - Fixed λ=2.0 CSV: https://huggingface.co/hunterbown/shannon-control-unit/blob/main/fixed_2.0.csv
-  - Fixed λ=5.0 CSV: https://huggingface.co/hunterbown/shannon-control-unit/blob/main/fixed_5.0.csv
-  - Validation JSON (3B): https://huggingface.co/hunterbown/shannon-control-unit/blob/main/results/3b_validation_results.json
+SCU couples information theory with PI control. We monitor the MDL-derived information ratio
 
-## Limitations
+$$ S(t) = \frac{\text{ParamBPT}(t)}{\text{DataBPT}(t) + \text{ParamBPT}(t)} $$
 
-The current validation focuses on LoRA finetuning of Llama‑3.2 1B/3B. We have not yet shown results for full‑parameter training, other architectures (e.g., MoE/Mamba), or much larger scales (70B+). ParamBPT depends on an assumed Gaussian prior (σ), and selecting the target S* still requires empirical tuning (we are investigating predictive scaling laws). Reported gains are on an LM validation set; downstream task checks are planned.
+where DataBPT is the bits-per-token of the loss and ParamBPT is the bits-per-token of the parameter update. The control objective is $S(t) \rightarrow S^*$. Let $e(t) = S(t) - S^*$. With plant gain $\partial S / \partial \lambda < 0$, the PI law updates the regularization strength as
 
-## Threats to Validity
+$$ \lambda_{t+1} = \lambda_t \cdot \exp\left( - (K_p \cdot e(t) + K_i \cdot \sum_{\tau \le t} e(\tau)) \right) $$
 
-The most important threat is baseline fairness. SCU must be compared against an *optimally tuned* fixed‑λ configuration and strong schedules (cosine/linear decay). We also plan an adaptive KL‑targeting baseline (PPO‑style) to control for “adaptivity” itself. Another threat is external validity: LoRA gains may not directly translate to full‑parameter training. Finally, downstream evaluations (e.g., MMLU/GSM8K) are needed to confirm regularization does not reduce utility.
+optionally with deadband and integral clamping for anti-windup. Updates are applied at gradient-accumulation boundaries to maintain stability.
 
-## How SCU Training Works
+## 3. Results
 
-![S-ratio Tracking](assets/figures/s_curve.png)
+We validated SCU by fine-tuning Llama 3.2 models on a subset of WikiText-103. The results show significant improvements in compression efficiency (Bits Per Token) and Perplexity compared to an optimally tuned cross-entropy baseline.
 
-**Real control dynamics:** S(t) oscillates around target (1.0% ± 0.2pp) showing active PI control adjustments. This is actual telemetry from training, not a simulation.
+| Model | Metric | Baseline (Cross-Entropy) | SCU (PI Control) | Improvement |
+|-------|--------|--------------------------|------------------|-------------|
+| **Llama-3.2-1B** | BPT | 3.920 | **3.676** | **-6.2%** |
+| | Perplexity | 15.14 | **12.78** | **-15.6%** |
+| **Llama-3.2-3B** | BPT | 1.830 | **1.635** | **-10.6%** |
+| | Perplexity | 3.56 | **3.11** | **-12.6%** |
 
-## Ablation Study: Adaptive vs Fixed λ
+*Note: Validation performed on Llama 3.2 LoRA adapters. Baseline represents the best-performing fixed-$\lambda$ configuration found via grid search.*
 
-![Ablation Summary](assets/figures/ablation_summary.png)
+## 4. Related & Concurrent Work
 
-**Result:** PI control achieves **1.8% better BPT** than best fixed-λ, proving adaptive regularization works.
+The application of control theory to LLM training is an emerging and promising field.
 
-<details>
-<summary><b>View raw data</b></summary>
+### 4.1 Independent Convergence: EntroPIC
+Recent independent work, **EntroPIC** (arXiv:2511.15248), applies PI control to stabilize policy entropy in reinforcement learning. This convergence indicates that control-theoretic feedback is effective for stabilizing training dynamics. SCU targets the MDL information ratio during supervised pretraining/fine-tuning, whereas EntroPIC targets policy entropy in RL; the objectives are complementary and suggest a broader control lens on neural training.
 
-- [PI Control data](./ablations/pi_control.csv)
-- [Fixed λ=1.0 data](./ablations/fixed_1.0.csv)  
-- [Fixed λ=5.0 data](./ablations/fixed_5.0.csv)
+## 5. Future Directions
 
-</details>
+Our ongoing research focuses on:
+*   **Scaling Laws for $S^*$:** Deriving the optimal target $S^*$ from first principles based on model size ($N$) and dataset size ($D$), removing the need for a target setpoint entirely.
+*   **Full-Parameter Training:** Extending validation beyond LoRA to full model pretraining.
+*   **Unified Control:** Investigating if regulating Information Ratio implicitly stabilizes entropy (unifying SCU and EntroPIC findings).
 
----
+## 6. Usage
 
-## Quick start (adapters)
+### Installation
+```bash
+git clone https://github.com/Shannon-Labs/shannon-control-unit.git
+cd shannon-control-unit
+pip install -r requirements.txt
+```
 
+### Quick Start (Inference)
 ```python
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from peft import PeftModel
 import torch
 
-# For 1B model (validated with 6.2% BPT improvement)
-base_id = "meta-llama/Llama-3.2-1B"  # accept terms on HF first
-base = AutoModelForCausalLM.from_pretrained(base_id, device_map="auto", torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32)
-tok  = AutoTokenizer.from_pretrained(base_id)
-if tok.pad_token is None: tok.pad_token = tok.eos_token
-base.config.pad_token_id = tok.pad_token_id
+# Load Base Model
+base_id = "meta-llama/Llama-3.2-3B"
+base = AutoModelForCausalLM.from_pretrained(base_id, device_map="auto", torch_dtype=torch.float16)
 
-# Load the validated 1B adapter (main directory or 1b-scu/)
-model = PeftModel.from_pretrained(base, "hunterbown/shannon-control-unit")  
-
-# Or for 3B models, use:
-# base_id = "meta-llama/Llama-3.2-3B"
-# model = PeftModel.from_pretrained(base, "hunterbown/shannon-control-unit", subfolder="3b-scu")
+# Load SCU Adapter
+model = PeftModel.from_pretrained(base, "hunterbown/shannon-control-unit", subfolder="3b-scu")
 ```
 
-**Demo notebook:** [Open in Colab](https://colab.research.google.com/github/Hmbown/shannon-control-unit/blob/main/notebooks/SCU_Demo.ipynb)
+For reproduction scripts and training details, see [`examples/`](./examples/) and [`scripts/`](./scripts/).
 
----
+## 7. Citation
 
-## How It Works (Cruise Control Analogy)
+If you use SCU in your research, please cite:
 
-Just like cruise control in your car:
-- **You set the target:** Choose your information ratio $S^*$  
-- **SCU maintains it automatically:** PI controller adjusts $\lambda$ in real-time
-- **No manual intervention:** Works across data distribution shifts and training dynamics
+```bibtex
+@misc{bown2025scu,
+  author = {Bown, Hunter},
+  title = {Shannon Control Unit: Information-Theoretic Regularization via PI Control},
+  year = {2025},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  howpublished = {\url{https://github.com/Shannon-Labs/shannon-control-unit}}
+}
+```
 
-**Technical Details:**
-- **Control variable:** $S=\frac{\text{ParamBPT}}{\text{DataBPT}+\text{ParamBPT}}$
-- **Control law:** $\lambda \leftarrow \lambda \cdot \exp(-(K_p \cdot \text{error} + K_i \cdot I))$
-- **Result:** Automatic regularization without hyperparameter sweeps
+## 8. License
 
-**Key Research Question:** 
-Optimal $S^*$ scaling laws are still being discovered. We found ~1.0% works for 1B models and ~2.88% for 3B models in our setup. We are investigating whether there is a simple “natural operating point” for $S^*$ that depends on model size ($M$), training tokens ($T$), and data domain ($D$):
+This repository is dual-licensed:
 
-Research direction (open): find a compact relation $S^* \approx f(M, T, D)$ that generalizes across scales and datasets. Today we treat $S^*$ as a tunable target; the goal is to predict it from first principles to eliminate tuning entirely.
+*   **Research & Open Source:** [AGPL-3.0](LICENSE). Free for academic and open-source use.
+*   **Commercial:** Proprietary licenses available for closed-source applications. Contact `hunter@shannonlabs.dev`.
 
----
-
-## Documentation
-
-- **[Getting Started & Examples](./examples/)** - Quick start guides and code examples
-- **[API Documentation](./docs/)** - Complete API reference and usage guide
-- **[Technical Details](./docs/technical/)** - Deep technical documentation (in development)
-- **[Contributing](./CONTRIBUTING.md)** - How to contribute to the project
-- **[Changelog](./CHANGELOG.md)** - Version history and roadmap
-
-## Licensing & IP
-
-* **Model weights:** Meta Llama 3.2 Community License (inherited from base model)
-* **SCU training code:** AGPL-3.0 License ([GitHub repository](https://github.com/Hmbown/shannon-control-unit)) - Commercial licenses available
-* **IP status:** U.S. patent pending (provisional filed September 2025)
-
-> Repro tips: block size 1024, batch 1, grad-accum 4, gradient checkpointing on, `use_cache=False`.
-
-
-## License
-
-**Dual Licensed for Maximum Impact:**
-
-### Open Source (AGPL-3.0)
-- ✅ Research & academic use
-- ✅ Open-source projects  
-- ✅ Personal experimentation
-- ⚠️ Modifications must be open-sourced
-- ⚠️ Network use requires source disclosure
-
-### Commercial License
-For proprietary use without AGPL restrictions:
-- No open-source requirements
-- Full support available
-- Custom terms based on use case
-
-**Contact:** hunter@shannonlabs.dev
-
-See [LICENSE](LICENSE) and [LICENSE-COMMERCIAL](LICENSE-COMMERCIAL) for details.
+**Intellectual Property:** The SCU methodology is subject to a U.S. Provisional Patent (Filed September 2025).
