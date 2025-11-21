@@ -106,3 +106,11 @@ This repository is dual-licensed:
 *   **Commercial:** Proprietary licenses available for closed-source applications. Contact `hunter@shannonlabs.dev`.
 
 **Intellectual Property:** The SCU methodology is subject to a U.S. Provisional Patent (Filed September 2025).
+
+**Technical Paper:** See [SCU_Technical_Report_v1.pdf](./SCU_Technical_Report_v1.pdf) for detailed methodology and evaluation.
+
+---
+
+**Author:** Hunter Bown  
+**Contact:** hunter@shannonlabs.dev  
+**Website:** https://shannonlabs.dev

@@ -1,10 +1,5 @@
 # .mailmap - Consolidate all contributions under Hunter Bown
 # This ensures GitHub shows only one contributor
 
-Hunter Bown <hunter@shannonlabs.dev> Hunter B <hmbown@gmail.com>
-Hunter Bown <hunter@shannonlabs.dev> Hunter Bown <hmbown@gmail.com>
-Hunter Bown <hunter@shannonlabs.dev> Hunter Bown <hunter@shannonlabs.dev>
-Hunter Bown <hunter@shannonlabs.dev> claude <claude@anthropic.com>
-Hunter Bown <hunter@shannonlabs.dev> Claude <claude@anthropic.com>
-Hunter Bown <hunter@shannonlabs.dev> claude
-Hunter Bown <hunter@shannonlabs.dev> Claude
+Hunter Bown <hunter@shannonlabs.dev> <hmbown@gmail.com>
+Hunter Bown <hunter@shannonlabs.dev> <hunter@shannonlabs.dev>
