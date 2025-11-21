@@ -26,7 +26,7 @@ inference: false
 
 **Abstract**
 
-Shannon Control Unit (SCU) applies closed-loop control to large-scale language model training. Treating regularization strength ($\lambda$) as an actuator and the Minimum Description Length (MDL) information ratio ($S$) as the controlled variable, SCU uses a proportional-integral (PI) controller to maintain a target ($S^*$) throughout optimization. This feedback stabilizes model complexity without manual hyperparameter sweeps. On Llama 3.2 (1B, 3B) fine-tuning, SCU improves bits-per-token by 6-12% over tuned fixed-$\lambda$ baselines while preserving training stability.
+Shannon Control Unit (SCU) applies closed-loop control to large-scale language model training. Treating regularization strength (λ) as an actuator and the Minimum Description Length (MDL) information ratio (S) as the controlled variable, SCU uses a proportional-integral (PI) controller to maintain a target (S*) throughout optimization. This feedback stabilizes model complexity without manual hyperparameter sweeps. On Llama 3.2 (1B, 3B) fine-tuning, SCU improves bits-per-token by 6-12% over tuned fixed-λ baselines while preserving training stability.
 
 ---
 
@@ -36,13 +36,17 @@ Conventional regularization (weight decay, dropout) is scheduled open-loop. The 
 
 ## 2. Methodology
 
-SCU couples information theory with PI control. We monitor the MDL-derived information ratio
+SCU couples information theory with PI control. We monitor the MDL-derived information ratio:
 
-$$ S(t) = \frac{\text{ParamBPT}(t)}{\text{DataBPT}(t) + \text{ParamBPT}(t)} $$
+```math
+S(t) = \frac{\text{ParamBPT}(t)}{\text{DataBPT}(t) + \text{ParamBPT}(t)}
+```
 
-where DataBPT is the bits-per-token of the loss and ParamBPT is the bits-per-token of the parameter update. The control objective is $S(t) \rightarrow S^*$. Let $e(t) = S(t) - S^*$. With plant gain $\partial S / \partial \lambda < 0$, the PI law updates the regularization strength as
+where DataBPT is the bits-per-token of the loss and ParamBPT is the bits-per-token of the parameter update. The control objective is S(t) → S*. Let e(t) = S(t) - S*. With plant gain ∂S/∂λ < 0, the PI law updates the regularization strength as:
 
-$$ \lambda_{t+1} = \lambda_t \cdot \exp\left( - (K_p \cdot e(t) + K_i \cdot \sum_{\tau \le t} e(\tau)) \right) $$
+```math
+\lambda_{t+1} = \lambda_t \cdot \exp\left( - (K_p \cdot e(t) + K_i \cdot \sum_{\tau \le t} e(\tau)) \right)
+```
 
 optionally with deadband and integral clamping for anti-windup. Updates are applied at gradient-accumulation boundaries to maintain stability.
 
@@ -57,7 +61,7 @@ We validated SCU by fine-tuning Llama 3.2 models on a subset of WikiText-103. Th
 | **Llama-3.2-3B** | BPT | 1.830 | **1.635** | **-10.6%** |
 | | Perplexity | 3.56 | **3.11** | **-12.6%** |
 
-*Note: Validation performed on Llama 3.2 LoRA adapters. Baseline represents the best-performing fixed-$\lambda$ configuration found via grid search.*
+*Note: Validation performed on Llama 3.2 LoRA adapters. Baseline represents the best-performing fixed-λ configuration found via grid search.*
 
 ## 4. Related & Concurrent Work
 
