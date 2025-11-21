@@ -48,7 +48,7 @@ We validated SCU by fine-tuning Llama 3.2 models on a subset of WikiText-103. Th
 The application of control theory to LLM training is an emerging and promising field.
 
 ### 4.1 Independent Convergence: EntroPIC
-Recent independent work, **EntroPIC** (arXiv:2511.15248), applies PI control to stabilize policy entropy in reinforcement learning. This convergence indicates that control-theoretic feedback is effective for stabilizing training dynamics. SCU targets the MDL information ratio during supervised pretraining/fine-tuning, whereas EntroPIC targets policy entropy in RL; the objectives are complementary and suggest a broader control lens on neural training.
+Recent independent work, **EntroPIC** (arXiv:2511.15248), applies PI control to stabilize policy entropy in reinforcement learning. Both approaches use PI control for training stability, but target different metrics: SCU regulates information ratio in supervised learning, while EntroPIC regulates policy entropy in RL. They're essentially two sides of the same coin - using feedback control to stabilize neural training dynamics.
 
 ## 5. Future Directions
 
@@ -56,7 +56,7 @@ Our ongoing research focuses on:
 
 - **Scaling Laws for S***: Deriving the optimal target S* from first principles based on model size (N) and dataset size (D), removing the need for a target setpoint entirely.
 - **Full-Parameter Training**: Extending validation beyond LoRA to full model pretraining.
-- **Unified Control**: Investigating if regulating Information Ratio implicitly stabilizes entropy (unifying SCU and EntroPIC findings).
+- **Unified Control**: Investigating if regulating Information Ratio implicitly stabilizes entropy (potentially unifying SCU and EntroPIC).
 
 ## 6. Usage
 
