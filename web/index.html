@@ -4,16 +4,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shannon Control Unit: Information-Theoretic Regularization via PI Control</title>
+  <title>Shannon Labs: The Control of Information & Time</title>
   <meta name="description"
-    content="Shannon Control Unit (SCU) applies closed-loop control to large-scale language model training. Validated: -10.6% BPT and -12.6% perplexity on Llama 3.2 3B.">
+    content="Shannon Labs builds fundamental primitives for the next era of computing. From sub-picosecond wireless sync (Driftlock) to closed-loop AI regularization (SCU).">
 
   <!-- Open Graph / Twitter -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://shannonlabs.dev/">
-  <meta property="og:title" content="Shannon Control Unit: Information-Theoretic Regularization">
+  <meta property="og:title" content="Shannon Labs: The Control of Information & Time">
   <meta property="og:description"
-    content="Closed-loop control for LLM training. Treating regularization strength as an actuator and MDL information ratio as the controlled variable.">
+    content="Building fundamental primitives. Driftlock Choir (Time) and Shannon Control Unit (Information).">
   <meta property="og:image" content="https://shannonlabs.dev/assets/shannon-scu-og-image.png">
   <meta name="twitter:card" content="summary_large_image">
 
@@ -70,123 +70,189 @@
       <div class="hero-background"></div>
       <div class="hero-grid"></div>
       <div class="hero-content">
-        <div class="badge badge-neutral mb-3">Patent Pending</div>
+        <div class="badge badge-neutral mb-3">Shannon Labs</div>
         <h1 class="hero-title">
-          Shannon <span class="highlight">Control Unit</span>
+          The Control of <br>
+          <span class="highlight">Information & Time</span>
         </h1>
         <p class="hero-subtitle">
-          Information-Theoretic Regularization via PI Control.<br>
-          Treating model training as a dynamic control problem.
+          Building fundamental primitives for the next era of computing.<br>
+          From sub-picosecond wireless sync to closed-loop AI regularization.
         </p>
 
         <div class="btn-group">
-          <a href="https://huggingface.co/hunterbown/shannon-control-unit" class="btn btn-primary">View Models</a>
-          <a href="research.html" class="btn btn-secondary">Read Technical Report</a>
+          <a href="#scu" class="btn btn-primary">Shannon Control Unit</a>
+          <a href="#driftlock" class="btn btn-secondary">Driftlock Choir</a>
         </div>
       </div>
     </section>
 
-    <!-- Key Metrics -->
+    <!-- The Lineage Section -->
     <section class="section">
-      <div class="section-content">
+      <div class="section-content text-center">
         <div class="section-header">
-          <h2 class="section-title">Validated Results</h2>
-          <p class="lead">Performance on Llama 3.2 (1B, 3B) fine-tuning vs. optimally tuned fixed-$\lambda$ baselines.
-          </p>
-        </div>
-
-        <div class="grid grid-2">
-          <div class="metric-card">
-            <div class="metric-value">-10.6%</div>
-            <div class="metric-label">Bits Per Token</div>
-            <p class="metric-description">Reduction in compression cost on Llama 3.2 3B, indicating superior
-              generalization efficiency.</p>
-          </div>
-          <div class="metric-card">
-            <div class="metric-value">-12.6%</div>
-            <div class="metric-label">Perplexity</div>
-            <p class="metric-description">Improvement in prediction uncertainty on held-out WikiText-103 data.</p>
-          </div>
-        </div>
-
-        <div class="mt-5 text-center">
-          <img src="images/s_curve.png" alt="Information Ratio Stabilization"
-            style="max-width: 100%; border-radius: 8px; border: 1px solid var(--gray-200); box-shadow: var(--shadow-md);">
-          <p class="text-muted text-sm mt-2">Figure 1: SCU stabilizing the Information Ratio ($S$) around the target
-            setpoint during training.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Methodology -->
-    <section class="section">
-      <div class="section-content">
-        <div class="section-header">
-          <h2 class="section-title">Methodology</h2>
-          <p class="lead">Bridging Information Theory and Control Theory.</p>
+          <h2 class="section-title">The Lineage of Control</h2>
+          <p class="lead">Three generations of controlling fundamental physics.</p>
         </div>
 
         <div class="grid grid-3">
           <div class="feature-card">
-            <div class="feature-title">1. The Plant</div>
+            <div class="feature-icon" style="font-size: 2.5rem; margin-bottom: 1rem;">⚡️</div>
+            <div class="feature-title">1948: Electrons</div>
             <p class="feature-description">
-              We treat the neural network training process as a dynamic system ("the plant"). The regularization
-              coefficient $\lambda$ is the <strong>actuator</strong>, and the model's generalization state is the
-              output.
+              <strong>Ralph Bown Sr.</strong> (Director of Research, Bell Labs) announces the
+              <strong>Transistor</strong>.
+              <br><br>
+              <em>The ability to control the flow of electrical current with precision.</em>
             </p>
           </div>
 
           <div class="feature-card">
-            <div class="feature-title">2. The Sensor</div>
+            <div class="feature-icon" style="font-size: 2.5rem; margin-bottom: 1rem;">⏱️</div>
+            <div class="feature-title">2024: Time</div>
             <p class="feature-description">
-              We monitor the <strong>Information Ratio ($S$)</strong>, derived from Minimum Description Length (MDL)
-              principles. $S$ measures the balance between parameter complexity (ParamBPT) and data fit (DataBPT).
+              <strong>Hunter Bown</strong> invents <strong>Chronometric Interferometry</strong> (Driftlock).
+              <br><br>
+              <em>The ability to control the synchronization of time with sub-picosecond precision.</em>
             </p>
           </div>
 
           <div class="feature-card">
-            <div class="feature-title">3. The Controller</div>
+            <div class="feature-icon" style="font-size: 2.5rem; margin-bottom: 1rem;">🧠</div>
+            <div class="feature-title">2025: Information</div>
             <p class="feature-description">
-              A <strong>PI Controller</strong> adjusts $\lambda$ in real-time to maintain $S$ at a target setpoint
-              ($S^*$). This feedback loop stabilizes the "learning velocity" and prevents overfitting dynamically.
+              <strong>Hunter Bown</strong> invents the <strong>Shannon Control Unit</strong>.
+              <br><br>
+              <em>The ability to control the flow of information in neural networks with thermodynamic precision.</em>
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Code Snippet -->
+    <!-- SCU Section -->
+    <section id="scu" class="section">
+      <div class="section-content">
+        <div class="section-header">
+          <div class="badge badge-neutral mb-2">Project 1</div>
+          <h2 class="section-title">Shannon Control Unit</h2>
+          <p class="lead">Thermodynamic Regularization for AI.</p>
+        </div>
+
+        <div class="grid grid-2">
+          <div>
+            <h3>The Problem</h3>
+            <p>
+              Training large models is an open-loop process. We guess at hyperparameters and hope for convergence. This
+              is like driving a car without a speedometer.
+            </p>
+            <h3>The Solution</h3>
+            <p>
+              SCU treats training as a control problem. We measure the <strong>Information Ratio</strong> (MDL) and use
+              a PI controller to adjust regularization ($\lambda$) in real-time.
+            </p>
+            <ul class="metric-list mt-4" style="list-style: none; padding: 0;">
+              <li class="mb-2">✅ <strong>-10.6%</strong> Bits Per Token (Efficiency)</li>
+              <li class="mb-2">✅ <strong>-12.6%</strong> Perplexity (Quality)</li>
+              <li class="mb-2">✅ <strong>Zero</strong> Manual Tuning</li>
+            </ul>
+            <div class="mt-4">
+              <a href="research.html" class="btn btn-primary">Read Technical Report</a>
+            </div>
+          </div>
+          <div>
+            <img src="images/s_curve.png" alt="SCU Stabilization"
+              style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-200); box-shadow: var(--shadow-md);">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Driftlock Section -->
+    <section id="driftlock" class="section" style="background: var(--gray-50);">
+      <div class="section-content">
+        <div class="section-header">
+          <div class="badge badge-neutral mb-2">Project 2</div>
+          <h2 class="section-title">Driftlock Choir</h2>
+          <p class="lead">Wireless Synchronization via Chronometric Interferometry.</p>
+        </div>
+
+        <div class="grid grid-2">
+          <div>
+            <img src="images/beat_note_demo.png" alt="Driftlock Interference Pattern"
+              style="width: 100%; border-radius: 8px; border: 1px solid var(--gray-200); box-shadow: var(--shadow-md);">
+            <p class="text-muted text-sm mt-2 text-center">Figure: The "Beat Note" interference pattern allowing
+              picosecond-level locking.</p>
+          </div>
+          <div>
+            <h3>The Concept</h3>
+            <p>
+              How do you synchronize a swarm of drones or a distributed antenna array without wires? GPS is too
+              imprecise (nanoseconds). Atomic clocks are too expensive.
+            </p>
+            <h3>The Invention</h3>
+            <p>
+              <strong>Chronometric Interferometry.</strong> By measuring the <em>interference beat note</em> between two
+              drifting oscillators, we can mathematically reconstruct the exact time offset.
+            </p>
+            <p>
+              It's like a choir breathing in unison. Even if individual singers drift, the <em>collective
+                interference</em> creates a lock.
+            </p>
+            <ul class="metric-list mt-4" style="list-style: none; padding: 0;">
+              <li class="mb-2">✅ <strong>0.091 ps</strong> Precision (Simulation)</li>
+              <li class="mb-2">✅ <strong>Passive</strong> Wireless Sync</li>
+              <li class="mb-2">✅ <strong>Hardware</strong> Agnostic</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The "Weird Genius" Bio -->
     <section class="section">
       <div class="section-content">
         <div class="section-header">
-          <h2 class="section-title">The Control Law</h2>
+          <h2 class="section-title">The Architect</h2>
         </div>
 
-        <div class="container-narrow">
-          <div class="code-block" data-lang="Python">
-            <pre><code>def update_lambda(self, current_S):
-    # Calculate error
-    error = current_S - self.target_S
-    
-    # Proportional term
-    P = self.Kp * error
-    
-    # Integral term (with anti-windup)
-    self.integral += error
-    self.integral = clip(self.integral, -self.limit, self.limit)
-    I = self.Ki * self.integral
-    
-    # Control output (negative sign because dS/dLambda < 0)
-    u = P + I
-    
-    # Update actuator
-    self.current_lambda *= exp(-u)
-    
-    return self.current_lambda</code></pre>
+        <div class="grid grid-2 flex-center">
+          <div class="text-center">
+            <img src="photos/900px-Bown.jpg" alt="Ralph Bown Sr."
+              style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover; filter: grayscale(100%); margin-bottom: 1rem; border: 4px solid var(--white); box-shadow: var(--shadow-md);">
+            <p class="text-muted"><strong>Ralph Bown Sr.</strong><br>The Legacy</p>
           </div>
-          <p class="text-center text-muted">
-            The SCU adjusts regularization strength $\lambda$ exponentially based on the error signal from the target
-            Information Ratio.
+          <div class="text-center">
+            <!-- Placeholder for Hunter's photo -->
+            <div
+              style="width: 200px; height: 200px; background: var(--gray-200); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; border: 4px solid var(--white); box-shadow: var(--shadow-md);">
+              <span style="font-family: var(--font-mono); font-size: 3rem; color: var(--gray-500);">HB</span>
+            </div>
+            <p class="text-muted"><strong>Hunter Bown</strong><br>The Architect</p>
+          </div>
+        </div>
+
+        <div class="container-narrow mt-5">
+          <p class="lead text-center">
+            "I am not a physicist. I am a Band Director turned MBA turned Law Student turned Inventor."
+          </p>
+          <p>
+            My background isn't in a lab. It's on a marching band field, orchestrating 200 students to move in perfect
+            synchronization. It's in a law library, dissecting the precise definitions of words.
+          </p>
+          <p>
+            I see systems differently.
+          </p>
+          <ul style="list-style: none; padding: 0; text-align: center; font-size: 1.1rem;">
+            <li class="mb-2">🎵 <strong>Music</strong> taught me that <em>timing is everything</em>. (Driftlock)</li>
+            <li class="mb-2">⚖️ <strong>Law</strong> taught me that <em>definitions constrain complexity</em>. (SCU)
+            </li>
+            <li class="mb-2">📡 <strong>Heritage</strong> taught me that <em>fundamental primitives change the
+                world</em>.</li>
+          </ul>
+          <p class="text-center mt-4">
+            Shannon Labs is the convergence of these disciplines. We don't just build apps. We build the physics of the
+            future.
           </p>
         </div>
       </div>
