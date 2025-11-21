@@ -1,0 +1,16 @@
+# Lightweight API image that runs the SCU training service using Unsloth's base.
+
+FROM unsloth/unsloth:latest
+
+WORKDIR /app
+
+# Copy dependency list and install (torch/transformers already in base image)
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy source
+COPY . .
+
+# Default: start FastAPI server
+ENV PYTHONUNBUFFERED=1
+CMD ["python", "-m", "scu_api.server"]
