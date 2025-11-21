@@ -77,7 +77,7 @@ class JobQueueManager:
             INSERT INTO jobs(job_id, status, config_json, progress, created_at)
             VALUES(?, ?, ?, ?, ?)
             """,
-            (job_id, "queued", json.dumps(config.dict()), 0.0, now),
+            (job_id, "queued", json.dumps(config.model_dump()), 0.0, now),
         )
         conn.commit()
         conn.close()

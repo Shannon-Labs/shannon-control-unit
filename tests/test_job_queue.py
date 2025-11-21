@@ -28,7 +28,8 @@ async def test_job_queue_persists_and_marks_success(tmp_path):
 
     cfg = TrainingConfig(base_model="gpt2", train_data="/tmp/data.txt", steps=1)
 
-    async def fake_train(job_id, config, progress_cb):
+    def fake_train(job_id, config, progress_cb):
+        # Make this a synchronous function to match the real _train_job signature
         progress_cb(
             DummyMetrics(
                 step=0,
