@@ -1,194 +1,89 @@
-#!/usr/bin/env python3
-"""
-Test script for simplified SCU training logic
-"""
-
 import sys
-import time
-import numpy as np
+import shutil
 from pathlib import Path
+from unittest.mock import MagicMock, patch
 
-# Add project root to path
-sys.path.append('.')
+import pytest
+import torch
+from scu_api.config import TrainingConfig
+from scu_api.training_engine import TrainingEngine
 
-from scu2.core.simplified_controller import SimplifiedSCU, TrainingState
+
+@pytest.fixture
+def mock_accelerator():
+    with patch("scu_api.training_engine.Accelerator") as mock:
+        acc = mock.return_value
+        acc.device = torch.device("cpu")
+        acc.prepare.side_effect = lambda m, o, s: (m, o, s)
+        acc.unwrap_model.side_effect = lambda m: m
+        yield acc
 
 
-def test_sscu():
-    """Test simplified SCU logic"""
-    print("Testing Simplified SCU...")
+@pytest.fixture
+def mock_model_tokenizer():
+    with patch("scu_api.training_engine.AutoModelForCausalLM") as mock_model_cls, \
+         patch("scu_api.training_engine.AutoTokenizer") as mock_tok_cls, \
+         patch("scu_api.training_engine.get_peft_model") as mock_peft:
+        
+        # Mock Tokenizer
+        tokenizer = MagicMock()
+        tokenizer.pad_token = None
+        tokenizer.eos_token = "</s>"
+        tokenizer.model_max_length = 1024
+        tokenizer.return_value = {"input_ids": [1, 2, 3], "attention_mask": [1, 1, 1]}
+        mock_tok_cls.from_pretrained.return_value = tokenizer
 
-    controller = SimplifiedSCU(
-        target_loss_improvement=0.01,
-        control_frequency=20,
-        enable_multiscale_analysis=True
+        # Mock Model
+        model = MagicMock()
+        model.config.use_cache = True
+        # Mock forward pass output
+        output = MagicMock()
+        output.loss = torch.tensor(2.5)
+        model.return_value = output
+        model.parameters.return_value = [torch.nn.Parameter(torch.randn(1))]
+        mock_model_cls.from_pretrained.return_value = model
+        
+        # Mock PEFT
+        peft_model = MagicMock()
+        peft_model.print_trainable_parameters = MagicMock()
+        peft_model.parameters.return_value = [torch.nn.Parameter(torch.randn(1))]
+        # Forward pass on peft model
+        peft_model.return_value = output
+        mock_peft.return_value = peft_model
+
+        yield model, tokenizer
+
+
+def test_training_engine_run(tmp_path, mock_accelerator, mock_model_tokenizer):
+    """Test that TrainingEngine runs a minimal loop without errors."""
+    
+    # Create dummy data
+    data_file = tmp_path / "train.txt"
+    data_file.write_text("This is a test sentence for training.\n" * 10)
+
+    config = TrainingConfig(
+        base_model="gpt2",
+        train_data=str(data_file),
+        steps=2,  # Run only 2 steps
+        batch_size=1,
+        adapter_out=str(tmp_path / "adapter"),
+        use_unsloth=False,  # Force standard path
+        log_csv=str(tmp_path / "log.csv")
     )
 
-    print("✓ SCU controller created")
+    engine = TrainingEngine(config, job_id="test_job")
+    
+    # Mock data loading to avoid actual tokenization overhead/errors
+    with patch("shannon_control.data.load_texts_from_file", return_value=["text"] * 5), \
+         patch("shannon_control.data.tokenize_and_chunk", return_value=[{"input_ids": [1], "attention_mask": [1]}] * 5):
+        
+        adapter_path = engine.run()
 
-    # Simulate training with decreasing loss
-    actions_taken = 0
-    for step in range(100):
-        # Simulate loss decreasing with some noise and patterns
-        base_loss = 2.0 * np.exp(-step * 0.01)
-
-        # Add some interesting dynamics
-        if 30 < step < 40:
-            base_loss *= 1.2  # Simulate difficulty
-        if step > 70:
-            base_loss *= 0.9  # Fast convergence
-
-        noise = 0.05 * np.random.randn()
-        loss = base_loss + noise
-
-        # Simulate gradient norm with some patterns
-        grad_norm = 0.5 + 0.3 * np.sin(step * 0.1) + 0.1 * np.random.randn()
-
-        # Create training state
-        state = TrainingState(
-            loss_value=loss,
-            gradient_norm=grad_norm,
-            learning_rate=2e-4,
-            batch_size=2,
-            step_count=step,
-            timestamp=time.time()
-        )
-
-        # Get SCU action
-        action = controller.update_state(state)
-
-        if action:
-            actions_taken += 1
-            print(f"  Step {step}: {action.reason[:60]}...")
-
-    summary = controller.get_training_summary()
-    print(f"✓ SCU test completed")
-    print(f"  Actions taken: {actions_taken}")
-    print(f"  Final loss: {summary['current_loss']:.4f}")
-    print(f"  Loss trend: {summary['loss_trend']:.6f}")
-
-    return True
-
-
-def test_multiscale_entropy():
-    """Test multi-scale entropy analysis"""
-    print("\nTesting Multi-scale Entropy Analysis...")
-
-    try:
-        from scu2.core.multiscale_entropy import quick_multiscale_analysis
-
-        # Create a test signal with multi-scale structure
-        t = np.linspace(0, 10, 256)
-        signal = (
-            np.sin(2 * np.pi * 1 * t) +           # Low frequency
-            0.5 * np.sin(2 * np.pi * 10 * t) +    # Medium frequency
-            0.2 * np.sin(2 * np.pi * 50 * t) +    # High frequency
-            0.1 * np.random.randn(len(t))         # Noise
-        )
-
-        result = quick_multiscale_analysis(signal)
-
-        print("✓ Multi-scale analysis completed")
-        print(f"  Total entropy bits: {result['total_entropy_bits']:.2f}")
-        print(f"  Selected scales: {result['selected_scales_count']}")
-        print(f"  Scale mask: {result['scale_mask_hex']}")
-
-        return True
-
-    except Exception as e:
-        print(f"✗ Multi-scale analysis failed: {e}")
-        return False
-
-
-def test_config():
-    """Test configuration loading"""
-    print("\nTesting Configuration...")
-
-    try:
-        from scu2.production.configs.qwen3_4b_mlx_config import Qwen3MLXProductionConfig
-
-        config = Qwen3MLXProductionConfig()
-
-        print("✓ Configuration loaded successfully")
-        print(f"  Model: {config.model_name}")
-        print(f"  Batch size: {config.batch_size}")
-        print(f"  Max steps: {config.max_steps}")
-        print(f"  Learning rate: {config.learning_rate}")
-        print(f"  LoRA enabled: {config.use_lora}")
-
-        return True
-
-    except Exception as e:
-        print(f"✗ Configuration test failed: {e}")
-        return False
-
-
-def test_mock_training():
-    """Test mock training without actual model"""
-    print("\nTesting Mock Training Logic...")
-
-    try:
-        from scu2.production.scripts.train_qwen3_simple import SimplifiedTrainer
-        from scu2.production.configs.qwen3_4b_mlx_config import Qwen3MLXProductionConfig
-
-        config = Qwen3MLXProductionConfig()
-        config.max_steps = 10  # Very short test
-
-        # Mock trainer arguments
-        class MockArgs:
-            def __init__(self):
-                self.train_batch_size = config.batch_size
-                self.max_grad_norm = 1.0
-
-        # Create a mock trainer (we can't actually instantiate without a model)
-        # But we can test the import and basic structure
-        print("✓ Trainer import successful")
-        print(f"  Mock trainer would use: {config.max_steps} steps")
-        print(f"  Batch size: {config.batch_size}")
-        print(f"  Control frequency: 50 steps")
-
-        return True
-
-    except Exception as e:
-        print(f"✗ Mock training test failed: {e}")
-        return False
-
-
-def main():
-    """Run all tests"""
-    print("🚀 Starting T-SCU Training Logic Tests\n")
-
-    tests = [
-        ("Simplified SCU", test_sscu),
-        ("Multi-scale Entropy", test_multiscale_entropy),
-        ("Configuration", test_config),
-        ("Mock Training", test_mock_training),
-    ]
-
-    passed = 0
-    total = len(tests)
-
-    for test_name, test_func in tests:
-        try:
-            if test_func():
-                passed += 1
-        except Exception as e:
-            print(f"✗ {test_name} failed with exception: {e}")
-
-    print(f"\n📊 Test Results: {passed}/{total} tests passed")
-
-    if passed == total:
-        print("🎉 All tests passed! Training pipeline is ready.")
-        print("\n🚀 Ready to train Qwen3-4B-MLX-4bit!")
-        print("\nTo start training:")
-        print("1. Install missing dependencies: pip install datasets")
-        print("2. Run: python scu2/production/scripts/train_qwen3_simple.py --test-run")
-    else:
-        print("❌ Some tests failed. Please check the issues above.")
-        return 1
-
-    return 0
-
-
-if __name__ == "__main__":
-    exit(main())
+    assert adapter_path.exists()
+    assert (adapter_path / "metadata.json").exists()
+    assert (tmp_path / "log.csv").exists()
+    
+    # Verify logs contain expected headers
+    with open(tmp_path / "log.csv") as f:
+        header = f.readline()
+        assert "s_ratio" in header or "S" in header

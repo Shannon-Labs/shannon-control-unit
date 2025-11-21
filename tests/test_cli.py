@@ -103,3 +103,13 @@ def test_cli_health(monkeypatch):
     res = runner.invoke(cli, ["health"])
     assert res.exit_code == 0
     assert "ok" in res.output
+
+
+def test_cli_jobs(monkeypatch):
+    dummy = DummyClient()
+    monkeypatch.setattr("scu_api.cli.main.SCUClient", lambda url: dummy)
+    runner = CliRunner()
+    res = runner.invoke(cli, ["jobs"])
+    assert res.exit_code == 0
+    assert "abc123" in res.output
+

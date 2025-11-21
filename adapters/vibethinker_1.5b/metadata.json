@@ -1,0 +1,18 @@
+{
+  "job_id": "799c60e4",
+  "base_model": "/Volumes/VIXinSSD/shannon-control-unit/models/VibeThinker-1.5B",
+  "target_s": 0.01,
+  "kp": 0.8,
+  "ki": 0.15,
+  "deadband": 0.002,
+  "lambda_init": 1.0,
+  "lambda_min": 0.0001,
+  "lambda_max": 2.0,
+  "epochs": 1,
+  "steps": 100,
+  "batch_size": 1,
+  "lr": 5e-05,
+  "block_size": 1024,
+  "gradient_accumulation_steps": 16,
+  "timestamp": "2025-11-21T00:21:54.867377"
+}

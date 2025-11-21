@@ -1,4 +1,0 @@
-# Shannon Labs Robots.txt
-User-agent: *
-Allow: /
-Sitemap: https://shannonlabs.dev/sitemap.xml

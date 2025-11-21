@@ -30,6 +30,30 @@ where **DataBPT** is the bits-per-token of the loss and **ParamBPT** is the bits
 
 optionally with deadband and integral clamping for anti-windup. Updates are applied at gradient-accumulation boundaries to maintain stability.
 
+### Control System Highlights
+- **Closed-loop, not scheduled:** PI controller keeps S near the target S*; λ adapts continually instead of following a fixed decay or manual grid.
+- **Stability primitives:** Deadband to avoid chatter, integral clamp/leak for anti-windup, and λ min/max guards to prevent runaway behavior.
+- **Observation + actuation:** Telemetry exposes S/DataBPT/ParamBPT; λ updates gate at accumulation boundaries to avoid noise amplification.
+- **Hardware-aware path:** CUDA 4-bit + Unsloth fast path when requested; MPS and CPU fall back safely with sane defaults.
+- **Bootstrapping:** Auto-config seeds controller gains/targets from model and dataset scale so feedback starts stable on first step.
+
+### Control Loop (text diagram)
+
+```
+Data → Tokenize/Batch → Model (plant)
+          │                 │
+          │          Loss → DataBPT, ParamBPT → S = ParamBPT / (DataBPT + ParamBPT)
+          │                 │                           │
+          └─────────────── Feedback (e = S - S*) ───────┘
+                                 │
+                          PI Controller (Kp, Ki, deadband, clamp)
+                                 │
+                            λ(t+1) actuator (regularization weight)
+                                 │
+                          Applied at grad-accum boundaries
+```
+
+
 ## 3. Results
 
 We validated SCU by fine-tuning Llama 3.2 models on a subset of WikiText-103. The results show significant improvements in compression efficiency (Bits Per Token) and Perplexity compared to an optimally tuned cross-entropy baseline.
@@ -132,6 +156,24 @@ This repository is dual-licensed:
 **Intellectual Property:** The SCU methodology is subject to a U.S. Provisional Patent (Filed September 2025).
 
 **Technical Paper:** See [SCU_Technical_Report_v1.pdf](./SCU_Technical_Report_v1.pdf) for detailed methodology and evaluation.
+
+---
+
+## Appendix: Control Math (tl;dr)
+
+- **S-ratio (controlled variable):**
+  
+  \(S = \frac{\text{ParamBPT}}{\text{DataBPT} + \text{ParamBPT}}\); reduces to the information ratio between parameter update cost and data fit.
+- **Error:** \(e(t) = S(t) - S^*\) with plant gain \(\partial S / \partial \lambda < 0\).
+- **PI update with deadband and clamp:**
+  
+  \(e_d = 0\) if \(|e| < \delta\) (deadband), else \(e_d = e\).
+  
+  \(I_{t+1} = \text{clip}(I_t + e_d, I_{\min}, I_{\max})\).
+  
+  \(\lambda_{t+1} = \text{clip}\big( \lambda_t \cdot \exp(-(K_p e_d + K_i I_{t+1})), \lambda_{\min}, \lambda_{\max} \big)\).
+- **Actuation point:** apply λ update at gradient-accumulation boundaries to avoid per-microbatch noise.
+- **Stability aids:** deadband to prevent chatter; integral clamp/leak to avoid windup; λ bounds to avoid runaway; controller gains set by auto-config from model/dataset scale.
 
 ---
 

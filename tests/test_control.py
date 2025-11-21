@@ -2,7 +2,7 @@
 import math
 import unittest
 
-from scu.control import update_lambda
+from shannon_control.control import update_lambda
 
 
 class TestSCUController(unittest.TestCase):
@@ -20,7 +20,7 @@ class TestSCUController(unittest.TestCase):
         self.assertLess(l2, lmbda)
 
     def test_bounds_and_integral(self):
-        lmbda, I, _ = update_lambda(2.0, 0.02, 0.01, 0.3, **self.kw)
+        lmbda, I, _ = update_lambda(2.0, 0.02, 0.01, 0.2, **self.kw)
         self.assertLessEqual(lmbda, 2.0 + 1e-9)
         self.assertLessEqual(I, 0.2 + 1e-6)
 

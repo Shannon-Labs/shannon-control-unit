@@ -221,4 +221,7 @@ async def health():
 if __name__ == "__main__":
     import uvicorn
 
+    for route in app.routes:
+        print(f"Route: {route.path} {route.methods}")
+
     uvicorn.run(app, host="0.0.0.0", port=8000)
