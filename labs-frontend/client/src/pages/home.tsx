@@ -108,7 +108,7 @@ export default function Home() {
           <div className="relative group">
             <LinkableCard 
               title="DRIFTLOCK CHOIR"
-              specs="Chronometric Interferometry. 2025 Extension of Ralph Bown's 1948 Patent. Wireless sync at ~90fs precision. Current Objective: Bench validation of the hardware layer at scale (Target: Fort Mason)."
+              specs="Chronometric Interferometry. 2025 Extension of Ralph Bown's 1948 Patent. Wireless sync at ~90fs precision. Current Objective: Bench validation of the hardware layer at scale."
               link="https://github.com/Hmbown/DRIFTLOCKCHOIR"
               highlight={true}
             />

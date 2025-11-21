@@ -135,7 +135,12 @@ def main(args):
     print(f"Created {len(train_chunks)} training chunks")
     
     # Calculate tokens per epoch for normalization
-    tokens_per_epoch = len(train_chunks) * actual_block_size
+    if args.tokens_per_epoch_override:
+        tokens_per_epoch = args.tokens_per_epoch_override
+        print(f"Using OVERRIDE tokens per epoch: {tokens_per_epoch}")
+    else:
+        tokens_per_epoch = len(train_chunks) * actual_block_size
+        print(f"Calculated tokens per epoch: {tokens_per_epoch}")
     
     # Setup optimizer (weight_decay=0 since we use ParamBPT)
     optimizer = torch.optim.AdamW(
@@ -357,6 +362,10 @@ if __name__ == "__main__":
     # Logging
     parser.add_argument("--log_csv", default="logs/scu_training.csv",
                        help="CSV file for logging")
+    
+    # Advanced control
+    parser.add_argument("--tokens_per_epoch_override", type=int, default=None,
+                       help="Override calculated tokens per epoch (for complexity normalization)")
     
     # Quick start mode
     parser.add_argument("--quickstart", action="store_true",

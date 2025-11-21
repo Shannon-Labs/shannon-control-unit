@@ -13,6 +13,93 @@
 
 **Status**: Patent pending, dual-licensed (AGPL-3.0 + commercial), seeking 7B+ validation partners.
 
+## Core Concepts: Model-Data Scaling
+
+SCU provides principled detection and response to model-data scaling imbalances. The system quantitatively measures when parameter complexity exceeds dataset justification through the S-ratio and responds via adaptive regularization.
+
+### Quantifying Model-Data Balance
+
+The information ratio S reveals the relative contribution of parameter complexity versus data fit:
+
+```
+S = ParamBPT / (DataBPT + ParamBPT)
+```
+
+**ParamBPT** (parameter bits per token) represents the description length of model updates, scaling inversely with dataset size:
+
+```
+ParamBPT ∝ 1 / tokens_per_epoch
+```
+
+**Interpretation thresholds**:
+- **S ≈ 1%**: Optimal balance (target)
+- **S > 10%**: Model is over-parameterized for dataset
+- **S > 50%**: Severe data starvation; regularization saturates
+
+### SCU Response to Scaling Mismatch
+
+When S exceeds target:
+1. Controller increases λ (regularization strength)
+2. ParamBPT decreases proportionally
+3. S approaches target through feedback
+
+When data is insufficient, λ may saturate at maximum (default: 2.0), indicating the system cannot achieve target S with available data.
+
+### Scaling Guidelines
+
+For prior σ=0.01 and target S=1%:
+
+```
+tokens_per_parameter ≈ 1 / (2 × σ² × S × ln(2))
+tokens_per_parameter ≈ 140
+```
+
+**Example requirements**:
+- 18M LoRA parameters: ~2.5B tokens (~10GB text)
+- 100M full parameters: ~14B tokens (~56GB text)
+
+### Resolution Strategies
+
+When λ saturates (S too high):
+
+1. **Increase Dataset**: Most theoretically rigorous
+   - Follows Minimum Description Length principles
+   - Maintains mathematical consistency
+   - Example: Download additional data via `scripts/download_finewiki.py`
+
+2. **Parameter Count Normalization**: Practical alternative
+   - Use `--tokens_per_epoch_override` to adjust normalization
+   - Effective for domain-specific fine-tuning
+   - Document override usage clearly
+
+3. **Prior Adjustment**: Modify regularization scale
+   - Increase σ (e.g., from 0.01 to 0.1) → 100× ParamBPT reduction
+   - Loosens weight prior assumptions
+   - Changes theoretical interpretation
+
+4. **Architecture Modification**: Reduce parameters
+   - Lower LoRA rank (e.g., r=16 → r=8)
+   - Reduces ParamBPT quadratically
+   - May impact representational capacity
+
+**Documentation**: Always report whether results use natural token counts or normalization overrides.
+
+### VibeThinker 1.5B Example
+
+**Configuration A**: Insufficient data
+- Model: 1.5B parameters, 18M LoRA parameters
+- Dataset: 2MB text, 530k tokens
+- Result: ParamBPT=14.2, S=64%, λ saturated at 2.0
+- Diagnosis: Severe model-data imbalance (≈0.03 tokens/parameter)
+
+**Configuration B**: Extended data
+- Dataset: HuggingFaceFW/finewiki, 100MB, 26M tokens
+- Result: ParamBPT=0.287, S=4.1%, λ in active regulation
+- Normalization: With 100M token override, S=1.5%
+- Conclusion: Adequate scaling for this adaptation task
+
+This demonstrates SCU's quantitative assessment capability and the importance of appropriate model-data scaling.
+
 ## Technology Stack
 
 **Core Dependencies**:

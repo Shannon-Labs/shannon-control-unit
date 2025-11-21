@@ -1,0 +1,16 @@
+{
+  "base_model": "models/VibeThinker-1.5B",
+  "target_s": 0.01,
+  "final_s": 0.018268828409354985,
+  "final_lambda": 2.0,
+  "final_data_bpt": 4.0864945576591705,
+  "final_param_bpt": 0.07604471573279907,
+  "kp": 0.8,
+  "ki": 0.15,
+  "prior_sigma": 0.01,
+  "block_size": 1024,
+  "tokens_per_epoch": 100000000,
+  "steps": 1000,
+  "seed": 42,
+  "timestamp": "2025-11-21T09:34:49.351016"
+}
