@@ -25,7 +25,7 @@ S(t) = ParamBPT(t) / (DataBPT(t) + ParamBPT(t))
 where **DataBPT** is the bits-per-token of the loss and **ParamBPT** is the bits-per-token of the parameter update. The control objective is `S(t) → S*`. Let `e(t) = S(t) - S*`. With plant gain `∂S/∂λ < 0`, the PI law updates the regularization strength as:
 
 ```
-λ_(t+1) = λ_t × exp(-(K_p × e(t) + K_i × Σ e(τ)))
+λ(t+1) = λ(t) * exp(-(K_p × e(t) + K_i × Σ e(τ)))
 ```
 
 optionally with deadband and integral clamping for anti-windup. Updates are applied at gradient-accumulation boundaries to maintain stability.
@@ -48,7 +48,7 @@ We validated SCU by fine-tuning Llama 3.2 models on a subset of WikiText-103. Th
 The application of control theory to LLM training is an emerging and promising field.
 
 ### 4.1 Independent Convergence: EntroPIC
-Recent independent work, **EntroPIC** (arXiv:2511.15248), applies PI control to stabilize policy entropy in reinforcement learning. Both approaches use PI control for training stability, but target different metrics: SCU regulates information ratio in supervised learning, while EntroPIC regulates policy entropy in RL. They're essentially two sides of the same coin - using feedback control to stabilize neural training dynamics.
+Recent independent work, **EntroPIC** (arXiv:2511.15248), applies PI control to stabilize policy entropy in reinforcement learning. While EntroPIC regulates policy entropy in RL, SCU regulates the information ratio in supervised learning. Both validate the necessity of feedback control for neural training dynamics.
 
 ## 5. Future Directions
 
