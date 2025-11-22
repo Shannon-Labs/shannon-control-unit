@@ -1,14 +1,14 @@
 import { ExternalLink } from "lucide-react";
 import patentImg from "@assets/US2436376-drawings-page-1 (1)_1763705732448.png";
 
-const LinkableCard = ({ 
-  title, 
-  specs, 
+const LinkableCard = ({
+  title,
+  specs,
   link,
   highlight = false,
-}: { 
-  title: string, 
-  specs: string, 
+}: {
+  title: string,
+  specs: string,
   link: string,
   highlight?: boolean,
 }) => (
@@ -16,9 +16,8 @@ const LinkableCard = ({
     href={link}
     target="_blank"
     rel="noopener noreferrer"
-    className={`relative border-r border-b border-black p-8 flex flex-col justify-between h-full min-h-[320px] group overflow-hidden transition-none cursor-pointer ${
-      highlight ? 'bg-black text-white hover:invert' : 'bg-white text-black hover:bg-black hover:text-white'
-    }`}
+    className={`relative border-r border-b border-black p-8 flex flex-col justify-between h-full min-h-[320px] group overflow-hidden transition-none cursor-pointer ${highlight ? 'bg-black text-white hover:invert' : 'bg-white text-black hover:bg-black hover:text-white'
+      }`}
     style={{ backgroundColor: highlight ? '#000000' : '#FFFFFF', borderColor: '#0A0A0A' }}
   >
     <div className="relative z-10">
@@ -28,7 +27,7 @@ const LinkableCard = ({
       </div>
       <p className="font-serif text-base leading-relaxed">{specs}</p>
     </div>
-    
+
     {!highlight && (
       <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-100 mix-blend-mode-difference pointer-events-none transition-none z-20"></div>
     )}
@@ -38,7 +37,7 @@ const LinkableCard = ({
 export default function Home() {
   return (
     <div className="min-h-screen bg-white text-black font-serif selection:bg-black selection:text-white" style={{ backgroundColor: '#F5F5F0', color: '#0A0A0A' }}>
-      
+
       {/* 1. HEADER (Sticky) */}
       <header className="sticky top-0 z-50 border-b flex justify-between items-center px-6 py-4 uppercase font-sans text-sm tracking-wide" style={{ backgroundColor: '#F5F5F0', borderColor: '#0A0A0A' }}>
         <div className="font-bold text-lg">
@@ -54,11 +53,14 @@ export default function Home() {
       {/* 2. HERO SECTION */}
       <section className="border-b py-32 px-6 md:px-12 flex flex-col items-start justify-center" style={{ backgroundColor: '#F5F5F0', borderColor: '#0A0A0A' }}>
         <h1 className="text-7xl md:text-8xl lg:text-9xl font-serif font-normal leading-none tracking-tight mb-8" style={{ color: '#0A0A0A' }}>
-          SHANNON<br/>LABS
+          SHANNON<br />LABS
         </h1>
         <h2 className="text-xl md:text-2xl font-mono font-normal mb-8 uppercase tracking-widest" style={{ color: '#0A0A0A' }}>
           THE ARCHITECTURE OF SOVEREIGN AI.
         </h2>
+        <div className="font-mono text-sm mb-8 max-w-3xl" style={{ color: '#0A0A0A' }}>
+          <span className="font-bold uppercase">Current focus:</span> Driftlock Choir — a truly wireless distributed timing mesh network, turning time into a network primitive for 6G, robotics, and high-frequency trading.
+        </div>
         <div className="font-mono text-xs uppercase tracking-widest border-t pt-6" style={{ borderColor: '#0A0A0A' }}>
           Est. 2025 | Dallas, TX | Status: Operating
         </div>
@@ -69,7 +71,7 @@ export default function Home() {
         <article className="max-w-[75ch] w-full" style={{ backgroundColor: '#FFFFFF', color: '#0A0A0A' }}>
           <div className="p-10 md:p-14 border" style={{ borderColor: '#0A0A0A' }}>
             <div className="mb-8">
-              <p className="font-mono text-xs uppercase tracking-widest mb-4 opacity-70">The Founder's Vision (1952)</p>
+              <p className="font-mono text-xs uppercase tracking-widest mb-4 opacity-70">The Inspiration — The Original "Idea Factory" (1952)</p>
               <p className="font-serif text-2xl md:text-3xl leading-relaxed italic">
                 "To maintain vitality implies a dynamic process of continuous growth in which a steady state is achieved only by matching construction against decay."
               </p>
@@ -78,7 +80,7 @@ export default function Home() {
               — Ralph Bown, Vice-President of Research, Bell Labs
             </div>
             <div className="text-center font-serif text-lg italic mt-8" style={{ color: '#0A0A0A' }}>
-              Ralph Bown announced the transistor (1948).<br/>We are announcing the protocol for what comes next: <span className="font-bold">Sovereign AI.</span>
+              Ralph Bown announced the transistor (1948).<br />We are announcing the protocol for what comes next: <span className="font-bold">Sovereign AI.</span>
             </div>
           </div>
         </article>
@@ -90,25 +92,25 @@ export default function Home() {
           // The 4 Pillars of Sovereignty
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2">
-          <LinkableCard 
+          <LinkableCard
             title="SHANNON CONTROL UNIT"
             specs="Entropy Stabilization via Closed-Loop PI Control. Validated at 1B/3B scales. Priority Date: Sept 02, 2025."
             link="https://github.com/Shannon-Labs/shannon-control-unit"
           />
-          <LinkableCard 
+          <LinkableCard
             title="HEGELION"
             specs="Dialectical Reasoning Engine. Recursive Thesis → Antithesis → Synthesis. Structuring thought beyond prediction."
             link="https://github.com/Hmbown/Hegelion"
           />
-          <LinkableCard 
+          <LinkableCard
             title="DRIFTLOCK"
-            specs="Compression-Based Anomaly Detection. Deterministic engine using entropy deltas to understand data drift without training."
+            specs="Compression-based anomaly detection. Deterministic entropy engine that detects data drift without training data."
             link="https://driftlock.net"
           />
           <div className="relative group">
-            <LinkableCard 
+            <LinkableCard
               title="DRIFTLOCK CHOIR"
-              specs="Chronometric Interferometry. 2025 Extension of Ralph Bown's 1948 Patent. Wireless sync at ~90fs precision. Current Objective: Bench validation of the hardware layer at scale."
+              specs="Chronometric interferometry. 2025 extension of Ralph Bown’s 1948 patent. Wireless sync at ~90fs precision. Current objective: bench validation of the hardware layer at scale — towards a truly wireless distributed timing mesh network."
               link="https://github.com/Hmbown/DRIFTLOCKCHOIR"
               highlight={true}
             />
@@ -126,19 +128,19 @@ export default function Home() {
           <header className="mb-10 text-center border-b-2 pb-8" style={{ borderColor: '#0A0A0A' }}>
             <h2 className="text-4xl lg:text-5xl font-serif font-bold mb-4 uppercase">The Renaissance Protocol</h2>
           </header>
-          
+
           <div className="space-y-6 text-lg leading-relaxed font-serif">
             <p>
               I am building the "Patent-Attorney-Inventor-Musician" profile—a Renaissance approach for the AGI era.
             </p>
             <p>
-              I am currently a 2L at SMU Law and hold an MBA, but these ideas are moving faster than the semester.
+              I’m a 2L at SMU Law with an MBA, but these ideas are moving faster than the semester.
             </p>
             <p>
               I have three commercially viable software architectures (SCU, Driftlock, Hegelion) and one massive hardware research thesis (Choir).
             </p>
             <p>
-              I am not leaving the law; I am informing it. But the Inventor leg of the stool needs a lab.
+              I’m not leaving the law; I’m trying to help rewrite it for the AGI era. But the Inventor leg of the stool needs a lab.
             </p>
             <p>
               To validate Chronometric Interferometry, I need to be around builders who think at this frequency.
@@ -156,7 +158,7 @@ export default function Home() {
           <h2 className="text-2xl md:text-3xl font-serif font-bold mb-12 uppercase text-center" style={{ color: '#0A0A0A' }}>
             Research Vectors
           </h2>
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-20">
             {/* VECTORS */}
             <div>
@@ -191,7 +193,7 @@ export default function Home() {
                 </div>
                 <div className="p-6 border" style={{ backgroundColor: '#FFFFFF', borderColor: '#0A0A0A', color: '#0A0A0A' }}>
                   <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">[06]</div>
-                  <h3 className="font-bold text-lg mb-2">Sovereignty</h3>
+                  <h3 className="font-bold text-lg mb-2">SOVEREIGNTY</h3>
                   <p className="font-serif text-sm leading-relaxed">AI systems that are self-stabilizing, self-reasoning, and self-synchronizing. Architecture for AGI-era autonomy.</p>
                 </div>
               </div>
@@ -306,7 +308,7 @@ export default function Home() {
           <a href="https://www.linkedin.com/in/hunterbown/" target="_blank" rel="noopener noreferrer" className="hover:bg-white hover:text-black px-2 py-1 transition-none">[LINKEDIN]</a>
         </div>
       </footer>
-      
+
     </div>
   );
 }
