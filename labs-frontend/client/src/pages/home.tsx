@@ -5,11 +5,13 @@ const LinkableCard = ({
   title,
   specs,
   link,
+  icon,
   highlight = false,
 }: {
   title: string,
   specs: string,
   link: string,
+  icon?: string,
   highlight?: boolean,
 }) => (
   <a
@@ -22,7 +24,10 @@ const LinkableCard = ({
   >
     <div className="relative z-10">
       <div className={`flex justify-between items-start mb-6 pb-4 border-b ${highlight ? 'border-white/40' : 'border-black/20'}`}>
-        <h3 className="text-2xl font-bold uppercase font-sans tracking-tight flex-1 pr-4">{title}</h3>
+        <div className="flex items-center gap-3 flex-1 pr-4">
+          {icon && <img src={icon} alt={`${title} Logo`} className={`h-8 w-8 object-contain ${highlight ? 'invert' : ''}`} />}
+          <h3 className="text-2xl font-bold uppercase font-sans tracking-tight">{title}</h3>
+        </div>
         <ExternalLink className="w-4 h-4 ml-2 flex-shrink-0 mt-1" strokeWidth={1.5} />
       </div>
       <p className="font-serif text-base leading-relaxed">{specs}</p>
@@ -40,7 +45,8 @@ export default function Home() {
 
       {/* 1. HEADER (Sticky) */}
       <header className="sticky top-0 z-50 border-b flex justify-between items-center px-6 py-4 uppercase font-sans text-sm tracking-wide" style={{ backgroundColor: '#F5F5F0', borderColor: '#0A0A0A' }}>
-        <div className="font-bold text-lg">
+        <div className="font-bold text-lg flex items-center gap-3">
+          <img src="/shannon-logo.png" alt="Shannon Labs Logo" className="h-8 w-8 object-contain" />
           SHANNON LABS
         </div>
         <div className="font-mono text-xs flex gap-4">
@@ -106,12 +112,14 @@ export default function Home() {
             title="DRIFTLOCK"
             specs="Compression-based anomaly detection. Deterministic entropy engine that detects data drift without training data."
             link="https://driftlock.net"
+            icon="/driftlock-logo.png"
           />
           <div className="relative group">
             <LinkableCard
               title="DRIFTLOCK CHOIR"
               specs="Chronometric interferometry. 2025 extension of Ralph Bown’s 1948 patent. Wireless sync at ~90fs precision. Current objective: bench validation of the hardware layer at scale — towards a truly wireless distributed timing mesh network."
               link="https://github.com/Hmbown/DRIFTLOCKCHOIR"
+              icon="/driftlock-choir-logo.svg"
               highlight={true}
             />
             {/* Ralph Bown Patent Overlay on Hover */}
