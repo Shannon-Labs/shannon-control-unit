@@ -65,10 +65,12 @@ At Step 386, the rate of information gain stalled. The model had recovered its g
 ## 4. Discussion: Efficiency & Safety
 
 ### 4.1 The 95% Efficiency Claim
-Standard practice would dictate training for 1 full epoch (~8000 steps).
-*   SCU detected saturation at **386 steps**.
-*   Compute utilized: $386 / 8000 \approx 4.8\%$.
-*   **Potential Savings:** **~95%** of compute in a standard run would have been wasted on the "Saturation Phase," yielding no generalizable gain and risking catastrophic forgetting.
+Standard practice for fine-tuning Large Language Models (LLMs) typically mandates training for **1 to 3 epochs** to ensuring the model sees all available data at least once. 
+*   **Standard 1 Epoch Run:** ~130M tokens ($\approx$ 8000 steps).
+*   **SCU Detection:** Saturation at ~6.3M tokens (386 steps).
+*   **Compute Utilized:** $386 / 8000 \approx 4.8\%$.
+
+**Conclusion:** By identifying that the highly-optimized VibeThinker model saturated its learning capacity in just 4.8% of a single epoch, SCU effectively saved **~95% of the compute** that a standard training run would have consumed. This transforms the training process from a "fixed recipe" into an "adaptive observation," preventing massive resource waste on already-learned data.
 
 ### 4.2 Dual-Domain Preservation
 The slight PPL difference (70.39 vs 70.27) is statistically negligible for English, but significant for structure. By freezing weights at Step 386, SCU preserved the latent mathematical topology of the model. The Baseline, by continuing to optimize for English PPL, likely began eroding these specialized circuits (Catastrophic Forgetting).
