@@ -1,0 +1,16 @@
+{
+  "base_model": "/Volumes/VIXinSSD/shannon-control-unit/models/VibeThinker-1.5B",
+  "target_s": 0.01,
+  "final_s": 0.018305412077223977,
+  "final_lambda": 2.0,
+  "final_data_bpt": 3.4930904346363594,
+  "final_param_bpt": 0.06513477879543728,
+  "kp": 0.8,
+  "ki": 0.15,
+  "prior_sigma": 0.01,
+  "block_size": 1024,
+  "tokens_per_epoch": 117776384,
+  "steps": 500,
+  "seed": 42,
+  "timestamp": "2025-11-21T13:38:30.638004"
+}

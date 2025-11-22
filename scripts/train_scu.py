@@ -169,6 +169,7 @@ def main(args):
     S_meas = 0.0
     data_bpt = 0.0
     param_bpt = 0.0
+    initial_data_bpt = None
     
     # Open CSV log file
     csv_file = None
@@ -335,7 +336,15 @@ if __name__ == "__main__":
     
     # Training args
     parser.add_argument("--prior_sigma", type=float, default=0.01,
-                       help="Prior std dev for ParamBPT")
+                       help="Prior std dev for ParamBPT (fixed)")
+    # Dynamic prior args
+    parser.add_argument("--dynamic_prior", action="store_true",
+                       help="Enable dynamic prior adaptation based on learning progress")
+    parser.add_argument("--prior_sigma_initial", type=float, default=0.01,
+                       help="Initial prior sigma for dynamic mode")
+    parser.add_argument("--prior_sigma_max", type=float, default=0.05,
+                       help="Maximum prior sigma for dynamic mode")
+    
     parser.add_argument("--epochs", type=int, default=1,
                        help="Number of epochs")
     parser.add_argument("--steps", type=int, default=None,
