@@ -29,7 +29,8 @@ The following files are now updated and ready for release:
 
 ## 🔜 Next Steps
 
-1.  **Push to Hugging Face:** Upload the V3 adapter and the new benchmark results to the model card.
+1.  **Push to Hugging Face:** Upload the VibeThinker-1.5B-SCU model to Hugging Face.
+    *   ✅ **DONE:** Published at [hunterbown/VibeThinker-1.5B-SCU](https://huggingface.co/hunterbown/VibeThinker-1.5B-SCU)
 2.  **Release:** Tag a new version (e.g., v1.1-validated) in git.
 
 *Great work on this. The ablation study (V4) was the final piece needed to turn "an experiment" into "science."
