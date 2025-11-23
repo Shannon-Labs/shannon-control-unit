@@ -135,3 +135,7 @@ server.log
 # Frontend build artifacts
 labs-frontend/dist/
 labs-frontend/node_modules/
+
+# Investor materials
+labs-frontend/SLIDE_DECK_USAGE.md
+labs-frontend/client/src/pages/deck.tsx

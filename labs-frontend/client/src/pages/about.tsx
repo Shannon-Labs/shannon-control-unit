@@ -11,6 +11,7 @@ export default function About() {
         </div>
         <div className="font-mono text-xs flex gap-4">
           <a href="/" className="hover:underline hover:bg-black hover:text-white px-1 transition-none">[HOME]</a>
+          <a href="/art" className="hover:underline hover:bg-black hover:text-white px-1 transition-none">[ART, EDUCATION &amp; MUSIC]</a>
         </div>
       </header>
 
@@ -38,10 +39,10 @@ export default function About() {
               Growing up, I was told how the government "stole everything" from Bell Labs. Later, I learned it was the 1956 Consent Decree—a decision that broke a monopoly but inadvertently sowed the seeds for the open ecosystem that allowed me to be born into a world of available technology.
             </p>
             <p>
-              Now, as a 2L at Southern Methodist University (SMU) Law and an MBA, I realize that while those antitrust decisions were challenging, they created the space for innovation. But today, the world is getting noisy again.
+              I decided in 8th grade I wanted to become a band director. Not because I was good at it—I was absolutely terrible at the trumpet. But my teacher not giving up on me confused me. What the heck dude, can't you tell I'm really bad at this? The fact that someone could invest in me without knowing the end product made it my life's mission to do the same. So off to North Texas I went. And to be honest, I miss being in the classroom—or as I see it more clearly now, the laboratory.
             </p>
             <p>
-              Before this, I was a high school band director for seven years. I built my own musical laboratory where the best musical ideas were the ones with the most value.
+              Now, as a 2L at SMU sitting in patent law twice a week, the connection to my great-grandfather and his work at Bell Labs has gotten more and more present in my mind, to the point that I can't shut off the possibilities. I'm using his wisdom of how to invent that's been lost—that's kind of the whole idea. We were both looking for the same thing in different ways.
             </p>
           </div>
 
@@ -71,10 +72,19 @@ export default function About() {
               With the advent of AI coding software, our paths finally converge. I take inspiration from figures like Hedy Lamarr, who didn't take "no" for an answer despite their seemingly strange connection to the space.
             </p>
             <p>
-              I studied vocal science with Dr. Stephen F. Austin, learning about the "missing fundamental"—how the human ear constructs a pitch that isn't physically present by perceiving its overtones. I apply this psychoacoustic principle to AI. In a world deafened by the noise of generative models, we need to perceive the structural signal that others miss.
+              A quote from Ralph Bown has become my north star: "I do not hold that inventing can be learned in the sense that arithmetic can be learned by anyone above the moron level, but I do believe that enhancement of creative capacity through thinking about inventions is very real. The essential characteristic of the inventor is that he has naturally or by development a quality of what I choose to call uninhibited insight."
             </p>
             <p>
-              I have built three commercially viable software architectures (SCU, Driftlock, Hegelion) and one massive hardware thesis (Driftlock Choir) from sheer willpower, teaching myself to code with AI assistance.
+              He continues: "The quality of looking at things as though for the first time and giving all things equal and searching scrutiny even though some are all too familiar is a quality which can be learned in some degree by practice. Whether it can be taught is another matter. The only way I have ever seen it learned is by example."
+            </p>
+            <p className="text-sm opacity-70">
+              —Ralph Bown, <em>Inventing and Patenting at Bell Laboratories</em>, <em>Bell Laboratories Record</em>, Volume 32 (1954)
+            </p>
+            <p>
+              I studied vocal science with Dr. Stephen F. Austin, who studied with Dr. Ingo Titze—the father of vocal science whose advancements were only possible because of the transistor. I learned about the "missing fundamental"—how the human ear constructs a pitch that isn't physically present by perceiving its overtones. I apply this psychoacoustic principle to AI. In a world deafened by the noise of generative models, we need to perceive the structural signal that others miss. You see the missing signal idea, don't you? We were both looking for the same thing in different ways.
+            </p>
+            <p>
+              I have built three commercially viable software architectures (SCU, Driftlock, Hegelion) and one massive hardware thesis (Driftlock Choir) from sheer willpower, teaching myself to code with AI assistance. I'm answering the call that's been coming from inside the house and yelling at me so loud I've been left with nothing to do but create the future I want to see. Ralph was right—inventors require several years to reach maximum output. I'm just getting started.
             </p>
             <p>
               I am not looking to capture patents for a corporation. I want to invert the model: I want to provide the legal and technical infrastructure for <strong>you</strong> to own your ideas.

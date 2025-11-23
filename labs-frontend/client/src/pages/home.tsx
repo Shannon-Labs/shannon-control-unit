@@ -49,6 +49,7 @@ export default function Home() {
           SHANNON LABS
         </div>
         <div className="font-mono text-xs flex gap-4">
+          <a href="/art" className="hover:underline hover:bg-black hover:text-white px-1 transition-none">[ART, EDUCATION &amp; MUSIC]</a>
           <a href="/about" className="hover:underline hover:bg-black hover:text-white px-1 transition-none">[ABOUT THE FOUNDER]</a>
           <a href="https://github.com/Shannon-Labs" target="_blank" rel="noopener noreferrer" className="hover:underline hover:bg-black hover:text-white px-1 transition-none">[GITHUB]</a>
           <a href="https://twitter.com/huntermbown" target="_blank" rel="noopener noreferrer" className="hover:underline hover:bg-black hover:text-white px-1 transition-none">[TWITTER]</a>
@@ -62,10 +63,10 @@ export default function Home() {
           SHANNON<br />LABS
         </h1>
         <h2 className="text-xl md:text-2xl font-mono font-normal mb-8 uppercase tracking-widest" style={{ color: '#0A0A0A' }}>
-          THE INFRASTRUCTURE FOR THE NEXT IDEA FACTORY.
+          THE NERVOUS SYSTEM FOR THE AGI ERA.
         </h2>
         <div className="font-mono text-sm mb-8 max-w-3xl" style={{ color: '#0A0A0A' }}>
-          <span className="font-bold uppercase">Current focus:</span> Driftlock Choir — a truly wireless distributed timing mesh network, staking a claim for human ingenuity in the age of AGI.
+          <span className="font-bold uppercase">Current focus:</span> Driftlock Choir — The temporal synchronization layer for Universal Compute. A wireless timing mesh network enabling the swarm.
         </div>
         <div className="font-mono text-xs uppercase tracking-widest border-t pt-6" style={{ borderColor: '#0A0A0A' }}>
           Est. 2025 | Dallas, TX | Status: Operating
@@ -79,14 +80,14 @@ export default function Home() {
             <div className="mb-8">
               <p className="font-mono text-xs uppercase tracking-widest mb-4 opacity-70">The Inspiration — The Original "Idea Factory" (1952)</p>
               <p className="font-serif text-2xl md:text-3xl leading-relaxed italic">
-                "To maintain vitality implies a dynamic process of continuous growth in which a steady state is achieved only by matching construction against decay."
+                "Time is a Lake. All moments exist, but the founder’s job is to navigate to the future before others arrive."
               </p>
             </div>
             <div className="text-center font-mono text-sm uppercase tracking-wider border-t pt-6" style={{ color: '#0A0A0A', borderColor: '#0A0A0A' }}>
-              — Ralph Bown, Vice-President of Research, Bell Labs
+              — Adam Draper (echoing the vitality of deep science)
             </div>
             <div className="text-center font-serif text-lg italic mt-8" style={{ color: '#0A0A0A' }}>
-              Ralph Bown announced the transistor (1948) and later defined the <span className="font-bold">Vitality of a Research Institution</span>.<br />We are announcing the protocol for what comes next: <span className="font-bold">The Vitality of Humanity.</span>
+              We are building the <span className="font-bold">Invisible Infrastructure</span> that makes the future possible.<br />Solving the temporal synchronization problem for distributed systems.
             </div>
           </div>
         </article>
@@ -117,7 +118,7 @@ export default function Home() {
           <div className="relative group">
             <LinkableCard
               title="DRIFTLOCK CHOIR"
-              specs="Chronometric interferometry. 2025 extension of Ralph Bown’s 1948 patent. Wireless sync at ~90fs precision. Current objective: bench validation of the hardware layer at scale — towards a truly wireless distributed timing mesh network."
+              specs="Chronometric interferometry. The synchronization layer for Decentralized Physical Infrastructure (DePIN). Wireless timing meshes enabling Universal Compute."
               link="https://driftlock-choir.pages.dev/"
               icon="/driftlock-choir-logo.svg"
               highlight={true}
@@ -329,6 +330,7 @@ export default function Home() {
           </div>
         </div>
         <div className="font-mono text-xs uppercase tracking-widest flex gap-6">
+          <a href="/art" className="hover:bg-white hover:text-black px-2 py-1 transition-none">[ART, EDUCATION &amp; MUSIC]</a>
           <a href="/about" className="hover:bg-white hover:text-black px-2 py-1 transition-none">[ABOUT THE FOUNDER]</a>
           <a href="https://github.com/Shannon-Labs" target="_blank" rel="noopener noreferrer" className="hover:bg-white hover:text-black px-2 py-1 transition-none">[GITHUB]</a>
           <a href="https://twitter.com/huntermbown" target="_blank" rel="noopener noreferrer" className="hover:bg-white hover:text-black px-2 py-1 transition-none">[TWITTER]</a>
