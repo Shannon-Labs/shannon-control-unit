@@ -1,4 +1,5 @@
 import { ExternalLink } from "lucide-react";
+import { useState } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -10,11 +11,24 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function About() {
+  const [showPatentBg, setShowPatentBg] = useState(false);
+
   return (
-    <div className="min-h-screen bg-white text-black font-serif selection:bg-black selection:text-white" style={{ backgroundColor: '#F5F5F0', color: '#0A0A0A' }}>
+    <div className="min-h-screen bg-white text-black font-serif selection:bg-black selection:text-white relative" style={{ backgroundColor: '#F5F5F0', color: '#0A0A0A' }}>
+      
+      {/* PATENT BACKGROUND OVERLAY */}
+      <div 
+        className={`fixed inset-0 z-0 pointer-events-none transition-opacity duration-700 ${showPatentBg ? 'opacity-20' : 'opacity-0'}`}
+        style={{
+          backgroundImage: 'url(/patent-1.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          filter: 'sepia(1) hue-rotate(180deg) contrast(1.2)'
+        }}
+      />
 
       {/* HEADER */}
-      <header className="sticky top-0 z-50 border-b flex justify-between items-center px-6 py-4 uppercase font-sans text-sm tracking-wide" style={{ backgroundColor: '#F5F5F0', borderColor: '#0A0A0A' }}>
+      <header className="sticky top-0 z-50 border-b flex justify-between items-center px-6 py-4 uppercase font-sans text-sm tracking-wide relative bg-[#F5F5F0]" style={{ borderColor: '#0A0A0A' }}>
         <div className="font-bold text-lg flex items-center gap-3">
           <a href="/" className="hover:opacity-70 transition-opacity">SHANNON LABS</a>
         </div>
@@ -165,7 +179,11 @@ export default function About() {
               I studied vocal science with Dr. Stephen F. Austin, learning about the "missing fundamental"—how the ear constructs a pitch that isn't physically present from its overtones. This maps directly to information theory. I've translated my lived insights as a musician to science, finding ideas left uninspected because there was no pattern-seeking researcher with my specific background.
             </p>
             <p>
-              I have built three commercially viable software architectures (SCU, Driftlock, Hegelion) and one hardware thesis (Driftlock Choir). Together, they set the stage for a world of AGI and maintained human vitality. Driftlock separates signal from noise; Driftlock Choir enables communication via beat frequency; SCU provides a control mechanism for training efficiency; and Hegelion forces models into "slow thinking" to ensure only the best ideas survive.
+              I have built three commercially viable software architectures (SCU, Driftlock, Hegelion) and one hardware thesis (<span 
+                className="font-bold cursor-help border-b border-black border-dotted hover:bg-black hover:text-white transition-colors"
+                onMouseEnter={() => setShowPatentBg(true)}
+                onMouseLeave={() => setShowPatentBg(false)}
+              >Driftlock Choir</span>). Together, they set the stage for a world of AGI and maintained human vitality. Driftlock separates signal from noise; Driftlock Choir enables communication via beat frequency; SCU provides a control mechanism for training efficiency; and Hegelion forces models into "slow thinking" to ensure only the best ideas survive.
             </p>
             <p>
               I am not looking to capture patents for a corporation. I want to invert the model: I want to provide the legal and technical infrastructure for <strong>you</strong> to own your ideas. We exist to multiply your trajectory, not just capture your output.
