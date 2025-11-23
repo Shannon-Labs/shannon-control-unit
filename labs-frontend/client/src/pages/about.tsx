@@ -23,7 +23,7 @@ export default function About() {
             <h1 className="text-4xl md:text-5xl font-bold mb-8 uppercase tracking-tight">About the Founder</h1>
 
             {/* HUNTER'S PHOTO */}
-            <div className="w-full max-w-md mx-auto mb-8">
+            <div className="w-full max-w-xs mx-auto mb-8">
               <div className="aspect-[3/4] w-full border border-black bg-gray-200 overflow-hidden relative grayscale hover:grayscale-0 transition-all duration-500">
                 <img src="/hunter-bown.png" alt="Hunter Bown" className="w-full h-full object-cover" />
               </div>
@@ -53,7 +53,7 @@ export default function About() {
             </p>
 
             {/* RALPH'S PHOTO */}
-            <div className="w-full max-w-md mx-auto my-8">
+            <div className="w-full max-w-xs mx-auto my-8">
               <div className="aspect-[3/4] w-full border border-black bg-gray-200 overflow-hidden relative grayscale hover:grayscale-0 transition-all duration-500">
                 <img src="/ralph-bown.png" alt="Ralph Bown" className="w-full h-full object-cover" />
               </div>
