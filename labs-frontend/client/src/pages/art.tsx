@@ -41,14 +41,6 @@ export default function ArtEducationMusic() {
               Art, Education &amp; Music
             </h1>
 
-            <h2
-              className="text-xl md:text-2xl font-mono font-normal mb-6 uppercase tracking-widest text-center"
-              style={{ color: "#0A0A0A", opacity: 0.7 }}
-            >
-              For inventors, artists, and students who learn by building
-              instruments.
-            </h2>
-
             <p>
               In order to attract the inventors, artists, and students of the
               future, the laboratory has to meet their needs. Instead of asking
@@ -61,6 +53,14 @@ export default function ArtEducationMusic() {
               doubles as ambient educational technology—systems you live with
               that quietly teach you how the world works.
             </p>
+
+            <h2
+              className="text-xl md:text-2xl font-mono font-normal mb-6 uppercase tracking-widest text-center"
+              style={{ color: "#0A0A0A", opacity: 0.7 }}
+            >
+              For inventors, artists, and students who learn by building
+              instruments.
+            </h2>
           </div>
 
           {/* PROJECTS */}

@@ -84,10 +84,10 @@ export default function About() {
               I studied vocal science with Dr. Stephen F. Austin, who studied with Dr. Ingo Titze—the father of vocal science whose advancements were only possible because of the transistor. I learned about the "missing fundamental"—how the human ear constructs a pitch that isn't physically present by perceiving its overtones. I apply this psychoacoustic principle to AI. In a world deafened by the noise of generative models, we need to perceive the structural signal that others miss. You see the missing signal idea, don't you? We were both looking for the same thing in different ways.
             </p>
             <p>
-              I have built three commercially viable software architectures (SCU, Driftlock, Hegelion) and one massive hardware thesis (Driftlock Choir) from sheer willpower, teaching myself to code with AI assistance. I'm answering the call that's been coming from inside the house and yelling at me so loud I've been left with nothing to do but create the future I want to see. Ralph was right—inventors require several years to reach maximum output. I'm just getting started.
+              I have built three commercially viable software architectures (SCU, Driftlock, Hegelion) and one massive hardware thesis (Driftlock Choir) from sheer willpower, teaching myself to code with AI assistance. I'm answering the call that's been coming from inside the house and yelling at me so loud I've been left with nothing to do but create the future I want to see. It is a bet on the kind of uninhibited insight that must be believed before it can be understood.
             </p>
             <p>
-              I am not looking to capture patents for a corporation. I want to invert the model: I want to provide the legal and technical infrastructure for <strong>you</strong> to own your ideas.
+              I am not looking to capture patents for a corporation. I want to invert the model: I want to provide the legal and technical infrastructure for <strong>you</strong> to own your ideas. We exist to multiply your trajectory, not just capture your output.
             </p>
             <p className="font-bold italic border-l-4 border-black pl-4 py-2 my-8">
               "The ideas aren't stopping, and neither am I."

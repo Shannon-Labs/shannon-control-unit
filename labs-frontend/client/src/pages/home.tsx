@@ -1,4 +1,5 @@
 import { ExternalLink } from "lucide-react";
+import { useState, useEffect } from "react";
 
 
 const LinkableCard = ({
@@ -39,6 +40,34 @@ const LinkableCard = ({
   </a>
 );
 
+const HeroQuoteCycler = () => {
+  const quotes = [
+    "Any laboratory which is built around the dominance of its director, however gifted and benevolent he may be, is ill prepared to cope with its future. The best thing a director can do for a research institution is so to shape it that he is not necessary to its vigorous continuity.",
+    "The vitality of a research organization is only a composite of the spirit of the people in it. It has little to do with buildings or equipment, although indeed these things are important mechanical factors in its existence.",
+    "The verb 'to maintain' ordinarily carries a connotation of merely supporting, in a state of equilibrium, something already in being. For our purposes I think we must decide that, in a research institution, to maintain vitality implies a dynamic process of continuous growth in which a steady state is achieved only by matching construction against decay.",
+    "The existence in a research and development organization of this freedom for research to say no when it deems necessary to protect its own vital functions and energies from dissipation presupposes that development departments are technically strong and well equipped to solve all of their problems which are essentially developmental in character."
+  ];
+
+  const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentQuoteIndex((prevIndex) => (prevIndex + 1) % quotes.length);
+    }, 8000); // Change quote every 8 seconds
+
+    return () => clearInterval(interval);
+  }, [quotes.length]);
+
+  return (
+    <div className="mb-8">
+      <p className="font-mono text-xs uppercase tracking-widest mb-4 opacity-70">The Inspiration — The Original "Idea Factory" (1952)</p>
+      <p className="font-serif text-2xl md:text-3xl leading-relaxed italic min-h-[200px] transition-opacity duration-500">
+        "{quotes[currentQuoteIndex]}"
+      </p>
+    </div>
+  );
+};
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-white text-black font-serif selection:bg-black selection:text-white" style={{ backgroundColor: '#F5F5F0', color: '#0A0A0A' }}>
@@ -66,7 +95,7 @@ export default function Home() {
           THE NERVOUS SYSTEM FOR THE AGI ERA.
         </h2>
         <div className="font-mono text-sm mb-8 max-w-3xl" style={{ color: '#0A0A0A' }}>
-          <span className="font-bold uppercase">Current focus:</span> Driftlock Choir — The temporal synchronization layer for Universal Compute. A wireless timing mesh network enabling the swarm.
+          <span className="font-bold uppercase">Current focus:</span> Driftlock Choir — The temporal synchronization layer for Universal Compute. A wireless timing mesh network enabling the swarm. Because the next frontier isn't just faster code, it's coordinated physics.
         </div>
         <div className="font-mono text-xs uppercase tracking-widest border-t pt-6" style={{ borderColor: '#0A0A0A' }}>
           Est. 2025 | Dallas, TX | Status: Operating
@@ -77,17 +106,12 @@ export default function Home() {
       <section className="border-b py-20 px-6 md:px-12 flex justify-center" style={{ backgroundColor: '#F5F5F0', borderColor: '#0A0A0A' }}>
         <article className="max-w-[75ch] w-full" style={{ backgroundColor: '#FFFFFF', color: '#0A0A0A' }}>
           <div className="p-10 md:p-14 border" style={{ borderColor: '#0A0A0A' }}>
-            <div className="mb-8">
-              <p className="font-mono text-xs uppercase tracking-widest mb-4 opacity-70">The Inspiration — The Original "Idea Factory" (1952)</p>
-              <p className="font-serif text-2xl md:text-3xl leading-relaxed italic">
-                "Time is a Lake. All moments exist, but the founder’s job is to navigate to the future before others arrive."
-              </p>
-            </div>
+            <HeroQuoteCycler />
             <div className="text-center font-mono text-sm uppercase tracking-wider border-t pt-6" style={{ color: '#0A0A0A', borderColor: '#0A0A0A' }}>
-              — Adam Draper (echoing the vitality of deep science)
+              — Ralph Bown, <em>Vitality of a Research Institution and How to Maintain It</em> (1952)
             </div>
             <div className="text-center font-serif text-lg italic mt-8" style={{ color: '#0A0A0A' }}>
-              We are building the <span className="font-bold">Invisible Infrastructure</span> that makes the future possible.<br />Solving the temporal synchronization problem for distributed systems.
+              We are building the <span className="font-bold">Invisible Infrastructure</span> that makes the future possible.<br />Solving the temporal synchronization problem at the edge where the digital model meets the physical world.
             </div>
           </div>
         </article>
@@ -96,22 +120,24 @@ export default function Home() {
       {/* 4. SYSTEM GRID: THE 4 PILLARS */}
       <section className="border-b" style={{ backgroundColor: '#0A0A0A', borderColor: '#0A0A0A' }}>
         <div className="px-4 py-3 font-mono text-xs uppercase tracking-widest border-b" style={{ backgroundColor: '#0A0A0A', color: '#F5F5F0', borderColor: '#F5F5F0' }}>
-          // The 4 Pillars of Sovereignty
+          // Current Research Vectors
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2">
           <LinkableCard
             title="SHANNON CONTROL UNIT"
             specs="Entropy Stabilization via Closed-Loop PI Control. Validated at 1B/3B scales. Priority Date: Sept 02, 2025."
             link="https://github.com/Shannon-Labs/shannon-control-unit"
+            icon="/scu-logo.svg"
           />
           <LinkableCard
             title="HEGELION"
             specs="Dialectical Reasoning Engine. Recursive Thesis → Antithesis → Synthesis. Structuring thought beyond prediction."
             link="https://github.com/Hmbown/Hegelion"
+            icon="/hegelion-logo.svg"
           />
           <LinkableCard
             title="DRIFTLOCK"
-            specs="Compression-based anomaly detection. Deterministic entropy engine that detects data drift without training data."
+            specs="Compression-based anomaly detection. Finding the signal at the edges where probabilistic models break."
             link="https://driftlock.web.app/"
             icon="/driftlock-logo.svg"
           />
@@ -123,118 +149,29 @@ export default function Home() {
               icon="/driftlock-choir-logo.svg"
               highlight={true}
             />
-
           </div>
+          <LinkableCard
+            title="VITALITY AND HOW TO MAINTAIN IT"
+            specs="Building research institutions that prioritize human selection and group spirit, well-defined technical objectives, individual freedom and dignity, orderly organizational structure recognizing diverse skills, self-governing work that moves dynamically forward, and adequate economic rewards as necessary but insufficient."
+            link="https://maceip.github.io/bell-labs-innovation/"
+            icon="/shannon-logo.png"
+          />
+          <LinkableCard
+            title="HUMAN VITALITY"
+            specs="Ensuring we remain high on the cognitive food chain. In an era of artificial abundance, we build systems that treat human intent as the ultimate scarce resource."
+            link="#"
+            icon="/vitality-logo.svg"
+          />
         </div>
       </section>
 
-
-      {/* 6. RESEARCH VECTORS */}
-      <section className="border-b py-20 px-6 md:px-12 flex justify-center" style={{ backgroundColor: '#F5F5F0', borderColor: '#0A0A0A' }}>
-        <div className="max-w-7xl w-full">
-          <h2 className="text-2xl md:text-3xl font-serif font-bold mb-12 uppercase text-center" style={{ color: '#0A0A0A' }}>
-            Research Vectors
-          </h2>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-20">
-            {/* VECTORS - Left Column */}
-            <div className="space-y-6">
-              {/* [01] SCU */}
-              <a
-                href="https://github.com/Shannon-Labs/shannon-control-unit"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block p-6 border bg-white text-black hover:bg-black hover:text-white transition-colors group"
-                style={{ borderColor: '#0A0A0A' }}
-              >
-                <div className="flex justify-between items-start mb-2">
-                  <div className="font-mono text-xs uppercase tracking-widest opacity-70 group-hover:opacity-100">[01]</div>
-                  <img src="/scu-logo.svg" alt="SCU" className="w-8 h-8 object-contain group-hover:invert" />
-                </div>
-                <h3 className="font-bold text-lg mb-2">Entropy Stabilization</h3>
-                <p className="font-serif text-sm leading-relaxed">Control theory applied to model complexity. Replacing static schedules with dynamic feedback loops.</p>
-              </a>
-
-              {/* [03] Driftlock */}
-              <a
-                href="https://driftlock.web.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block p-6 border bg-white text-black hover:bg-black hover:text-white transition-colors group"
-                style={{ borderColor: '#0A0A0A' }}
-              >
-                <div className="flex justify-between items-start mb-2">
-                  <div className="font-mono text-xs uppercase tracking-widest opacity-70 group-hover:opacity-100">[03]</div>
-                  <img src="/driftlock-logo.svg" alt="Driftlock" className="w-8 h-8 object-contain group-hover:invert" />
-                </div>
-                <h3 className="font-bold text-lg mb-2">Anomaly Detection</h3>
-                <p className="font-serif text-sm leading-relaxed">Compression-based drift detection without training data. Understanding outliers, not suppressing them.</p>
-              </a>
-
-              {/* [05] Institutional Vitality */}
-              <div className="p-6 border bg-white text-black group" style={{ backgroundColor: '#FFFFFF', borderColor: '#0A0A0A', color: '#0A0A0A' }}>
-                <div className="flex justify-between items-start mb-2">
-                  <div className="font-mono text-xs uppercase tracking-widest opacity-70">[05]</div>
-                  <img src="/shannon-logo.png" alt="Shannon Labs" className="w-8 h-8 object-contain" />
-                </div>
-                <h3 className="font-bold text-lg mb-2">Institutional Vitality</h3>
-                <p className="font-serif text-sm leading-relaxed">Building research institutions that maintain vitality through continuous growth and decay-matching construction.</p>
-              </div>
-            </div>
-
-            {/* VECTORS - Right Column */}
-            <div className="space-y-6">
-              {/* [02] Hegelion */}
-              <a
-                href="https://github.com/Hmbown/Hegelion"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block p-6 border bg-white text-black hover:bg-black hover:text-white transition-colors group"
-                style={{ borderColor: '#0A0A0A' }}
-              >
-                <div className="flex justify-between items-start mb-2">
-                  <div className="font-mono text-xs uppercase tracking-widest opacity-70 group-hover:opacity-100">[02]</div>
-                  <img src="/hegelion-logo.svg" alt="Hegelion" className="w-8 h-8 object-contain group-hover:invert" />
-                </div>
-                <h3 className="font-bold text-lg mb-2">Dialectical Reasoning</h3>
-                <p className="font-serif text-sm leading-relaxed">Moving beyond next-token prediction to structural thought. Thesis → Antithesis → Synthesis recursively applied.</p>
-              </a>
-
-              {/* [04] Driftlock Choir */}
-              <a
-                href="https://driftlock-choir.pages.dev/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block p-6 border bg-white text-black hover:bg-black hover:text-white transition-colors group"
-                style={{ borderColor: '#0A0A0A' }}
-              >
-                <div className="flex justify-between items-start mb-2">
-                  <div className="font-mono text-xs uppercase tracking-widest opacity-70 group-hover:opacity-100">[04]</div>
-                  <img src="/driftlock-choir-logo.svg" alt="Choir" className="w-8 h-8 object-contain group-hover:invert" />
-                </div>
-                <h3 className="font-bold text-lg mb-2">Chronometric Interferometry</h3>
-                <p className="font-serif text-sm leading-relaxed">Hardware-layer timing synchronization via wireless carriers. Achieving fiber-grade precision without fiber.</p>
-              </a>
-
-              {/* [06] Human Vitality */}
-              <div className="p-6 border bg-white text-black group" style={{ backgroundColor: '#FFFFFF', borderColor: '#0A0A0A', color: '#0A0A0A' }}>
-                <div className="flex justify-between items-start mb-2">
-                  <div className="font-mono text-xs uppercase tracking-widest opacity-70">[06]</div>
-                  <img src="/vitality-logo.svg" alt="Human Vitality" className="w-8 h-8 object-contain" />
-                </div>
-                <h3 className="font-bold text-lg mb-2">Human Vitality</h3>
-                <p className="font-serif text-sm leading-relaxed">Ensuring we remain high on the cognitive food chain. Building systems that extend human intent rather than replace it.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* 7. THE BOWN PROTOCOL: 1952 vs 2025 */}
       <section className="border-b py-20 px-6 md:px-12 flex justify-center" style={{ backgroundColor: '#0A0A0A', borderColor: '#0A0A0A' }}>
         <div className="max-w-7xl w-full">
           <h2 className="text-2xl md:text-3xl font-serif font-bold mb-12 uppercase text-center" style={{ color: '#F5F5F0' }}>
-            The Vitality of Humanity — And How to Maintain It
+            Institutional Pillars<br/>
+            Vitality and How to Maintain It
           </h2>
           <p className="text-center font-mono text-xs uppercase tracking-widest mb-12" style={{ color: '#F5F5F0', opacity: 0.7 }}>
             The Next Idea Factory
@@ -318,6 +255,11 @@ export default function Home() {
                 </div>
               </div>
             </div>
+          </div>
+          
+          <div className="mt-12 text-center font-mono text-xs uppercase tracking-widest opacity-70" style={{ color: '#F5F5F0' }}>
+            Bell Labs 1952 | Shannon Labs 2025<br/>
+            Dr. Ralph Bown, Sr., Director of Research and Hunter Bown, Founder and CEO
           </div>
         </div>
       </section>
