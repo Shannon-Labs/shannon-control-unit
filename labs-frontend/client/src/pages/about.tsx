@@ -3,7 +3,7 @@ import { ExternalLink } from "lucide-react";
 export default function About() {
   return (
     <div className="min-h-screen bg-white text-black font-serif selection:bg-black selection:text-white" style={{ backgroundColor: '#F5F5F0', color: '#0A0A0A' }}>
-      
+
       {/* HEADER */}
       <header className="sticky top-0 z-50 border-b flex justify-between items-center px-6 py-4 uppercase font-sans text-sm tracking-wide" style={{ backgroundColor: '#F5F5F0', borderColor: '#0A0A0A' }}>
         <div className="font-bold text-lg flex items-center gap-3">
@@ -17,11 +17,11 @@ export default function About() {
       {/* CONTENT */}
       <section className="py-20 px-6 md:px-12 flex justify-center">
         <article className="max-w-[75ch] w-full space-y-12">
-          
+
           {/* INTRO */}
           <div className="space-y-6 text-lg leading-relaxed">
             <h1 className="text-4xl md:text-5xl font-bold mb-8 uppercase tracking-tight">About the Founder</h1>
-            
+
             {/* HUNTER'S PHOTO */}
             <div className="w-full max-w-md mx-auto mb-8">
               <div className="aspect-[3/4] w-full border border-black bg-gray-200 overflow-hidden relative grayscale hover:grayscale-0 transition-all duration-500">
@@ -55,7 +55,7 @@ export default function About() {
             {/* RALPH'S PHOTO */}
             <div className="w-full max-w-md mx-auto my-8">
               <div className="aspect-[3/4] w-full border border-black bg-gray-200 overflow-hidden relative grayscale hover:grayscale-0 transition-all duration-500">
-                <img src="/ralph-bown.jpg" alt="Ralph Bown" className="w-full h-full object-cover" />
+                <img src="/ralph-bown.png" alt="Ralph Bown" className="w-full h-full object-cover" />
               </div>
               <p className="font-mono text-xs uppercase tracking-widest text-center mt-4">Ralph Bown — 1952</p>
             </div>
