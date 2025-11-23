@@ -1,5 +1,5 @@
 import { ExternalLink } from "lucide-react";
-import patentImg from "@assets/US2436376-drawings-page-1 (1)_1763705732448.png";
+
 
 const LinkableCard = ({
   title,
@@ -46,7 +46,6 @@ export default function Home() {
       {/* 1. HEADER (Sticky) */}
       <header className="sticky top-0 z-50 border-b flex justify-between items-center px-6 py-4 uppercase font-sans text-sm tracking-wide" style={{ backgroundColor: '#F5F5F0', borderColor: '#0A0A0A' }}>
         <div className="font-bold text-lg flex items-center gap-3">
-          <img src="/shannon-logo.png" alt="Shannon Labs Logo" className="h-8 w-8 object-contain" />
           SHANNON LABS
         </div>
         <div className="font-mono text-xs flex gap-4">
@@ -62,10 +61,10 @@ export default function Home() {
           SHANNON<br />LABS
         </h1>
         <h2 className="text-xl md:text-2xl font-mono font-normal mb-8 uppercase tracking-widest" style={{ color: '#0A0A0A' }}>
-          THE ARCHITECTURE OF SOVEREIGN AI.
+          THE INFRASTRUCTURE FOR THE NEXT IDEA FACTORY.
         </h2>
         <div className="font-mono text-sm mb-8 max-w-3xl" style={{ color: '#0A0A0A' }}>
-          <span className="font-bold uppercase">Current focus:</span> Driftlock Choir — a truly wireless distributed timing mesh network, turning time into a network primitive for 6G, robotics, and high-frequency trading.
+          <span className="font-bold uppercase">Current focus:</span> Driftlock Choir — a truly wireless distributed timing mesh network, staking a claim for human ingenuity in the age of AGI.
         </div>
         <div className="font-mono text-xs uppercase tracking-widest border-t pt-6" style={{ borderColor: '#0A0A0A' }}>
           Est. 2025 | Dallas, TX | Status: Operating
@@ -86,7 +85,7 @@ export default function Home() {
               — Ralph Bown, Vice-President of Research, Bell Labs
             </div>
             <div className="text-center font-serif text-lg italic mt-8" style={{ color: '#0A0A0A' }}>
-              Ralph Bown announced the transistor (1948).<br />We are announcing the protocol for what comes next: <span className="font-bold">Sovereign AI.</span>
+              Ralph Bown announced the transistor (1948) and later defined the <span className="font-bold">Vitality of a Research Institution</span>.<br />We are announcing the protocol for what comes next: <span className="font-bold">The Vitality of Humanity.</span>
             </div>
           </div>
         </article>
@@ -111,54 +110,22 @@ export default function Home() {
           <LinkableCard
             title="DRIFTLOCK"
             specs="Compression-based anomaly detection. Deterministic entropy engine that detects data drift without training data."
-            link="https://driftlock.net"
-            icon="/driftlock-logo.png"
+            link="https://driftlock.web.app/"
+            icon="/driftlock-logo.svg"
           />
           <div className="relative group">
             <LinkableCard
               title="DRIFTLOCK CHOIR"
               specs="Chronometric interferometry. 2025 extension of Ralph Bown’s 1948 patent. Wireless sync at ~90fs precision. Current objective: bench validation of the hardware layer at scale — towards a truly wireless distributed timing mesh network."
-              link="https://github.com/Hmbown/DRIFTLOCKCHOIR"
+              link="https://driftlock-choir.pages.dev/"
               icon="/driftlock-choir-logo.svg"
               highlight={true}
             />
-            {/* Ralph Bown Patent Overlay on Hover */}
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-25 pointer-events-none transition-opacity duration-0 z-30 overflow-hidden flex items-center justify-center">
-              <img src={patentImg} alt="Bown 1948 Patent US2436376" className="w-full h-full object-cover grayscale contrast-200" />
-            </div>
+
           </div>
         </div>
       </section>
 
-      {/* 5. THE RENAISSANCE PROTOCOL */}
-      <section className="border-b py-20 px-6 flex justify-center" style={{ backgroundColor: '#F5F5F0', borderColor: '#0A0A0A' }}>
-        <article className="max-w-[65ch] w-full p-8 lg:p-16 border shadow-lg" style={{ backgroundColor: '#FFFFFF', borderColor: '#0A0A0A', color: '#0A0A0A' }}>
-          <header className="mb-10 text-center border-b-2 pb-8" style={{ borderColor: '#0A0A0A' }}>
-            <h2 className="text-4xl lg:text-5xl font-serif font-bold mb-4 uppercase">The Renaissance Protocol</h2>
-          </header>
-
-          <div className="space-y-6 text-lg leading-relaxed font-serif">
-            <p>
-              I am building the "Patent-Attorney-Inventor-Musician" profile—a Renaissance approach for the AGI era.
-            </p>
-            <p>
-              I’m a 2L at SMU Law with an MBA, but these ideas are moving faster than the semester.
-            </p>
-            <p>
-              I have three commercially viable software architectures (SCU, Driftlock, Hegelion) and one massive hardware research thesis (Choir).
-            </p>
-            <p>
-              I’m not leaving the law; I’m trying to help rewrite it for the AGI era. But the Inventor leg of the stool needs a lab.
-            </p>
-            <p>
-              To validate Chronometric Interferometry, I need to be around builders who think at this frequency.
-            </p>
-            <p className="font-bold italic border-l-4 pl-4 py-2 my-8" style={{ borderColor: '#0A0A0A' }}>
-              "The ideas aren't stopping, and neither am I."
-            </p>
-          </div>
-        </article>
-      </section>
 
       {/* 6. RESEARCH VECTORS */}
       <section className="border-b py-20 px-6 md:px-12 flex justify-center" style={{ backgroundColor: '#F5F5F0', borderColor: '#0A0A0A' }}>
@@ -168,45 +135,95 @@ export default function Home() {
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-20">
-            {/* VECTORS */}
-            <div>
-              <h3 className="font-mono text-sm uppercase tracking-widest mb-6 font-bold" style={{ color: '#0A0A0A' }}>
-                The 6 Research Directions
-              </h3>
-              <div className="space-y-4">
-                <div className="p-6 border" style={{ backgroundColor: '#FFFFFF', borderColor: '#0A0A0A', color: '#0A0A0A' }}>
-                  <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">[01]</div>
-                  <h3 className="font-bold text-lg mb-2">Entropy Stabilization</h3>
-                  <p className="font-serif text-sm leading-relaxed">Control theory applied to model complexity. Replacing static schedules with dynamic feedback loops.</p>
+            {/* VECTORS - Left Column */}
+            <div className="space-y-6">
+              {/* [01] SCU */}
+              <a
+                href="https://github.com/Shannon-Labs/shannon-control-unit"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block p-6 border bg-white text-black hover:bg-black hover:text-white transition-colors group"
+                style={{ borderColor: '#0A0A0A' }}
+              >
+                <div className="flex justify-between items-start mb-2">
+                  <div className="font-mono text-xs uppercase tracking-widest opacity-70 group-hover:opacity-100">[01]</div>
+                  <img src="/scu-logo.svg" alt="SCU" className="w-8 h-8 object-contain group-hover:invert" />
                 </div>
-                <div className="p-6 border" style={{ backgroundColor: '#FFFFFF', borderColor: '#0A0A0A', color: '#0A0A0A' }}>
-                  <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">[02]</div>
-                  <h3 className="font-bold text-lg mb-2">Dialectical Reasoning</h3>
-                  <p className="font-serif text-sm leading-relaxed">Moving beyond next-token prediction to structural thought. Thesis → Antithesis → Synthesis recursively applied.</p>
+                <h3 className="font-bold text-lg mb-2">Entropy Stabilization</h3>
+                <p className="font-serif text-sm leading-relaxed">Control theory applied to model complexity. Replacing static schedules with dynamic feedback loops.</p>
+              </a>
+
+              {/* [03] Driftlock */}
+              <a
+                href="https://driftlock.web.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block p-6 border bg-white text-black hover:bg-black hover:text-white transition-colors group"
+                style={{ borderColor: '#0A0A0A' }}
+              >
+                <div className="flex justify-between items-start mb-2">
+                  <div className="font-mono text-xs uppercase tracking-widest opacity-70 group-hover:opacity-100">[03]</div>
+                  <img src="/driftlock-logo.svg" alt="Driftlock" className="w-8 h-8 object-contain group-hover:invert" />
                 </div>
-                <div className="p-6 border" style={{ backgroundColor: '#FFFFFF', borderColor: '#0A0A0A', color: '#0A0A0A' }}>
-                  <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">[03]</div>
-                  <h3 className="font-bold text-lg mb-2">Anomaly Detection</h3>
-                  <p className="font-serif text-sm leading-relaxed">Compression-based drift detection without training data. Understanding outliers, not suppressing them.</p>
+                <h3 className="font-bold text-lg mb-2">Anomaly Detection</h3>
+                <p className="font-serif text-sm leading-relaxed">Compression-based drift detection without training data. Understanding outliers, not suppressing them.</p>
+              </a>
+
+              {/* [05] Institutional Vitality */}
+              <div className="p-6 border bg-white text-black group" style={{ backgroundColor: '#FFFFFF', borderColor: '#0A0A0A', color: '#0A0A0A' }}>
+                <div className="flex justify-between items-start mb-2">
+                  <div className="font-mono text-xs uppercase tracking-widest opacity-70">[05]</div>
+                  <img src="/shannon-logo.png" alt="Shannon Labs" className="w-8 h-8 object-contain" />
                 </div>
-                <div className="p-6 border" style={{ backgroundColor: '#FFFFFF', borderColor: '#0A0A0A', color: '#0A0A0A' }}>
-                  <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">[04]</div>
-                  <h3 className="font-bold text-lg mb-2">Chronometric Interferometry</h3>
-                  <p className="font-serif text-sm leading-relaxed">Hardware-layer timing synchronization via wireless carriers. Achieving fiber-grade precision without fiber.</p>
-                </div>
-                <div className="p-6 border" style={{ backgroundColor: '#FFFFFF', borderColor: '#0A0A0A', color: '#0A0A0A' }}>
-                  <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">[05]</div>
-                  <h3 className="font-bold text-lg mb-2">Institutional Vitality</h3>
-                  <p className="font-serif text-sm leading-relaxed">Building research institutions that maintain vitality through continuous growth and decay-matching construction.</p>
-                </div>
-                <div className="p-6 border" style={{ backgroundColor: '#FFFFFF', borderColor: '#0A0A0A', color: '#0A0A0A' }}>
-                  <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">[06]</div>
-                  <h3 className="font-bold text-lg mb-2">SOVEREIGNTY</h3>
-                  <p className="font-serif text-sm leading-relaxed">AI systems that are self-stabilizing, self-reasoning, and self-synchronizing. Architecture for AGI-era autonomy.</p>
-                </div>
+                <h3 className="font-bold text-lg mb-2">Institutional Vitality</h3>
+                <p className="font-serif text-sm leading-relaxed">Building research institutions that maintain vitality through continuous growth and decay-matching construction.</p>
               </div>
             </div>
 
+            {/* VECTORS - Right Column */}
+            <div className="space-y-6">
+              {/* [02] Hegelion */}
+              <a
+                href="https://github.com/Hmbown/Hegelion"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block p-6 border bg-white text-black hover:bg-black hover:text-white transition-colors group"
+                style={{ borderColor: '#0A0A0A' }}
+              >
+                <div className="flex justify-between items-start mb-2">
+                  <div className="font-mono text-xs uppercase tracking-widest opacity-70 group-hover:opacity-100">[02]</div>
+                  <img src="/hegelion-logo.svg" alt="Hegelion" className="w-8 h-8 object-contain group-hover:invert" />
+                </div>
+                <h3 className="font-bold text-lg mb-2">Dialectical Reasoning</h3>
+                <p className="font-serif text-sm leading-relaxed">Moving beyond next-token prediction to structural thought. Thesis → Antithesis → Synthesis recursively applied.</p>
+              </a>
+
+              {/* [04] Driftlock Choir */}
+              <a
+                href="https://driftlock-choir.pages.dev/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block p-6 border bg-white text-black hover:bg-black hover:text-white transition-colors group"
+                style={{ borderColor: '#0A0A0A' }}
+              >
+                <div className="flex justify-between items-start mb-2">
+                  <div className="font-mono text-xs uppercase tracking-widest opacity-70 group-hover:opacity-100">[04]</div>
+                  <img src="/driftlock-choir-logo.svg" alt="Choir" className="w-8 h-8 object-contain group-hover:invert" />
+                </div>
+                <h3 className="font-bold text-lg mb-2">Chronometric Interferometry</h3>
+                <p className="font-serif text-sm leading-relaxed">Hardware-layer timing synchronization via wireless carriers. Achieving fiber-grade precision without fiber.</p>
+              </a>
+
+              {/* [06] Human Vitality */}
+              <div className="p-6 border bg-white text-black group" style={{ backgroundColor: '#FFFFFF', borderColor: '#0A0A0A', color: '#0A0A0A' }}>
+                <div className="flex justify-between items-start mb-2">
+                  <div className="font-mono text-xs uppercase tracking-widest opacity-70">[06]</div>
+                  <img src="/vitality-logo.svg" alt="Human Vitality" className="w-8 h-8 object-contain" />
+                </div>
+                <h3 className="font-bold text-lg mb-2">Human Vitality</h3>
+                <p className="font-serif text-sm leading-relaxed">Ensuring we remain high on the cognitive food chain. Building systems that extend human intent rather than replace it.</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -215,17 +232,17 @@ export default function Home() {
       <section className="border-b py-20 px-6 md:px-12 flex justify-center" style={{ backgroundColor: '#0A0A0A', borderColor: '#0A0A0A' }}>
         <div className="max-w-7xl w-full">
           <h2 className="text-2xl md:text-3xl font-serif font-bold mb-12 uppercase text-center" style={{ color: '#F5F5F0' }}>
-            The Bown Protocol
+            The Vitality of Humanity — And How to Maintain It
           </h2>
           <p className="text-center font-mono text-xs uppercase tracking-widest mb-12" style={{ color: '#F5F5F0', opacity: 0.7 }}>
-            How to Maintain Vitality in a Research Institution
+            The Next Idea Factory
           </p>
 
           <div className="grid grid-cols-2 gap-8">
             {/* 1952 COLUMN */}
             <div>
               <h3 className="font-mono text-sm uppercase tracking-widest mb-6 font-bold border-b pb-4" style={{ borderColor: '#F5F5F0', color: '#F5F5F0' }}>
-                Ralph Bown — 1952
+                Vitality of a Research Institution
               </h3>
               <div className="space-y-4">
                 <div className="p-6 border" style={{ backgroundColor: '#F5F5F0', borderColor: '#F5F5F0', color: '#0A0A0A' }}>
@@ -264,23 +281,23 @@ export default function Home() {
             {/* 2025 COLUMN */}
             <div>
               <h3 className="font-mono text-sm uppercase tracking-widest mb-6 font-bold border-b pb-4" style={{ borderColor: '#F5F5F0', color: '#F5F5F0' }}>
-                Shannon Labs — 2025
+                Vitality of Humanity
               </h3>
               <div className="space-y-4">
                 <div className="p-6 border" style={{ backgroundColor: '#F5F5F0', borderColor: '#F5F5F0', color: '#0A0A0A' }}>
                   <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">[01]</div>
                   <h3 className="font-bold text-lg mb-2">A Human Problem</h3>
-                  <p className="font-serif text-sm leading-relaxed">Building teams of uninhibited thinkers who can navigate the AGI transition. Patent-Attorney-Inventor-Musician profiles.</p>
+                  <p className="font-serif text-sm leading-relaxed">Building teams of uninhibited polymaths. The Hedy Lamarrs of the AGI era—newly awakened Renaissance minds capable of synthesizing art and architecture.</p>
                 </div>
                 <div className="p-6 border" style={{ backgroundColor: '#F5F5F0', borderColor: '#F5F5F0', color: '#0A0A0A' }}>
                   <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">[02]</div>
                   <h3 className="font-bold text-lg mb-2">Technical Objective</h3>
-                  <p className="font-serif text-sm leading-relaxed">Sovereign AI—self-stabilizing, self-reasoning, self-synchronizing systems. Infrastructure for AGI-era autonomy.</p>
+                  <p className="font-serif text-sm leading-relaxed">The Next Idea Factory. Infrastructure for human autonomy.</p>
                 </div>
                 <div className="p-6 border" style={{ backgroundColor: '#F5F5F0', borderColor: '#F5F5F0', color: '#0A0A0A' }}>
                   <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">[03]</div>
                   <h3 className="font-bold text-lg mb-2">Freedom & Dignity</h3>
-                  <p className="font-serif text-sm leading-relaxed">Open publication, cross-institutional collaboration, freedom from surveillance. The researcher owns their work.</p>
+                  <p className="font-serif text-sm leading-relaxed">Cognitive Sovereignty. The right to pursue the "missing fundamental"—structural signals invisible to probabilistic models. Preserving human intuition against the noise of generative homogeneity.</p>
                 </div>
                 <div className="p-6 border" style={{ backgroundColor: '#F5F5F0', borderColor: '#F5F5F0', color: '#0A0A0A' }}>
                   <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">[04]</div>
@@ -295,7 +312,7 @@ export default function Home() {
                 <div className="p-6 border" style={{ backgroundColor: '#F5F5F0', borderColor: '#F5F5F0', color: '#0A0A0A' }}>
                   <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">[06]</div>
                   <h3 className="font-bold text-lg mb-2">Economic Rewards</h3>
-                  <p className="font-serif text-sm leading-relaxed">Equity, respect, and the chance to build something that outlasts you. Shared mission over salary.</p>
+                  <p className="font-serif text-sm leading-relaxed">Inventor-first patent policy. The Founder retains patent title and majority equity. Incentives aligned through a minority stake and a recursive research license. Launching sovereign companies, not capturing them.</p>
                 </div>
               </div>
             </div>
@@ -311,6 +328,7 @@ export default function Home() {
           </div>
         </div>
         <div className="font-mono text-xs uppercase tracking-widest flex gap-6">
+          <a href="/about" className="hover:bg-white hover:text-black px-2 py-1 transition-none">[ABOUT THE FOUNDER]</a>
           <a href="https://github.com/Shannon-Labs" target="_blank" rel="noopener noreferrer" className="hover:bg-white hover:text-black px-2 py-1 transition-none">[GITHUB]</a>
           <a href="https://twitter.com/huntermbown" target="_blank" rel="noopener noreferrer" className="hover:bg-white hover:text-black px-2 py-1 transition-none">[TWITTER]</a>
           <a href="https://www.linkedin.com/in/hunterbown/" target="_blank" rel="noopener noreferrer" className="hover:bg-white hover:text-black px-2 py-1 transition-none">[LINKEDIN]</a>

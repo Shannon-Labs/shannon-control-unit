@@ -49,6 +49,7 @@ outputs/
 *.swp
 *.swo
 *~
+.cursor/
 
 # Logs
 *.log
@@ -124,3 +125,13 @@ adapters/*/pytorch_model.bin
 */tokenizer.json
 */merges.txt
 */vocab.json
+
+# Archive and temporary organization folders
+archive/
+*.db
+firebase-debug.log
+server.log
+
+# Frontend build artifacts
+labs-frontend/dist/
+labs-frontend/node_modules/

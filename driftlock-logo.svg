@@ -1,0 +1,8 @@
+<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Shackle: Brutalist thick arch -->
+  <path d="M6 11V4H18V11" stroke="black" stroke-width="4"/>
+  <!-- Body: Heavy block -->
+  <rect x="2" y="11" width="20" height="11" fill="black"/>
+  <!-- Signal: The 'Drift' trapped inside -->
+  <path d="M4 16.5H7L9.5 12.5L12.5 19.5L15 15.5L17 16.5H20" stroke="white" stroke-width="2" stroke-linejoin="bevel"/>
+</svg>
