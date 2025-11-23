@@ -58,7 +58,7 @@ export default function About() {
             {/* RALPH'S PHOTO */}
             <div className="w-full max-w-xs mx-auto my-8">
               <div className="aspect-[3/4] w-full border border-black bg-gray-200 overflow-hidden relative grayscale hover:grayscale-0 transition-all duration-500">
-                <img src="/ralph-bown.png" alt="Ralph Bown" className="w-full h-full object-cover" />
+                <img src="/ralph-bown.jpg" alt="Ralph Bown" className="w-full h-full object-cover" />
               </div>
               <p className="font-mono text-xs uppercase tracking-widest text-center mt-4">Ralph Bown — 1952</p>
             </div>
