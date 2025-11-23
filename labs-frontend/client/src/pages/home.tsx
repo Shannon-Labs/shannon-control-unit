@@ -14,6 +14,7 @@ const LinkableCard = ({
   link: string,
   icon?: string,
   highlight?: boolean,
+  backgroundImage?: string,
 }) => (
   <a
     href={link}
@@ -21,12 +22,24 @@ const LinkableCard = ({
     rel="noopener noreferrer"
     className={`relative border-r border-b border-black p-8 flex flex-col justify-between h-full min-h-[320px] group overflow-hidden transition-none cursor-pointer ${highlight ? 'bg-black text-white hover:invert' : 'bg-white text-black hover:bg-black hover:text-white'
       }`}
-    style={{ backgroundColor: highlight ? '#000000' : '#FFFFFF', borderColor: '#0A0A0A' }}
+    style={{ 
+      backgroundColor: highlight ? '#000000' : '#FFFFFF', 
+      borderColor: '#0A0A0A',
+      ...(backgroundImage ? {
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundBlendMode: 'soft-light'
+      } : {})
+    }}
   >
+    {backgroundImage && (
+      <div className="absolute inset-0 bg-black/60 z-0 pointer-events-none" />
+    )}
     <div className="relative z-10">
-      <div className={`flex justify-between items-start mb-6 pb-4 border-b ${highlight ? 'border-white/40' : 'border-black/20'}`}>
+      <div className={`flex justify-between items-start mb-6 pb-4 border-b ${highlight || backgroundImage ? 'border-white/40' : 'border-black/20'}`}>
         <div className="flex items-center gap-3 flex-1 pr-4">
-          {icon && <img src={icon} alt={`${title} Logo`} className={`h-8 w-8 object-contain ${highlight ? 'invert' : ''}`} />}
+          {icon && <img src={icon} alt={`${title} Logo`} className={`h-8 w-8 object-contain ${highlight || backgroundImage ? 'invert' : ''}`} />}
           <h3 className="text-xl font-mono font-bold uppercase tracking-tighter">{title}</h3>
         </div>
         <ExternalLink className="w-4 h-4 ml-2 flex-shrink-0 mt-1" strokeWidth={1.5} />
@@ -34,7 +47,7 @@ const LinkableCard = ({
       <p className="font-mono text-xs leading-relaxed opacity-80">{specs}</p>
     </div>
 
-    {!highlight && (
+    {!highlight && !backgroundImage && (
       <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-100 mix-blend-mode-difference pointer-events-none transition-none z-20"></div>
     )}
   </a>
@@ -114,6 +127,7 @@ export default function Home() {
               link="https://driftlock-choir.pages.dev/"
               icon="/driftlock-choir-logo.svg"
               highlight={true}
+              backgroundImage="/patent-1.png"
             />
           </div>
           <LinkableCard
