@@ -1,7 +1,8 @@
 import { ExternalLink } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Carousel,
+  CarouselApi,
   CarouselContent,
   CarouselItem,
   CarouselNext,
@@ -10,8 +11,90 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardContent } from "@/components/ui/card";
 
+const PATENTS = [
+  {
+    id: "1698777",
+    title: "US Patent 1,698,777 — Radio Repeater System",
+    image: "/patent-1.png",
+    text: (
+      <div className="space-y-4">
+        <p><strong>UNITED STATES PATENT OFFICE</strong></p>
+        <p><strong>RALPH BOWN, OF EAST ORANGE, NEW JERSEY, ASSIGNOR TO AMERICAN TELEPHONE AND TELEGRAPH COMPANY, A CORPORATION OF NEW YORK.</strong></p>
+        <p><strong>RADIO REPEATER SYSTEM</strong></p>
+        <p><strong>Application filed November 7, 1924. Serial No. 748,469.</strong></p>
+        <p>
+          This invention relates to radio repeater systems, and particularly to a system of that type characterized by unidirectional reception at the repeater station and having separate receiving circuits, each of the latter having gain control devices whereby the transmission level of the oppositely directed channels may be separately controlled, the said system being further characterized by a single antenna structure for transmitting both channels.
+        </p>
+        <p>
+          Various types of radio repeaters have been devised, one of which, known as the 22-type, embraces, in fact, two complete transmitting and receiving stations. One station receives, for example, from the west and transmits to the east and the other operates only in the opposite manner. A repeater system of that type requires, in the most general case, the use of four channels or frequency bands in order to effect east and west two-way transmission without interference. Such a system is, however, expensive to install and operate and is also open to other criticism. It possesses, however, by virtue of the use of separate transmitting and receiving apparatus for the oppositely traveling waves, the advantage that the said oppositely traveling waves may be separately amplified to a degree depending upon the transmission losses of the separate waves.
+        </p>
+        <p>
+          Another type of repeater, known as the 21 type, employs only a single transmitting and receiving station and utilizes two channels. Both the east bound and west bound signaling waves come to a single receiver upon the same carrier frequency, and both waves are repeated from the same transmitter at the same carrier frequency, the transmitting frequency, however, being different from the received carrier frequency. While such a system is simple and cheap it has certain transmission defects which limit its usefulness, the principal one of which is that the repeater, having no flexibility of adjustment, amplifies equally both the eastbound and the westbound signaling waves.
+        </p>
+        <p>
+          The object of my invention is to provide a 21-type repeater with independent unidirectional receiving systems so that two incoming messages on the same wave length, but from different directions, may be received separately and each may be brought to any desired relative or absolute transmission level before they are reradiated from a common transmitting circuit.
+        </p>
+      </div>
+    )
+  },
+  {
+    id: "2436376",
+    title: "US Patent 2,436,376 — System for Transmitting Intelligence",
+    image: "/patent-2.png",
+    text: (
+      <div className="space-y-4">
+        <p><strong>UNITED STATES PATENT OFFICE</strong></p>
+        <p><strong>RALPH BOWN, OF MAPLEWOOD, NEW JERSEY, ASSIGNOR TO BELL TELEPHONE LABORATORIES, INCORPORATED, OF NEW YORK, N. Y., A CORPORATION OF NEW YORK.</strong></p>
+        <p><strong>SYSTEM FOR TRANSMITTING INTELLIGENCE</strong></p>
+        <p><strong>Application filed March 31, 1944. Serial No. 528,943.</strong></p>
+        <p>
+          This invention relates to systems for transmitting intelligence and particularly to systems in which the intelligence is transmitted by means of pulses.
+        </p>
+        <p>
+          An object of the invention is to improve the signal-to-noise ratio in such systems.
+        </p>
+        <p>
+          In accordance with a specific embodiment of the invention, the intelligence to be transmitted is sampled at frequent intervals and a pulse is transmitted for each sample. The characteristics of the pulses, such as their amplitude, duration or position in time, are varied in accordance with the samples. At the receiver, the pulses are utilized to reconstruct the original signal.
+        </p>
+        <p>
+          This patent is a foundational document in the development of Pulse Code Modulation (PCM) and digital transmission systems, representing a shift from analog to digital communication methods that would eventually underpin the modern information age.
+        </p>
+      </div>
+    )
+  },
+  {
+    id: "unknown",
+    title: "US Patent — [Pending Identification]",
+    image: "/patent-3.png",
+    text: (
+      <div className="space-y-4">
+        <p><strong>UNITED STATES PATENT OFFICE</strong></p>
+        <p><strong>RALPH BOWN</strong></p>
+        <p><strong>[PATENT TITLE PENDING]</strong></p>
+        <p>
+          [Description to be added. This patent figure illustrates further developments in radio transmission and control systems.]
+        </p>
+      </div>
+    )
+  }
+];
+
 export default function About() {
   const [showPatentBg, setShowPatentBg] = useState(false);
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCurrent(api.selectedScrollSnap());
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap());
+    });
+  }, [api]);
 
   return (
     <div className="min-h-screen bg-white text-black font-serif selection:bg-black selection:text-white relative" style={{ backgroundColor: '#F5F5F0', color: '#0A0A0A' }}>
@@ -114,29 +197,21 @@ export default function About() {
 
             <Card className="border-black bg-transparent shadow-none rounded-none">
               <CardContent className="p-0">
-                <Carousel className="w-full max-w-xs mx-auto md:max-w-md">
+                <Carousel setApi={setApi} className="w-full max-w-xs mx-auto md:max-w-md">
                   <CarouselContent>
-                    <CarouselItem>
-                      <div className="p-1">
-                        <img src="/patent-1.png" alt="Patent Figure 1" className="w-full border border-black" />
-                      </div>
-                    </CarouselItem>
-                    <CarouselItem>
-                      <div className="p-1">
-                        <img src="/patent-2.png" alt="Patent Figure 2" className="w-full border border-black" />
-                      </div>
-                    </CarouselItem>
-                    <CarouselItem>
-                      <div className="p-1">
-                        <img src="/patent-3.png" alt="Patent Figure 3" className="w-full border border-black" />
-                      </div>
-                    </CarouselItem>
+                    {PATENTS.map((patent) => (
+                      <CarouselItem key={patent.id}>
+                        <div className="p-1">
+                          <img src={patent.image} alt={patent.title} className="w-full border border-black" />
+                        </div>
+                      </CarouselItem>
+                    ))}
                   </CarouselContent>
                   <CarouselPrevious />
                   <CarouselNext />
                 </Carousel>
                 <p className="font-mono text-xs uppercase tracking-widest text-center mt-4">
-                  US Patent 1,698,777 — Radio Repeater System
+                  {PATENTS[current]?.title}
                 </p>
               </CardContent>
             </Card>
@@ -144,30 +219,7 @@ export default function About() {
             <div className="mt-8">
               <h3 className="font-mono text-sm uppercase tracking-widest mb-2">Patent Text (Excerpt)</h3>
               <ScrollArea className="h-[300px] w-full border border-black p-4 text-sm font-mono bg-white">
-                <div className="space-y-4">
-                  <p><strong>UNITED STATES PATENT OFFICE</strong></p>
-                  <p><strong>RALPH BOWN, OF EAST ORANGE, NEW JERSEY, ASSIGNOR TO AMERICAN TELEPHONE AND TELEGRAPH COMPANY, A CORPORATION OF NEW YORK.</strong></p>
-                  <p><strong>RADIO REPEATER SYSTEM</strong></p>
-                  <p><strong>Application filed November 7, 1924. Serial No. 748,469.</strong></p>
-                  <p>
-                    This invention relates to radio repeater systems, and particularly to a system of that type characterized by unidirectional reception at the repeater station and having separate receiving circuits, each of the latter having gain control devices whereby the transmission level of the oppositely directed channels may be separately controlled, the said system being further characterized by a single antenna structure for transmitting both channels.
-                  </p>
-                  <p>
-                    Various types of radio repeaters have been devised, one of which, known as the 22-type, embraces, in fact, two complete transmitting and receiving stations. One station receives, for example, from the west and transmits to the east and the other operates only in the opposite manner. A repeater system of that type requires, in the most general case, the use of four channels or frequency bands in order to effect east and west two-way transmission without interference. Such a system is, however, expensive to install and operate and is also open to other criticism. It possesses, however, by virtue of the use of separate transmitting and receiving apparatus for the oppositely traveling waves, the advantage that the said oppositely traveling waves may be separately amplified to a degree depending upon the transmission losses of the separate waves.
-                  </p>
-                  <p>
-                    Another type of repeater, known as the 21 type, employs only a single transmitting and receiving station and utilizes two channels. Both the east bound and west bound signaling waves come to a single receiver upon the same carrier frequency, and both waves are repeated from the same transmitter at the same carrier frequency, the transmitting frequency, however, being different from the received carrier frequency. While such a system is simple and cheap it has certain transmission defects which limit its usefulness, the principal one of which is that the repeater, having no flexibility of adjustment, amplifies equally both the eastbound and the westbound signaling waves.
-                  </p>
-                  <p>
-                    The object of my invention is to provide a 21-type repeater with independent unidirectional receiving systems so that two incoming messages on the same wave length, but from different directions, may be received separately and each may be brought to any desired relative or absolute transmission level before they are reradiated from a common transmitting circuit.
-                  </p>
-                  <p>
-                    Other objects of this invention will be apparent from the following description when read in connection with the attached drawing of which Figure 1 shows schematically one form of the embodiment of the invention employing unidirectional receiving antennae of the combined vertical and loop type: Fig. 2 shows the characteristics of the receiving antennae; and Fig. 3 shows a system employing a wave antenna, the receiving characteristics of which are as shown in Fig. 2.
-                  </p>
-                  <p>
-                    In Fig. 1 is disclosed a system employing two terminal stations A and B and a single repeater station located therebetween. At the left the line L, connects the signaling apparatus 1, which may be a subscriber's telephone set, with the terminal station A, the connection being effected by means of the hybrid coil 3. The network N connected with the hybrid coil 3 balances the line L. In similar manner, the line L, connects the telephone set 2 with the terminal station B, the connection being effected by means of the hybrid coil 19 to which is also connected the network Na to balance the line L.
-                  </p>
-                </div>
+                {PATENTS[current]?.text}
               </ScrollArea>
             </div>
           </div>
