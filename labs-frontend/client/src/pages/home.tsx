@@ -27,11 +27,11 @@ const LinkableCard = ({
       <div className={`flex justify-between items-start mb-6 pb-4 border-b ${highlight ? 'border-white/40' : 'border-black/20'}`}>
         <div className="flex items-center gap-3 flex-1 pr-4">
           {icon && <img src={icon} alt={`${title} Logo`} className={`h-8 w-8 object-contain ${highlight ? 'invert' : ''}`} />}
-          <h3 className="text-2xl font-bold uppercase font-sans tracking-tight">{title}</h3>
+          <h3 className="text-xl font-mono font-bold uppercase tracking-tighter">{title}</h3>
         </div>
         <ExternalLink className="w-4 h-4 ml-2 flex-shrink-0 mt-1" strokeWidth={1.5} />
       </div>
-      <p className="font-serif text-base leading-relaxed">{specs}</p>
+      <p className="font-mono text-xs leading-relaxed opacity-80">{specs}</p>
     </div>
 
     {!highlight && (
@@ -40,33 +40,14 @@ const LinkableCard = ({
   </a>
 );
 
-const HeroQuoteCycler = () => {
-  const quotes = [
-    "Any laboratory which is built around the dominance of its director, however gifted and benevolent he may be, is ill prepared to cope with its future. The best thing a director can do for a research institution is so to shape it that he is not necessary to its vigorous continuity.",
-    "The vitality of a research organization is only a composite of the spirit of the people in it. It has little to do with buildings or equipment, although indeed these things are important mechanical factors in its existence.",
-    "The verb 'to maintain' ordinarily carries a connotation of merely supporting, in a state of equilibrium, something already in being. For our purposes I think we must decide that, in a research institution, to maintain vitality implies a dynamic process of continuous growth in which a steady state is achieved only by matching construction against decay.",
-    "The existence in a research and development organization of this freedom for research to say no when it deems necessary to protect its own vital functions and energies from dissipation presupposes that development departments are technically strong and well equipped to solve all of their problems which are essentially developmental in character."
-  ];
-
-  const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentQuoteIndex((prevIndex) => (prevIndex + 1) % quotes.length);
-    }, 8000); // Change quote every 8 seconds
-
-    return () => clearInterval(interval);
-  }, [quotes.length]);
-
-  return (
-    <div className="mb-8">
-      <p className="font-mono text-xs uppercase tracking-widest mb-4 opacity-70">The Inspiration — The Original "Idea Factory" (1952)</p>
-      <p className="font-serif text-2xl md:text-3xl leading-relaxed italic min-h-[200px] transition-opacity duration-500">
-        "{quotes[currentQuoteIndex]}"
-      </p>
-    </div>
-  );
-};
+const HeroQuote = () => (
+  <div className="mb-8">
+    <p className="font-mono text-xs uppercase tracking-widest mb-4 opacity-70">The Inspiration — The Original "Idea Factory" (1952)</p>
+    <p className="font-serif text-2xl md:text-3xl leading-relaxed italic min-h-[200px]">
+      "The vitality of a research organization is only a composite of the spirit of the people in it. It has little to do with buildings or equipment, although indeed these things are important mechanical factors in its existence."
+    </p>
+  </div>
+);
 
 export default function Home() {
   return (
@@ -106,12 +87,9 @@ export default function Home() {
       <section className="border-b py-20 px-6 md:px-12 flex justify-center" style={{ backgroundColor: '#F5F5F0', borderColor: '#0A0A0A' }}>
         <article className="max-w-[75ch] w-full" style={{ backgroundColor: '#FFFFFF', color: '#0A0A0A' }}>
           <div className="p-10 md:p-14 border" style={{ borderColor: '#0A0A0A' }}>
-            <HeroQuoteCycler />
+            <HeroQuote />
             <div className="text-center font-mono text-sm uppercase tracking-wider border-t pt-6" style={{ color: '#0A0A0A', borderColor: '#0A0A0A' }}>
               — Ralph Bown, <em>Vitality of a Research Institution and How to Maintain It</em> (1952)
-            </div>
-            <div className="text-center font-serif text-lg italic mt-8" style={{ color: '#0A0A0A' }}>
-              We are building the <span className="font-bold">Invisible Infrastructure</span> that makes the future possible.<br />Solving the temporal synchronization problem at the edge where the digital model meets the physical world.
             </div>
           </div>
         </article>
@@ -124,18 +102,6 @@ export default function Home() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2">
           <LinkableCard
-            title="SHANNON CONTROL UNIT"
-            specs="Entropy Stabilization via Closed-Loop PI Control. Validated at 1B/3B scales. Priority Date: Sept 02, 2025."
-            link="https://github.com/Shannon-Labs/shannon-control-unit"
-            icon="/scu-logo.svg"
-          />
-          <LinkableCard
-            title="HEGELION"
-            specs="Dialectical Reasoning Engine. Recursive Thesis → Antithesis → Synthesis. Structuring thought beyond prediction."
-            link="https://github.com/Hmbown/Hegelion"
-            icon="/hegelion-logo.svg"
-          />
-          <LinkableCard
             title="DRIFTLOCK"
             specs="Compression-based anomaly detection. Finding the signal at the edges where probabilistic models break."
             link="https://driftlock.web.app/"
@@ -144,23 +110,23 @@ export default function Home() {
           <div className="relative group">
             <LinkableCard
               title="DRIFTLOCK CHOIR"
-              specs="Chronometric interferometry. The synchronization layer for Decentralized Physical Infrastructure (DePIN). Wireless timing meshes enabling Universal Compute."
+              specs="Simulation Validated: 91 Femtoseconds. Wireless timing precision rivaling dedicated fiber synchronization. The synchronization layer for Universal Compute."
               link="https://driftlock-choir.pages.dev/"
               icon="/driftlock-choir-logo.svg"
               highlight={true}
             />
           </div>
           <LinkableCard
-            title="VITALITY AND HOW TO MAINTAIN IT"
-            specs="Building research institutions that prioritize human selection and group spirit, well-defined technical objectives, individual freedom and dignity, orderly organizational structure recognizing diverse skills, self-governing work that moves dynamically forward, and adequate economic rewards as necessary but insufficient."
-            link="https://maceip.github.io/bell-labs-innovation/"
-            icon="/shannon-logo.png"
+            title="SHANNON CONTROL UNIT"
+            specs="Entropy Stabilization via Closed-Loop PI Control. Independently validated by Tencent researchers (EntroPIC). Priority Date: Sept 02, 2025."
+            link="https://github.com/Shannon-Labs/shannon-control-unit"
+            icon="/scu-logo.svg"
           />
           <LinkableCard
-            title="HUMAN VITALITY"
-            specs="Ensuring we remain high on the cognitive food chain. In an era of artificial abundance, we build systems that treat human intent as the ultimate scarce resource."
-            link="#"
-            icon="/vitality-logo.svg"
+            title="HEGELION"
+            specs="Dialectical Reasoning Engine. Wraps any LLM in a Thesis → Antithesis → Synthesis loop. Available as an MCP server for search-grounded dialectics."
+            link="https://github.com/Hmbown/Hegelion"
+            icon="/hegelion-logo.svg"
           />
         </div>
       </section>
@@ -180,86 +146,91 @@ export default function Home() {
           <div className="grid grid-cols-2 gap-8">
             {/* 1952 COLUMN */}
             <div>
-              <h3 className="font-mono text-sm uppercase tracking-widest mb-6 font-bold border-b pb-4" style={{ borderColor: '#F5F5F0', color: '#F5F5F0' }}>
-                Vitality of a Research Institution
-              </h3>
-              <div className="space-y-4">
-                <div className="p-6 border" style={{ backgroundColor: '#F5F5F0', borderColor: '#F5F5F0', color: '#0A0A0A' }}>
+              <div className="border-b pb-4 mb-6" style={{ borderColor: '#F5F5F0' }}>
+                <h3 className="font-mono text-sm uppercase tracking-widest font-bold mb-2" style={{ color: '#F5F5F0' }}>
+                  Vitality of a Research Institution
+                </h3>
+                <p className="font-mono text-xs uppercase tracking-widest opacity-70" style={{ color: '#F5F5F0' }}>
+                  Ralph Bown, 1952
+                </p>
+              </div>
+              <div className="space-y-0 border-l border-r border-t" style={{ borderColor: '#F5F5F0' }}>
+                <div className="p-6 border-b" style={{ borderColor: '#F5F5F0', color: '#F5F5F0' }}>
                   <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">[01]</div>
-                  <h3 className="font-bold text-lg mb-2">A Human Problem</h3>
-                  <p className="font-serif text-sm leading-relaxed">"Primarily a problem in human selection, human relations and group spirit."</p>
+                  <h3 className="font-mono text-sm font-bold mb-2 uppercase tracking-wider">A Human Problem</h3>
+                  <p className="font-serif text-sm leading-relaxed opacity-90">"Primarily a problem in human selection, human relations and group spirit."</p>
                 </div>
-                <div className="p-6 border" style={{ backgroundColor: '#F5F5F0', borderColor: '#F5F5F0', color: '#0A0A0A' }}>
+                <div className="p-6 border-b" style={{ borderColor: '#F5F5F0', color: '#F5F5F0' }}>
                   <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">[02]</div>
-                  <h3 className="font-bold text-lg mb-2">Technical Objective</h3>
-                  <p className="font-serif text-sm leading-relaxed">"A well defined but broad technical objective furnishes a rallying point and sharpens decisions."</p>
+                  <h3 className="font-mono text-sm font-bold mb-2 uppercase tracking-wider">Technical Objective</h3>
+                  <p className="font-serif text-sm leading-relaxed opacity-90">"A well defined but broad technical objective furnishes a rallying point and sharpens decisions."</p>
                 </div>
-                <div className="p-6 border" style={{ backgroundColor: '#F5F5F0', borderColor: '#F5F5F0', color: '#0A0A0A' }}>
+                <div className="p-6 border-b" style={{ borderColor: '#F5F5F0', color: '#F5F5F0' }}>
                   <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">[03]</div>
-                  <h3 className="font-bold text-lg mb-2">Freedom & Dignity</h3>
-                  <p className="font-serif text-sm leading-relaxed">"The freedom and dignity of the individual in the world of science is a paramount principle."</p>
+                  <h3 className="font-mono text-sm font-bold mb-2 uppercase tracking-wider">Freedom & Dignity</h3>
+                  <p className="font-serif text-sm leading-relaxed opacity-90">"The freedom and dignity of the individual in the world of science is a paramount principle."</p>
                 </div>
-                <div className="p-6 border" style={{ backgroundColor: '#F5F5F0', borderColor: '#F5F5F0', color: '#0A0A0A' }}>
+                <div className="p-6 border-b" style={{ borderColor: '#F5F5F0', color: '#F5F5F0' }}>
                   <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">[04]</div>
-                  <h3 className="font-bold text-lg mb-2">Organizational Structure</h3>
-                  <p className="font-serif text-sm leading-relaxed">"An orderly organizational structure with room for recognition of a variety of skills is helpful."</p>
+                  <h3 className="font-mono text-sm font-bold mb-2 uppercase tracking-wider">Organizational Structure</h3>
+                  <p className="font-serif text-sm leading-relaxed opacity-90">"An orderly organizational structure with room for recognition of a variety of skills is helpful."</p>
                 </div>
-                <div className="p-6 border" style={{ backgroundColor: '#F5F5F0', borderColor: '#F5F5F0', color: '#0A0A0A' }}>
+                <div className="p-6 border-b" style={{ borderColor: '#F5F5F0', color: '#F5F5F0' }}>
                   <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">[05]</div>
-                  <h3 className="font-bold text-lg mb-2">Self-Governing Work</h3>
-                  <p className="font-serif text-sm leading-relaxed">"A program which keeps moving dynamically forward into new ground is the purpose of the whole thing."</p>
+                  <h3 className="font-mono text-sm font-bold mb-2 uppercase tracking-wider">Self-Governing Work</h3>
+                  <p className="font-serif text-sm leading-relaxed opacity-90">"A program which keeps moving dynamically forward into new ground is the purpose of the whole thing."</p>
                 </div>
-                <div className="p-6 border" style={{ backgroundColor: '#F5F5F0', borderColor: '#F5F5F0', color: '#0A0A0A' }}>
+                <div className="p-6 border-b" style={{ borderColor: '#F5F5F0', color: '#F5F5F0' }}>
                   <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">[06]</div>
-                  <h3 className="font-bold text-lg mb-2">Economic Rewards</h3>
-                  <p className="font-serif text-sm leading-relaxed">"Just and adequate economic rewards are necessary but far from sufficient."</p>
+                  <h3 className="font-mono text-sm font-bold mb-2 uppercase tracking-wider">Economic Rewards</h3>
+                  <p className="font-serif text-sm leading-relaxed opacity-90">"Just and adequate economic rewards are necessary but far from sufficient."</p>
                 </div>
               </div>
             </div>
 
             {/* 2025 COLUMN */}
             <div>
-              <h3 className="font-mono text-sm uppercase tracking-widest mb-6 font-bold border-b pb-4" style={{ borderColor: '#F5F5F0', color: '#F5F5F0' }}>
-                Vitality of Humanity
-              </h3>
-              <div className="space-y-4">
-                <div className="p-6 border" style={{ backgroundColor: '#F5F5F0', borderColor: '#F5F5F0', color: '#0A0A0A' }}>
+              <div className="border-b pb-4 mb-6" style={{ borderColor: '#F5F5F0' }}>
+                <h3 className="font-mono text-sm uppercase tracking-widest font-bold mb-2" style={{ color: '#F5F5F0' }}>
+                  Vitality of Humanity
+                </h3>
+                <p className="font-mono text-xs uppercase tracking-widest opacity-70" style={{ color: '#F5F5F0' }}>
+                  Hunter Bown, 2025
+                </p>
+              </div>
+              <div className="space-y-0 border-l border-r border-t" style={{ borderColor: '#F5F5F0' }}>
+                <div className="p-6 border-b" style={{ borderColor: '#F5F5F0', color: '#F5F5F0' }}>
                   <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">[01]</div>
-                  <h3 className="font-bold text-lg mb-2">A Human Problem</h3>
-                  <p className="font-serif text-sm leading-relaxed">Building teams of uninhibited polymaths. The Hedy Lamarrs of the AGI era—newly awakened Renaissance minds capable of synthesizing art and architecture.</p>
+                  <h3 className="font-mono text-sm font-bold mb-2 uppercase tracking-wider">A Human Problem</h3>
+                  <p className="font-serif text-sm leading-relaxed opacity-90">Building teams of uninhibited polymaths. The Hedy Lamarrs of the AGI era—newly awakened Renaissance minds capable of synthesizing art and architecture.</p>
                 </div>
-                <div className="p-6 border" style={{ backgroundColor: '#F5F5F0', borderColor: '#F5F5F0', color: '#0A0A0A' }}>
+                <div className="p-6 border-b" style={{ borderColor: '#F5F5F0', color: '#F5F5F0' }}>
                   <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">[02]</div>
-                  <h3 className="font-bold text-lg mb-2">Technical Objective</h3>
-                  <p className="font-serif text-sm leading-relaxed">The Next Idea Factory. Infrastructure for human autonomy.</p>
+                  <h3 className="font-mono text-sm font-bold mb-2 uppercase tracking-wider">Technical Objective</h3>
+                  <p className="font-serif text-sm leading-relaxed opacity-90">The Next Idea Factory. Infrastructure for human autonomy.</p>
                 </div>
-                <div className="p-6 border" style={{ backgroundColor: '#F5F5F0', borderColor: '#F5F5F0', color: '#0A0A0A' }}>
+                <div className="p-6 border-b" style={{ borderColor: '#F5F5F0', color: '#F5F5F0' }}>
                   <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">[03]</div>
-                  <h3 className="font-bold text-lg mb-2">Freedom & Dignity</h3>
-                  <p className="font-serif text-sm leading-relaxed">Cognitive Sovereignty. The right to pursue the "missing fundamental"—structural signals invisible to probabilistic models. Preserving human intuition against the noise of generative homogeneity.</p>
+                  <h3 className="font-mono text-sm font-bold mb-2 uppercase tracking-wider">Freedom & Dignity</h3>
+                  <p className="font-serif text-sm leading-relaxed opacity-90">Cognitive Sovereignty. The right to pursue the "missing fundamental"—structural signals invisible to probabilistic models. Preserving human intuition against the noise of generative homogeneity.</p>
                 </div>
-                <div className="p-6 border" style={{ backgroundColor: '#F5F5F0', borderColor: '#F5F5F0', color: '#0A0A0A' }}>
+                <div className="p-6 border-b" style={{ borderColor: '#F5F5F0', color: '#F5F5F0' }}>
                   <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">[04]</div>
-                  <h3 className="font-bold text-lg mb-2">Organizational Structure</h3>
-                  <p className="font-serif text-sm leading-relaxed">Flat hierarchies that value theoretical depth AND engineering execution. Complementary skills integrated.</p>
+                  <h3 className="font-mono text-sm font-bold mb-2 uppercase tracking-wider">Organizational Structure</h3>
+                  <p className="font-serif text-sm leading-relaxed opacity-90">Flat hierarchies that value theoretical depth AND engineering execution. Complementary skills integrated.</p>
                 </div>
-                <div className="p-6 border" style={{ backgroundColor: '#F5F5F0', borderColor: '#F5F5F0', color: '#0A0A0A' }}>
+                <div className="p-6 border-b" style={{ borderColor: '#F5F5F0', color: '#F5F5F0' }}>
                   <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">[05]</div>
-                  <h3 className="font-bold text-lg mb-2">Self-Governing Work</h3>
-                  <p className="font-serif text-sm leading-relaxed">Matching construction against decay—continuous growth or institutional death. Dynamic forward momentum required.</p>
+                  <h3 className="font-mono text-sm font-bold mb-2 uppercase tracking-wider">Self-Governing Work</h3>
+                  <p className="font-serif text-sm leading-relaxed opacity-90">Matching construction against decay—continuous growth or institutional death. Dynamic forward momentum required.</p>
                 </div>
-                <div className="p-6 border" style={{ backgroundColor: '#F5F5F0', borderColor: '#F5F5F0', color: '#0A0A0A' }}>
+                <div className="p-6 border-b" style={{ borderColor: '#F5F5F0', color: '#F5F5F0' }}>
                   <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">[06]</div>
-                  <h3 className="font-bold text-lg mb-2">Economic Rewards</h3>
-                  <p className="font-serif text-sm leading-relaxed">Inventor-first patent policy. The Founder retains patent title and majority equity. Incentives aligned through a minority stake and a recursive research license. Launching sovereign companies, not capturing them.</p>
+                  <h3 className="font-mono text-sm font-bold mb-2 uppercase tracking-wider">Economic Rewards</h3>
+                  <p className="font-serif text-sm leading-relaxed opacity-90">Inventor-first patent policy. The Inventor retains patent title and majority equity. Incentives aligned through a minority stake and a recursive research license. Launching sovereign companies, not capturing them.</p>
                 </div>
               </div>
             </div>
-          </div>
-          
-          <div className="mt-12 text-center font-mono text-xs uppercase tracking-widest opacity-70" style={{ color: '#F5F5F0' }}>
-            Bell Labs 1952 | Shannon Labs 2025<br/>
-            Dr. Ralph Bown, Sr., Director of Research and Hunter Bown, Founder and CEO
           </div>
         </div>
       </section>
