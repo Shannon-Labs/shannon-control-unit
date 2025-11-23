@@ -8,6 +8,7 @@ const LinkableCard = ({
   link,
   icon,
   highlight = false,
+  backgroundImage,
 }: {
   title: string,
   specs: string,
@@ -22,8 +23,8 @@ const LinkableCard = ({
     rel="noopener noreferrer"
     className={`relative border-r border-b border-black p-8 flex flex-col justify-between h-full min-h-[320px] group overflow-hidden transition-none cursor-pointer ${highlight ? 'bg-black text-white hover:invert' : 'bg-white text-black hover:bg-black hover:text-white'
       }`}
-    style={{ 
-      backgroundColor: highlight ? '#000000' : '#FFFFFF', 
+    style={{
+      backgroundColor: highlight ? '#000000' : '#FFFFFF',
       borderColor: '#0A0A0A',
       ...(backgroundImage ? {
         backgroundImage: `url(${backgroundImage})`,
@@ -150,7 +151,7 @@ export default function Home() {
       <section className="border-b py-20 px-6 md:px-12 flex justify-center" style={{ backgroundColor: '#0A0A0A', borderColor: '#0A0A0A' }}>
         <div className="max-w-7xl w-full">
           <h2 className="text-2xl md:text-3xl font-serif font-bold mb-12 uppercase text-center" style={{ color: '#F5F5F0' }}>
-            Institutional Pillars<br/>
+            Institutional Pillars<br />
             Vitality and How to Maintain It
           </h2>
           <p className="text-center font-mono text-xs uppercase tracking-widest mb-12" style={{ color: '#F5F5F0', opacity: 0.7 }}>
