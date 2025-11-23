@@ -40,6 +40,9 @@ export default function About() {
             <p>
               Now, as a 2L at Southern Methodist University (SMU) Law and an MBA, I realize that while those antitrust decisions were challenging, they created the space for innovation. But today, the world is getting noisy again.
             </p>
+            <p>
+              Before this, I was a high school band director for seven years. I built my own musical laboratory where the best musical ideas were the ones with the most value.
+            </p>
           </div>
 
           {/* PHILOSOPHY */}
