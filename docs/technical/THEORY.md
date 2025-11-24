@@ -22,7 +22,7 @@ $$\text{TotalBPT} = \text{DataBPT} + \text{ParamBPT}$$
 
 where:
 - $\text{DataBPT} = -\frac{1}{N \ln 2} \sum_{i=1}^N \log p(x_i|\theta)$
-- $\text{ParamBPT} = \frac{\lambda}{N \ln 2} \sum_{j} \frac{\theta_j^2}{2\sigma^2}$
+- $\text{ParamBPT} = \frac{1}{N \ln 2} \sum_{j} \frac{\theta_j^2}{2\sigma^2}$
 
 The parameter $\lambda$ controls the regularization strength, and $\sigma$ is the prior standard deviation.
 
@@ -36,6 +36,12 @@ This ratio satisfies $S \in [0,1]$, with interpretation:
 - $S \to 0$: Negligible regularization (overfitting risk)
 - $S \to 1$: Excessive regularization (underfitting)
 - $S^* \in (0,1)$: Optimal trade-off
+
+### 1.4 Normalization Dependency
+
+Note that $S$ depends inversely on the dataset size normalization constant $N$ (`tokens_per_epoch`).
+$$ S \propto \frac{1}{N} $$
+Therefore, $S^*$ values are only comparable when $N$ is fixed. The code enforces explicit $N$ to ensure reproducibility.
 
 ## 2. Control System Design
 
@@ -232,10 +238,4 @@ Sample size determination for detecting $\Delta\text{BPT} = 0.1$:
 *Correspondence: Hunter Bown, Shannon Labs (hunter@shannonlabs.dev)*
 
 *Preprint available at arXiv:2509.XXXXX*
-## 5. Open Problem: Natural Operating Point for S*
 
-We observe that keeping the information ratio S near a small target S* improves stability and generalization in our 1B/3B LoRA setups (≈1.0% and ≈2.9% respectively). A central open question is whether there exists a simple, general relation
-
-$$ S^* \approx f(M, T, D), $$
-
-where M is model size, T the number of training tokens, and D the data domain. Such a law would define a “natural operating point” of the training dynamics, enabling predictive setting of S* without empirical sweeps. This repo treats the existence and form of f as a hypothesis; establishing it requires broader experiments across sizes and datasets.

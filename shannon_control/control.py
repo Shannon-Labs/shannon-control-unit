@@ -133,8 +133,8 @@ def update_lambda(
 
 def calculate_param_bpt(
     model,
+    tokens_per_epoch: int,
     sigma: float = 0.01,
-    tokens_per_epoch: int = 1000000
 ) -> float:
     """Calculate Parameter BPT for LoRA weights.
     
@@ -142,8 +142,8 @@ def calculate_param_bpt(
     
     Args:
         model: Model with parameters
+        tokens_per_epoch: Fixed normalization constant (N). REQUIRED to avoid arbitrary S values.
         sigma: Prior standard deviation
-        tokens_per_epoch: Fixed normalization constant
         
     Returns:
         Parameter bits per token

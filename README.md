@@ -51,7 +51,7 @@ S(t) = ParamBPT(t) / (DataBPT(t) + ParamBPT(t))
 where **DataBPT** is the bits-per-token of the loss and **ParamBPT** is the bits-per-token of the parameter update. The control objective is `S(t) → S*`. Let `e(t) = S(t) - S*`. With plant gain `∂S/∂λ < 0`, the PI law updates the regularization strength as:
 
 ```
-λ(t+1) = λ(t) * exp(-(K_p × e(t) + K_i × Σ e(τ)))
+λ(t+1) = λ(t) * exp(+(K_p × e(t) + K_i × Σ e(τ)))
 ```
 
 optionally with deadband and integral clamping for anti-windup. Updates are applied at gradient-accumulation boundaries to maintain stability.
@@ -196,7 +196,7 @@ This repository is dual-licensed:
 
 **Intellectual Property:** The SCU methodology is subject to a U.S. Provisional Patent (Filed September 2025).
 
-**Technical Paper:** See [SCU_Technical_Report_v1.pdf](./SCU_Technical_Report_v1.pdf) for detailed methodology and evaluation.
+**Technical Paper:** See `docs/technical/` for detailed methodology and evaluation.
 
 ---
 
@@ -212,7 +212,7 @@ This repository is dual-licensed:
   
   \(I_{t+1} = \text{clip}(I_t + e_d, I_{\min}, I_{\max})\).
   
-  \(\lambda_{t+1} = \text{clip}\big( \lambda_t \cdot \exp(-(K_p e_d + K_i I_{t+1})), \lambda_{\min}, \lambda_{\max} \big)\).
+  \(\lambda_{t+1} = \text{clip}\big( \lambda_t \cdot \exp(+(K_p e_d + K_i I_{t+1})), \lambda_{\min}, \lambda_{\max} \big)\).
 - **Actuation point:** apply λ update at gradient-accumulation boundaries to avoid per-microbatch noise.
 - **Stability aids:** deadband to prevent chatter; integral clamp/leak to avoid windup; λ bounds to avoid runaway; controller gains set by auto-config from model/dataset scale.
 

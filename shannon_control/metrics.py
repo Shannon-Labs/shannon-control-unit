@@ -40,8 +40,12 @@ class S_Ratio(MetricBase):
         if loss is None or model is None:
             return 0.0
         
-        data_bpt = calculate_data_bpt(loss.item())
-        param_bpt = calculate_param_bpt(model)
+        # tokens_per_epoch is now REQUIRED for correct S-ratio calculation
+        tokens_per_epoch = orchestrator_state.get("tokens_per_epoch")
+        if tokens_per_epoch is None:
+            raise ValueError("tokens_per_epoch must be provided in orchestrator_state for S_Ratio metric")
+            
+        param_bpt = calculate_param_bpt(model, tokens_per_epoch=tokens_per_epoch)
         return calculate_s_ratio(data_bpt, param_bpt)
 
 class AttentionEntropy(MetricBase):

@@ -34,6 +34,7 @@ class TrainingConfig(BaseModel):
     seed: int = Field(42)
     max_texts: Optional[int] = Field(None, ge=1)
     use_unsloth: bool = Field(False, description="Use Unsloth FastLanguageModel loader")
+    tokens_per_epoch_override: Optional[int] = Field(None, description="Manual override for normalization constant N")
 
     # LoRA parameters
     lora_r: int = Field(16, ge=1)

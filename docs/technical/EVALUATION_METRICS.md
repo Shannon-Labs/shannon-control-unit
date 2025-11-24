@@ -53,12 +53,13 @@ $$S = \frac{\text{ParamBPT}}{\text{DataBPT} + \text{ParamBPT}}$$
 
 **Components**:
 - **DataBPT**: From cross-entropy loss
-- **ParamBPT**: $\frac{\lambda}{N\ln 2} \sum_j \frac{\theta_j^2}{2\sigma^2}$
+- **ParamBPT**: $\frac{1}{N\ln 2} \sum_j \frac{\theta_j^2}{2\sigma^2}$
 
 **Target Selection**:
 - Empirically determined per model size and setup
 - Typical range (observed here): ≈1% (1B), ≈2.9% (3B)
 - Scaling with model size is a hypothesis to test, not established
+- **Note**: $S$ values depend on the normalization constant $N$ (`tokens_per_epoch`). Always report $N$ alongside $S$.
 
 ### 2.2 Control Error Metrics
 

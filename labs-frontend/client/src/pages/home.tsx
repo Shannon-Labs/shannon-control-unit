@@ -140,7 +140,7 @@ export default function Home() {
           <LinkableCard
             title="HEGELION"
             specs="Dialectical Reasoning Engine. Wraps any LLM in a Thesis → Antithesis → Synthesis loop. Available as an MCP server for search-grounded dialectics."
-            link="https://github.com/Hmbown/Hegelion"
+            link="https://hegelion-web.pages.dev/"
             icon="/hegelion-logo.svg"
           />
         </div>

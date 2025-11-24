@@ -250,6 +250,14 @@ class TrainingOrchestrator:
             # Update the shared state dictionary for metrics
             self.state['model'] = self.model
             self.state['loss'] = loss
+            
+            # Calculate tokens_per_epoch (N) for normalization
+            # For this demo script, we estimate it based on the data loader
+            # In a real scenario, this should be exact
+            # 100 samples * 512 tokens (max) approx
+            tokens_per_epoch = 100 * 512 
+            self.state['tokens_per_epoch'] = tokens_per_epoch
+            
             # For real models, attention maps are not directly accessible in this way
             # We'll set a placeholder for now - attention maps would be captured differently in real implementation
             # In a real implementation, attention maps would be extracted using hooks
@@ -274,7 +282,7 @@ class TrainingOrchestrator:
             # Apply regularization with lambda
             # Calculate the param bpt for regularization, based on S-Ratio
             data_bpt = (loss.item() / math.log(2))  # Convert from nats to bits
-            param_bpt = calculate_param_bpt(self.model)
+            param_bpt = calculate_param_bpt(self.model, tokens_per_epoch=tokens_per_epoch)
             s_ratio = param_bpt / (data_bpt + param_bpt) if (data_bpt + param_bpt) > 0 else 0.0
             
             # Apply regularization with lambda - using the actual S-ratio for param_bpt
@@ -291,7 +299,7 @@ class TrainingOrchestrator:
             if s_ratio_from_metric == 0.0:
                 # Calculate manually if metric failed
                 data_bpt = (loss.item() / math.log(2))  # Convert from nats to bits
-                param_bpt = calculate_param_bpt(self.model)
+                param_bpt = calculate_param_bpt(self.model, tokens_per_epoch=tokens_per_epoch)
                 s_ratio_manual = param_bpt / (data_bpt + param_bpt) if (data_bpt + param_bpt) > 0 else 0.0
                 s_ratio_final = s_ratio_manual
             else:
