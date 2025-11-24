@@ -18,8 +18,8 @@ Fine-tuning a specialized model like **VibeThinker-1.5B** (a Qwen-2.5-Math deriv
 *   **Phase 2: Erasure (Step 380+):** Once general capabilities are unmasked, the optimizer begins overwriting specialized math circuits to squeeze out marginal gains in general text. This is **Catastrophic Forgetting**.
 
 **SCU vs. Baseline:**
-*   **Baseline (Vacuum Tube):** Continues training blindly into Phase 2, likely sacrificing math genius for slightly better English.
-*   **SCU (Transistor):** Detects the saturation of information gain at the end of Phase 1 (Step 386) and effectively stops training. This preserves the **Dual-Domain** nature of the model (Good Math + Functional English).
+*   **Baseline:** Continues training blindly into Phase 2, likely sacrificing math genius for slightly better English.
+*   **SCU:** Detects the saturation of information gain at the end of Phase 1 (Step 386) and effectively stops training. This preserves the **Dual-Domain** nature of the model (Good Math + Functional English).
 
 ## 2. Scientific Validation: The VibeThinker Experiment
 
