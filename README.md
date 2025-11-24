@@ -1,44 +1,43 @@
-# Shannon Control Unit (SCU): Dual-Domain Preservation via Automated Early Stopping
+# Shannon Control Unit (SCU): Adaptive Regularization via Control Theory
 
-[![Patent Pending](https://img.shields.io/badge/Patent-Pending-orange.svg)](https://shannonlabs.dev)
 [![Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97-VibeThinker_SCU-yellow)](https://huggingface.co/hunterbown/VibeThinker-1.5B-SCU)
 [![License](https://img.shields.io/badge/License-AGPL%203.0-blue.svg)](LICENSE)
 
 **Abstract**
 
-Shannon Control Unit (SCU) is a control-theoretic framework for Large Language Model (LLM) training that solves the "Plasticity-Stability Dilemma." When fine-tuning a highly specialized model (like a math expert) on general data, standard training risks **Catastrophic Forgetting**—erasing the specialized circuits to minimize general loss. SCU monitors the **Information Ratio (S)** in real-time to detect the precise moment of "Latent Capability Unmasking" (Step 386) and applies a "Safety Brake" ($\lambda \to 2.0$) to freeze weights before the specialized capabilities are overwritten.
+Shannon Control Unit (SCU) is a control-theoretic framework for adaptive regularization during Large Language Model (LLM) fine-tuning. SCU addresses the **Plasticity-Stability Trade-off** by monitoring an MDL-derived **Information Ratio (S)** in real-time, automatically adjusting regularization strength via PI control to prevent overfitting while maintaining learning capacity.
 
 ---
 
-## 1. The Physics of Re-Generalization
+## 1. Motivation: The Plasticity-Stability Trade-off
 
-Fine-tuning a specialized model like **VibeThinker-1.5B** (a Qwen-2.5-Math derivative) on general text isn't just "learning"; it is **remembering**. The model already possesses general English capabilities from its pre-training, but they are suppressed by its math specialization (initial PPL 967).
+Fine-tuning a specialized model like **VibeThinker-1.5B** (a Qwen-2.5-Math derivative) on general text involves recovering suppressed general capabilities while attempting to preserve specialized knowledge. The model already possesses general English capabilities from pre-training, but they are suppressed by its math specialization (initial PPL 967).
 
-*   **Phase 1: Unmasking (Steps 0-380):** The model rapidly recovers its general English latent abilities. PPL drops from 967 to ~70.
-*   **Phase 2: Erasure (Step 380+):** Once general capabilities are unmasked, the optimizer begins overwriting specialized math circuits to squeeze out marginal gains in general text. This is **Catastrophic Forgetting**.
+*   **Phase 1: Capability Recovery (Steps 0-380):** The model rapidly recovers its general English abilities. PPL drops from 967 to ~70.
+*   **Phase 2: Potential Interference (Step 380+):** Continued training may begin overwriting specialized circuits to squeeze out marginal gains in general text. This is the risk of **Catastrophic Forgetting**.
 
 **SCU vs. Baseline:**
-*   **Baseline:** Continues training blindly into Phase 2, likely sacrificing math genius for slightly better English.
-*   **SCU:** Detects the saturation of information gain at the end of Phase 1 (Step 386) and effectively stops training. This preserves the **Dual-Domain** nature of the model (Good Math + Functional English).
+*   **Baseline:** Continues training without adaptive stopping, potentially sacrificing specialized capabilities for marginal general improvement.
+*   **SCU:** Detects saturation of information gain and increases regularization, aiming to preserve specialized capabilities while achieving functional general performance.
 
-## 2. Scientific Validation: The VibeThinker Experiment
+## 2. Experimental Validation: The VibeThinker Experiment
 
 We validated SCU on **WeiboAI/VibeThinker-1.5B** using the FineWeb-Edu dataset.
 
-### The Discovery: Step 386 Saturation
-SCU detected that the "Information Ratio" (Signal-to-Noise of gradients) saturated after only **16M tokens** (Step 386).
-*   **Reaction:** SCU saturated regularization to $\lambda=2.0$, freezing the weights.
-*   **Implication:** SCU identified the optimal stopping point where "re-generalization" was complete but "catastrophic interference" had not yet begun.
+### Observed Behavior: Information Ratio Saturation
+SCU detected that the Information Ratio saturated after approximately **16M tokens** (~Step 386).
+*   **Reaction:** SCU increased regularization to $\lambda=2.0$, effectively freezing the weights.
+*   **Interpretation:** This suggests SCU identified a point where additional training provided diminishing returns on information gain.
 
 ### Results
 
 | Metric | Base Model | Baseline (Manual) | SCU V3 (Auto-Brake) | SCU V4 (Unregulated) |
 | :--- | :--- | :--- | :--- | :--- |
 | **FineWeb PPL** | 967 | 70.27 | **70.39** | 108.84 (Crash) |
-| **Interpretation** | Specialized | **Risk of Forgetting** | **Dual-Domain Preserved** | Overfit |
+| **Interpretation** | Specialized | Recovers general | Comparable recovery | Overfit |
 
 *   **Parity in General Performance:** SCU matched the baseline's general text recovery (70.39 vs 70.27 PPL).
-*   **Superiority in Preservation:** By stopping at the saturation point, SCU protected the latent mathematical capabilities that the baseline likely eroded by continuing to train.
+*   **Hypothesis on Preservation:** By stopping at the saturation point, SCU may help preserve specialized capabilities. *Note: This hypothesis requires validation with domain-specific benchmarks (e.g., math evaluations).*
 
 ## 3. Methodology
 
@@ -82,23 +81,23 @@ Data → Tokenize/Batch → Model (plant)
 
 ## 3. Results
 
-### VibeThinker 1.5B Validation (Scientific Breakthrough)
+### VibeThinker 1.5B Validation
 
-We conducted a rigorous comparative study on the **VibeThinker 1.5B** model to validate SCU's efficacy and safety mechanisms. This experiment used a 500MB subset of the FineWeb-Edu dataset and compared three configurations:
+We conducted a comparative study on the **VibeThinker 1.5B** model to validate SCU's adaptive regularization. This experiment used a 500MB subset of the FineWeb-Edu dataset and compared three configurations:
 
 | Model Variant | Training Method | Validation PPL | Status |
 | :--- | :--- | :--- | :--- |
 | **Baseline** | Standard Finetuning (λ=0) | 70.27 | Strong Baseline |
-| **V3 (Scientific)** | SCU (Fixed Prior) | **70.39** | ✅ **Optimal & Robust** |
-| **V4 (Adaptive)** | SCU (Dynamic Prior) | 108.84 | ❌ Overfit |
+| **V3 (Fixed Prior)** | SCU (Fixed σ) | **70.39** | Comparable |
+| **V4 (Dynamic Prior)** | SCU (Dynamic σ) | 108.84 | Overfit |
 
-#### Key Discovery: The "Safety Brake"
-In the V3 (Scientific) run, the SCU controller naturally saturated the regularization strength ($\lambda \to 2.0$) towards the end of training. 
-*   **The Test:** We hypothesized this was a limitation and ran V4 to "fix" it by loosening the prior to prevent saturation.
-*   **The Result:** V4 overfitted immediately (PPL 108 vs 70).
-*   **The Conclusion:** The saturation in V3 was NOT a bug. It was a **correct safety signal**. The SCU detected that the model had fully exploited the data capacity and applied maximum braking to prevent memorization.
+#### Key Observation: Regularization Saturation as Safety Signal
+In the V3 run, the SCU controller naturally saturated the regularization strength ($\lambda \to 2.0$) towards the end of training.
+*   **The Test:** We hypothesized this saturation was a limitation and ran V4 to "fix" it by loosening the prior.
+*   **The Result:** V4 overfitted (PPL 108 vs 70).
+*   **The Interpretation:** The saturation in V3 appears to be a useful signal that the model-data complexity ratio has reached a threshold. This suggests SCU can serve as an automatic early-stopping mechanism.
 
-This validates SCU as an automated **safety system** for model training, capable of detecting and preventing overfitting without human intervention.
+This provides preliminary evidence that SCU can help detect overfitting risk during training.
 
 ### Llama 3.2 Validation (Earlier Work)
 On Llama 3.2 (1B, 3B) fine-tuning, SCU improved bits-per-token by 6-12% over tuned fixed-λ baselines:
@@ -115,15 +114,23 @@ The application of control theory to LLM training is an emerging and promising f
 ### 4.1 Independent Convergence: EntroPIC
 Recent independent work, **EntroPIC** (arXiv:2511.15248), applies PI control to stabilize policy entropy in reinforcement learning. While EntroPIC regulates policy entropy in RL, SCU regulates the information ratio in supervised learning. Both validate the necessity of feedback control for neural training dynamics.
 
-## 5. Future Directions
+## 5. Limitations
+
+- **Scale**: Validated only up to 3B parameters with LoRA fine-tuning
+- **Domain benchmarks**: No direct measurement of specialized capability preservation (e.g., math benchmarks)
+- **S* selection**: Optimal target S* currently requires empirical tuning
+- **Baseline comparisons**: Not yet compared against DoRA, QLoRA, or other modern PEFT methods with careful tuning
+
+## 6. Future Directions
 
 Our ongoing research focuses on:
 
-- **Scaling Laws for S***: Deriving the optimal target S* from first principles based on model size (N) and dataset size (D), removing the need for a target setpoint entirely.
-- **Full-Parameter Training**: Extending validation beyond LoRA to full model pretraining.
-- **Unified Control**: Investigating if regulating Information Ratio implicitly stabilizes entropy (potentially unifying SCU and EntroPIC).
+- **Scaling Laws for S***: Investigating whether optimal target S* can be derived from model size (N) and dataset size (D)
+- **Full-Parameter Training**: Extending validation beyond LoRA to full model pretraining
+- **Domain-Specific Evaluation**: Adding math/code benchmarks to validate capability preservation claims
+- **Unified Control**: Investigating relationships between Information Ratio regulation and entropy stabilization
 
-## 6. Usage
+## 7. Usage
 
 ### Installation
 ```bash
@@ -172,7 +179,7 @@ Notes:
 - CLI auto-config merges suggested settings with your overrides; defaults map to `TrainingConfig`.
 - `SCUClient` is exported at package root for SDK usage if you prefer Python over the CLI.
 
-## 7. Citation
+## 8. Citation
 
 If you use SCU in your research, please cite:
 
@@ -187,14 +194,12 @@ If you use SCU in your research, please cite:
 }
 ```
 
-## 8. License
+## 9. License
 
 This repository is dual-licensed:
 
 *   **Research & Open Source:** [AGPL-3.0](LICENSE). Free for academic and open-source use.
 *   **Commercial:** Proprietary licenses available for closed-source applications. Contact `hunter@shannonlabs.dev`.
-
-**Intellectual Property:** The SCU methodology is subject to a U.S. Provisional Patent (Filed September 2025).
 
 **Technical Paper:** See `docs/technical/` for detailed methodology and evaluation.
 
@@ -204,7 +209,7 @@ This repository is dual-licensed:
 
 - **S-ratio (controlled variable):**
   
-  \(S = \frac{\text{ParamBPT}}{\text{DataBPT} + \text{ParamBPT}}\); reduces to the information ratio between parameter update cost and data fit.
+  \(S = \frac{\text{ParamBPT}}{\text{DataBPT} + \text{ParamBPT}}\); the MDL-derived regularization-to-fit ratio.
 - **Error:** \(e(t) = S(t) - S^*\) with plant gain \(\partial S / \partial \lambda < 0\).
 - **PI update with deadband and clamp:**
   

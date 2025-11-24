@@ -3,13 +3,13 @@
 ## Executive Summary
 
 **Status**: ✅ **Training completed & Validated**
-**Result**: **Discovery of the "Shannon Limit"**
+**Result**: **Observed MDL Complexity Saturation**
 
-The VibeThinker 1.5B training run (Nov 21, 2025) successfully demonstrated the core principle of the Shannon Control Unit: **You cannot justify a high-complexity model with low-complexity data.** We call this boundary the **Shannon Limit**.
+The VibeThinker 1.5B training run (Nov 21, 2025) demonstrated a key behavior of the Shannon Control Unit: it detects when model complexity exceeds what the data can justify. We call this the **MDL Saturation Threshold**.
 
-## The "Shannon Limit" Discovery
+## Observed Behavior: MDL Saturation
 
-We attempted to train a **1.5 Billion parameter model** (with ~18M trainable LoRA parameters) on a tiny dataset of **~2MB (530k tokens)**.
+We attempted to train a **1.5 Billion parameter model** (with ~18M trainable LoRA parameters) on a small dataset of **~2MB (530k tokens)**.
 
 ### The Result
 The SCU controller immediately detected this imbalance:
@@ -20,13 +20,13 @@ The SCU controller immediately detected this imbalance:
 The controller reacted exactly as designed:
 - It saw $S \gg S_{target}$ (64% vs 1%).
 - It increased $\lambda$ (regularization strength) to the maximum allowed value ($2.0$).
-- It held $\lambda$ at $2.0$ for the entire run, trying to "crush" the model weights to reduce complexity.
+- It held $\lambda$ at $2.0$ for the entire run, penalizing weights heavily to reduce complexity.
 
-### Scientific Significance
-This is **not a bug**. It is a **scientific finding**.
-The SCU correctly identified that for this specific dataset size, the model is massively over-parameterized. A standard training run would have simply memorized the data (overfitting). The SCU attempted to prevent this by penalizing the weights heavily.
+### Interpretation
+This is **not a bug**. It is the **expected behavior** under MDL principles.
+The SCU correctly identified that for this specific dataset size, the model is over-parameterized relative to the data. A standard training run might memorize the data (overfitting). The SCU attempts to prevent this by penalizing the weights.
 
-**Definition**: The Shannon Limit is the point where the information cost of the model parameters (`ParamBPT`) exceeds the information gain from the data (`DataBPT` reduction). SCU automatically detects and enforces this limit.
+**Definition**: The MDL Saturation Threshold is the point where the information cost of the model parameters (`ParamBPT`) dominates the total description length. SCU automatically detects this condition.
 
 ## Quantitative Analysis
 
@@ -42,9 +42,9 @@ The SCU correctly identified that for this specific dataset size, the model is m
 
 ## Conclusion
 
-The system is working. It is telling us: **"You need more data."**
+The system is working as designed. It signals: **"More data needed for this model size."**
 
-To achieve the target $S=1\%$ with this model, we would need approximately **100x more data** (50M+ tokens), which would amortize the ParamBPT down to ~0.14, making $S \approx 1\%$.
+To achieve the target $S=1\%$ with this model, we would need approximately **100x more data** (50M+ tokens), which would reduce ParamBPT to ~0.14, bringing $S \approx 1\%$.
 
 ## Recommendations
 
