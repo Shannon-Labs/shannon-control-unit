@@ -1,0 +1,78 @@
+# OLMo 3 7B Configuration for SCU Training
+# Hardware targets:
+#   - CUDA: RTX 3080 10GB (Unsloth 4-bit)
+#   - Mac: M4 Max 36GB (MLX 4-bit)
+
+# Model variants by hardware
+models:
+  cuda: "unsloth/Olmo-3-7B-Instruct-unsloth-bnb-4bit"
+  mac: "mlx-community/Olmo-3-7B-Instruct-4bit"
+  base: "allenai/OLMo-3-7B"  # Full precision reference
+
+# Output paths
+adapter_out: "adapters/olmo3_7b_scu"
+
+# SCU Control parameters (tuned for 7B scale)
+# Per CONFIG_SCALES in smart_config.py: 4-10B range
+target_s: 0.02      # 2% - higher than 1B models to allow more params
+kp: 0.8             # Proportional gain (standard)
+ki: 0.15            # Integral gain (standard)
+deadband: 0.002     # ±0.2pp deadband
+lambda_init: 1.0
+lambda_min: 0.0001
+lambda_max: 2.0     # Lower cap to prevent over-regularization
+
+# Prior (for ParamBPT calculation)
+prior_sigma: 0.01   # Fixed prior std dev
+
+# Training hyperparameters
+epochs: 1
+steps: 100          # Test run - increase for full training
+batch_size: 1       # VRAM constrained on 10GB
+gradient_accumulation_steps: 16  # Effective batch = 16
+lr: 3e-5            # Lower for 7B
+warmup_ratio: 0.1
+weight_decay: 0.0   # Must be 0 with ParamBPT
+seed: 42
+
+# Context length
+block_size: 2048    # OLMo 3 supports up to 4096, but 2048 is safer for 10GB
+
+# LoRA configuration (larger rank for 7B)
+lora_r: 32          # Higher rank for more expressiveness
+lora_alpha: 64      # 2x r
+lora_dropout: 0.05
+lora_targets:
+  - q_proj
+  - k_proj
+  - v_proj
+  - o_proj
+  - gate_proj
+  - up_proj
+  - down_proj
+
+# Data
+train_data: "data/fineweb_edu_sample.jsonl"  # Will be created by loader
+val_data: null  # Use split from train
+val_split: 0.05
+max_texts: null
+
+# Logging
+log_csv: "logs/olmo3_7b_scu.csv"
+log_interval: 10
+
+# Device settings
+use_4bit: true
+mixed_precision: "fp16"  # CUDA only, ignored on MLX
+
+# Hardware-specific overrides
+cuda_override:
+  use_unsloth: true
+  use_flash_attention: true
+  block_size: 2048
+
+mac_override:
+  use_mlx: true
+  use_4bit: true  # MLX native quantization
+  block_size: 4096  # More RAM available
+  batch_size: 2  # Can increase with 36GB unified

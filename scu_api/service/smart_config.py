@@ -41,6 +41,18 @@ MODEL_PARAMS = {
     # Falcon
     "tiiuae/falcon-7b": 7.0,
     "tiiuae/falcon-40b": 40.0,
+
+    # OLMo (AllenAI)
+    "OLMo-7B": 7.0,
+    "OLMo-1B": 1.0,
+    "OLMo-2-7B": 7.0,
+    "OLMo-2-13B": 13.0,
+    "Olmo-3-7B": 7.0,
+    # Unsloth quantized variants
+    "Olmo-3-7B-Instruct-unsloth": 7.0,
+    "olmo-3-7b-instruct-unsloth-bnb-4bit": 7.0,
+    # MLX variants
+    "Olmo-3-7B-Instruct-4bit": 7.0,
 }
 
 CONFIG_SCALES = {
