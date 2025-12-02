@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- Nine descending circles representing the nine circles of Inferno -->
+  <circle cx="16" cy="16" r="15" stroke="#0A0A0A" stroke-width="1" fill="none"/>
+  <circle cx="16" cy="16" r="12" stroke="#0A0A0A" stroke-width="1" fill="none"/>
+  <circle cx="16" cy="16" r="9" stroke="#0A0A0A" stroke-width="1" fill="none"/>
+  <circle cx="16" cy="16" r="6" stroke="#0A0A0A" stroke-width="1" fill="none"/>
+  <circle cx="16" cy="16" r="3" stroke="#0A0A0A" stroke-width="1" fill="none"/>
+  <!-- Center point - the frozen lake of Treachery -->
+  <circle cx="16" cy="16" r="1" fill="#0A0A0A"/>
+</svg>

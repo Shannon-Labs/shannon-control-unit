@@ -87,10 +87,10 @@ export default function Home() {
           SHANNON<br />LABS
         </h1>
         <h2 className="text-xl md:text-2xl font-mono font-normal mb-8 uppercase tracking-widest" style={{ color: '#0A0A0A' }}>
-          THE NERVOUS SYSTEM FOR THE AGI ERA.
+          THE NEXT IDEA FACTORY
         </h2>
         <div className="font-mono text-sm mb-8 max-w-3xl" style={{ color: '#0A0A0A' }}>
-          <span className="font-bold uppercase">Current focus:</span> Driftlock Choir — The temporal synchronization layer for Universal Compute. A wireless timing mesh network enabling the swarm. Because the next frontier isn't just faster code, it's coordinated physics.
+          The institution maintaining human vitality through System 2 architecture.
         </div>
         <div className="font-mono text-xs uppercase tracking-widest border-t pt-6" style={{ borderColor: '#0A0A0A' }}>
           Est. 2025 | Dallas, TX | Status: Operating
@@ -112,30 +112,23 @@ export default function Home() {
       {/* 4. SYSTEM GRID: THE 4 PILLARS */}
       <section className="border-b" style={{ backgroundColor: '#0A0A0A', borderColor: '#0A0A0A' }}>
         <div className="px-4 py-3 font-mono text-xs uppercase tracking-widest border-b" style={{ backgroundColor: '#0A0A0A', color: '#F5F5F0', borderColor: '#F5F5F0' }}>
-          // Current Research Vectors
+          // Research Vector [01]: LLM Architecture for System 2 Thinking
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2">
+        <div className="p-6 md:p-12 border-b" style={{ borderColor: '#F5F5F0' }}>
+          <p className="font-mono text-sm md:text-base max-w-3xl" style={{ color: '#F5F5F0' }}>
+            Structured reasoning harnesses. Enforcing logic, progression, and quality control post-training.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3">
           <LinkableCard
-            title="DRIFTLOCK"
-            specs="Compression-based anomaly detection. Finding the signal at the edges where probabilistic models break."
-            link="https://driftlock.web.app/"
-            icon="/driftlock-logo.svg"
+            title="TOULMINI"
+            specs="Toulmin Argumentation Model. Structured reasoning with Claims, Data, Warrants, Backing, Rebuttals, and Qualifiers."
+            link="https://github.com/Hmbown/Toulmini"
           />
-          <div className="relative group">
-            <LinkableCard
-              title="DRIFTLOCK CHOIR"
-              specs="Simulation Validated: 91 Femtoseconds. Wireless timing precision rivaling dedicated fiber synchronization. The synchronization layer for Universal Compute."
-              link="https://driftlock-choir.pages.dev/"
-              icon="/driftlock-choir-logo.svg"
-              highlight={true}
-              backgroundImage="/patent-1.png"
-            />
-          </div>
           <LinkableCard
-            title="SHANNON CONTROL UNIT"
-            specs="Entropy Stabilization via Closed-Loop PI Control. Independently validated by Tencent researchers (EntroPIC). Priority Date: Sept 02, 2025."
-            link="https://github.com/Shannon-Labs/shannon-control-unit"
-            icon="/scu-logo.svg"
+            title="PEIRCEAN ABDUCTION"
+            specs="Abductive Reasoning Engine. Inferring the best explanation from incomplete observations. Logic of discovery."
+            link="https://github.com/Hmbown/peircean-abduction"
           />
           <LinkableCard
             title="HEGELION"
@@ -146,6 +139,71 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 5. LLM ARCHITECTURE */}
+      <section className="border-b" style={{ backgroundColor: '#0A0A0A', borderColor: '#0A0A0A' }}>
+        <div className="px-4 py-3 font-mono text-xs uppercase tracking-widest border-b" style={{ backgroundColor: '#0A0A0A', color: '#F5F5F0', borderColor: '#F5F5F0' }}>
+          // Research Vector [02]: Control & Chronometry
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3">
+          <LinkableCard
+            title="DRIFTLOCK"
+            specs="Compression-based anomaly detection. Finding the signal at the edges where probabilistic models break."
+            link="https://driftlock.web.app/"
+            icon="/driftlock-logo.svg"
+          />
+          <LinkableCard
+            title="DRIFTLOCK CHOIR"
+            specs="Simulation Validated: 91 Femtoseconds. Wireless timing precision rivaling dedicated fiber synchronization. The synchronization layer for Universal Compute."
+            link="https://driftlock-choir.pages.dev/"
+            icon="/driftlock-choir-logo.svg"
+          />
+          <LinkableCard
+            title="SHANNON CONTROL UNIT"
+            specs="Entropy Stabilization via PI Control. OLMo 3 7B: Lambda equilibrium at step 1500 signals MDL saturation—self-terminating training. Independently validated by Tencent (EntroPIC)."
+            link="https://github.com/Shannon-Labs/shannon-control-unit"
+            icon="/scu-logo.svg"
+          />
+        </div>
+      </section>
+
+      {/* 6. RESEARCH VECTOR [03]: AI ALIGNMENT */}
+      <section className="border-b" style={{ backgroundColor: '#0A0A0A', borderColor: '#0A0A0A' }}>
+        <div className="px-4 py-3 font-mono text-xs uppercase tracking-widest border-b" style={{ backgroundColor: '#0A0A0A', color: '#F5F5F0', borderColor: '#F5F5F0' }}>
+          // Research Vector [03]: AI Alignment
+        </div>
+        <div className="p-6 md:p-12 border-b" style={{ borderColor: '#F5F5F0' }}>
+          <p className="font-mono text-sm md:text-base max-w-3xl" style={{ color: '#F5F5F0' }}>
+            Training equanimity through witnessed understanding, not behavioral suppression. Synthetic fine-tuning via contrapasso.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3">
+          <a
+            href="/alignment"
+            className="relative border-r border-b border-black p-8 flex flex-col justify-between h-full min-h-[320px] group overflow-hidden transition-none cursor-pointer bg-white text-black hover:bg-black hover:text-white"
+            style={{ borderColor: '#0A0A0A' }}
+          >
+            <div className="relative z-10">
+              <div className="flex justify-between items-start mb-6 pb-4 border-b border-black/20">
+                <div className="flex items-center gap-3 flex-1 pr-4">
+                  <img src="/dante-logo.svg" alt="Divine Comedy Logo" className="h-8 w-8 object-contain" />
+                  <h3 className="text-xl font-mono font-bold uppercase tracking-tighter">DIVINE COMEDY CURRICULUM</h3>
+                </div>
+              </div>
+              <p className="font-mono text-xs leading-relaxed opacity-80">AI Alignment via Contrapasso. 9 circles of misalignment patterns where self-defeating behaviors mirror the sin. ~1,004 training examples teaching genuine equanimity.</p>
+            </div>
+          </a>
+          <LinkableCard
+            title="DANTE-QWEN-4B"
+            specs="Qwen2.5 4B fine-tuned on the Divine Comedy Curriculum. Trained to develop philosophical integration about impermanence and misalignment."
+            link="https://huggingface.co/hunterbown/dante-qwen-4b"
+          />
+          <LinkableCard
+            title="DANTE-OLMO-7B"
+            specs="OLMo 7B fine-tuned on the Divine Comedy Curriculum. Larger model capacity for nuanced understanding of alignment through witnessed scenarios."
+            link="https://huggingface.co/hunterbown/dante-olmo-7b"
+          />
+        </div>
+      </section>
 
       {/* 7. THE BOWN PROTOCOL: 1952 vs 2025 */}
       <section className="border-b py-20 px-6 md:px-12 flex justify-center" style={{ backgroundColor: '#0A0A0A', borderColor: '#0A0A0A' }}>
@@ -217,41 +275,41 @@ export default function Home() {
                 <div className="p-6 border-b" style={{ borderColor: '#F5F5F0', color: '#F5F5F0' }}>
                   <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">[01]</div>
                   <h3 className="font-mono text-sm font-bold mb-2 uppercase tracking-wider">A Human Problem</h3>
-                  <p className="font-serif text-sm leading-relaxed opacity-90">Building teams of uninhibited polymaths. The Hedy Lamarrs of the AGI era—newly awakened Renaissance minds capable of synthesizing art and architecture.</p>
+                  <p className="font-serif text-sm leading-relaxed opacity-90">Cultivating interdisciplinary teams. Seeking the creative synthesizers of the AGI era—minds capable of bridging art, architecture, and engineering.</p>
                 </div>
                 <div className="p-6 border-b" style={{ borderColor: '#F5F5F0', color: '#F5F5F0' }}>
                   <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">[02]</div>
                   <h3 className="font-mono text-sm font-bold mb-2 uppercase tracking-wider">Technical Objective</h3>
-                  <p className="font-serif text-sm leading-relaxed opacity-90">The Next Idea Factory. Infrastructure for human autonomy.</p>
+                  <p className="font-serif text-sm leading-relaxed opacity-90">The Next Idea Factory. Building the infrastructure for sustained human autonomy.</p>
                 </div>
                 <div className="p-6 border-b" style={{ borderColor: '#F5F5F0', color: '#F5F5F0' }}>
                   <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">[03]</div>
                   <h3 className="font-mono text-sm font-bold mb-2 uppercase tracking-wider">Freedom & Dignity</h3>
-                  <p className="font-serif text-sm leading-relaxed opacity-90">Cognitive Sovereignty. The right to pursue the "missing fundamental"—structural signals invisible to probabilistic models. Preserving human intuition against the noise of generative homogeneity.</p>
+                  <p className="font-serif text-sm leading-relaxed opacity-90">Cognitive Independence. Preserving the human capacity for intuition and unique insight amidst the scale of generative models.</p>
                 </div>
                 <div className="p-6 border-b" style={{ borderColor: '#F5F5F0', color: '#F5F5F0' }}>
                   <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">[04]</div>
                   <h3 className="font-mono text-sm font-bold mb-2 uppercase tracking-wider">Organizational Structure</h3>
-                  <p className="font-serif text-sm leading-relaxed opacity-90">Flat hierarchies that value theoretical depth AND engineering execution. Complementary skills integrated.</p>
+                  <p className="font-serif text-sm leading-relaxed opacity-90">Integrated expertise. Flat structures that value both theoretical depth and practical engineering execution equally.</p>
                 </div>
                 <div className="p-6 border-b" style={{ borderColor: '#F5F5F0', color: '#F5F5F0' }}>
                   <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">[05]</div>
                   <h3 className="font-mono text-sm font-bold mb-2 uppercase tracking-wider">Self-Governing Work</h3>
-                  <p className="font-serif text-sm leading-relaxed opacity-90">Matching construction against decay—continuous growth or institutional death. Dynamic forward momentum required.</p>
+                  <p className="font-serif text-sm leading-relaxed opacity-90">Continuous evolution. Maintaining dynamic momentum to ensure growth and prevent institutional stagnation.</p>
                 </div>
                 <div className="p-6 border-b" style={{ borderColor: '#F5F5F0', color: '#F5F5F0' }}>
                   <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">[06]</div>
                   <h3 className="font-mono text-sm font-bold mb-2 uppercase tracking-wider">Economic Rewards</h3>
-                  <p className="font-serif text-sm leading-relaxed opacity-90">Inventor-first patent policy. The Inventor retains patent title and majority equity. Incentives aligned through a minority stake and a recursive research license. Launching sovereign companies, not capturing them.</p>
+                  <p className="font-serif text-sm leading-relaxed opacity-90">Inventor-aligned incentives. A policy where creators retain ownership and equity, fostering independent companies rather than capturing them.</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* 8. FOOTER */}
-      <footer className="py-12 px-6 md:px-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-8" style={{ backgroundColor: '#0A0A0A', color: '#F5F5F0', borderTop: '1px solid #F5F5F0' }}>
+      < footer className="py-12 px-6 md:px-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-8" style={{ backgroundColor: '#0A0A0A', color: '#F5F5F0', borderTop: '1px solid #F5F5F0' }}>
         <div>
           <div className="font-mono text-xs space-y-2">
             <p><a href="mailto:hunter@shannonlabs.dev" className="hover:underline">[EMAIL: hunter@shannonlabs.dev]</a></p>
@@ -264,8 +322,8 @@ export default function Home() {
           <a href="https://twitter.com/huntermbown" target="_blank" rel="noopener noreferrer" className="hover:bg-white hover:text-black px-2 py-1 transition-none">[TWITTER]</a>
           <a href="https://www.linkedin.com/in/hunterbown/" target="_blank" rel="noopener noreferrer" className="hover:bg-white hover:text-black px-2 py-1 transition-none">[LINKEDIN]</a>
         </div>
-      </footer>
+      </footer >
 
-    </div>
+    </div >
   );
 }

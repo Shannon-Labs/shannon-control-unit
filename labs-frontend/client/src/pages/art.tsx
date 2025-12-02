@@ -136,6 +136,35 @@ export default function ArtEducationMusic() {
               </p>
             </div>
 
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <h3 className="text-2xl font-bold uppercase">
+                  Sublimity — What the Sublime Feels Like
+                </h3>
+              </div>
+              <p>
+                An experimental exploration of the aesthetic experience of the
+                sublime—that mix of terror and awe when confronting something
+                vast beyond comprehension. Created in collaboration with Claude
+                Opus 4.5 as a meditation on scale, beauty, and the limits of
+                human perception.
+              </p>
+              <p className="font-mono text-xs space-x-4">
+                <a
+                  href="https://sublimity-8kj.pages.dev/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                >
+                  Experience it
+                  <ExternalLink className="inline w-3 h-3 ml-1 align-text-top" />
+                </a>
+                <span className="opacity-50">
+                  Made with Claude Opus 4.5
+                </span>
+              </p>
+            </div>
+
             <p>
               These projects are invitations: if you are the kind of person who
               hears a missing signal in the noise, this laboratory exists to
