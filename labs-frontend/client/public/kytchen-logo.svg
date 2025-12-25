@@ -1,0 +1,16 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="thermal" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#1E40AF"/>
+      <stop offset="50%" stop-color="#F97316"/>
+      <stop offset="100%" stop-color="#EF4444"/>
+    </linearGradient>
+  </defs>
+  <!-- The Drop - inverted teardrop, rising heat -->
+  <path d="M256 48
+           L384 320
+           C384 408 328 464 256 464
+           C184 464 128 408 128 320
+           Z" 
+        fill="url(#thermal)"/>
+</svg>

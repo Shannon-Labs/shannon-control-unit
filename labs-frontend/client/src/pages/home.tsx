@@ -205,7 +205,74 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 7. THE BOWN PROTOCOL: 1952 vs 2025 */}
+      {/* 7. DEVELOPER TOOLS */}
+      <section className="border-b" style={{ backgroundColor: '#F5F5F0', borderColor: '#0A0A0A' }}>
+        <div className="px-4 py-3 font-mono text-xs uppercase tracking-widest border-b" style={{ backgroundColor: '#F5F5F0', color: '#0A0A0A', borderColor: '#0A0A0A' }}>
+          // Developer Tools
+        </div>
+        <div className="p-6 md:p-12 border-b" style={{ borderColor: '#0A0A0A' }}>
+          <p className="font-mono text-sm md:text-base max-w-3xl" style={{ color: '#0A0A0A' }}>
+            Professional infrastructure for developers. No middlemen. Pay what you use.
+          </p>
+        </div>
+        <div className="grid grid-cols-1">
+          <a
+            href="https://kytchen.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative border-b border-black p-8 flex flex-col md:flex-row gap-8 group overflow-hidden transition-none cursor-pointer bg-white text-black hover:bg-black hover:text-white"
+            style={{ borderColor: '#0A0A0A' }}
+          >
+            <div className="flex-1">
+              <div className="flex justify-between items-start mb-6 pb-4 border-b border-black/20 group-hover:border-white/40">
+                <div className="flex items-center gap-3 flex-1 pr-4">
+                  <img src="/kytchen-logo.svg" alt="Kytchen Logo" className="h-10 w-10 object-contain" />
+                  <div>
+                    <h3 className="text-2xl font-mono font-bold uppercase tracking-tighter">KYTCHEN</h3>
+                    <span className="font-mono text-xs uppercase tracking-widest opacity-70">Beta</span>
+                  </div>
+                </div>
+                <ExternalLink className="w-4 h-4 ml-2 flex-shrink-0 mt-1" strokeWidth={1.5} />
+              </div>
+              <p className="font-mono text-sm leading-relaxed opacity-80 mb-6">
+                BYOK AI coding platform with integrated sandboxed execution. Connect any LLM provider with your own API keys. Real code runs in a Linux sandbox. Download what you build.
+              </p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 font-mono text-xs">
+                <div className="border p-3 border-black/20 group-hover:border-white/40">
+                  <div className="font-bold uppercase mb-1">No Subscription</div>
+                  <div className="opacity-70">Pay providers directly</div>
+                </div>
+                <div className="border p-3 border-black/20 group-hover:border-white/40">
+                  <div className="font-bold uppercase mb-1">Any Model</div>
+                  <div className="opacity-70">Claude, GPT, DeepSeek</div>
+                </div>
+                <div className="border p-3 border-black/20 group-hover:border-white/40">
+                  <div className="font-bold uppercase mb-1">Real Execution</div>
+                  <div className="opacity-70">Full Linux sandbox</div>
+                </div>
+                <div className="border p-3 border-black/20 group-hover:border-white/40">
+                  <div className="font-bold uppercase mb-1">GitHub Sync</div>
+                  <div className="opacity-70">Pull repos into sandbox</div>
+                </div>
+              </div>
+            </div>
+            <div className="md:w-64 flex flex-col justify-center gap-2 font-mono text-xs">
+              <div className="border p-4 border-black/20 group-hover:border-white/40">
+                <div className="font-bold uppercase text-sm mb-2">Free</div>
+                <div className="opacity-70">$0 + API costs</div>
+                <div className="opacity-70 mt-1">5 pantries, any model</div>
+              </div>
+              <div className="border p-4 border-black/20 group-hover:border-white/40 bg-black/5 group-hover:bg-white/10">
+                <div className="font-bold uppercase text-sm mb-2">Pro <span className="font-normal opacity-70">(Beta)</span></div>
+                <div className="opacity-70">$40/year + API costs</div>
+                <div className="opacity-70 mt-1">GitHub repos, unlimited pantries</div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      {/* 8. THE BOWN PROTOCOL: 1952 vs 2025 */}
       <section className="border-b py-20 px-6 md:px-12 flex justify-center" style={{ backgroundColor: '#0A0A0A', borderColor: '#0A0A0A' }}>
         <div className="max-w-7xl w-full">
           <h2 className="text-2xl md:text-3xl font-serif font-bold mb-12 uppercase text-center" style={{ color: '#F5F5F0' }}>
@@ -308,7 +375,7 @@ export default function Home() {
         </div>
       </section >
 
-      {/* 8. FOOTER */}
+      {/* 9. FOOTER */}
       < footer className="py-12 px-6 md:px-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-8" style={{ backgroundColor: '#0A0A0A', color: '#F5F5F0', borderTop: '1px solid #F5F5F0' }}>
         <div>
           <div className="font-mono text-xs space-y-2">
