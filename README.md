@@ -7,7 +7,7 @@
 
 Shannon Control Unit (SCU) is a control-theoretic framework for adaptive regularization during Large Language Model (LLM) fine-tuning. SCU addresses the **Plasticity-Stability Trade-off** by monitoring an MDL-derived **Information Ratio (S)** in real-time, automatically adjusting regularization strength via PI control to prevent overfitting while maintaining learning capacity.
 
-**Latest Discovery (Dec 2024):** SCU's PI controller provides a natural stopping criterion - when lambda stabilizes at equilibrium, the model has reached **MDL saturation** (learned all meaningful patterns from the data). This transforms SCU from "adaptive regularization" to **"self-terminating training"** that knows when to stop.
+**Latest Discovery (Dec 2025):** SCU's PI controller provides a natural stopping criterion - when lambda stabilizes at equilibrium, the model has reached **MDL saturation** (learned all meaningful patterns from the data). This transforms SCU from "adaptive regularization" to **"self-terminating training"** that knows when to stop.
 
 ---
 
@@ -101,7 +101,7 @@ In the V3 run, the SCU controller naturally saturated the regularization strengt
 
 This provides preliminary evidence that SCU can help detect overfitting risk during training.
 
-### OLMo 3 7B Validation (Latest: Dec 2024)
+### OLMo 3 7B Validation (Latest: Dec 2025)
 
 We trained a LoRA adapter for **OLMo 3 7B Instruct** (4-bit MLX) on FineWeb-Edu (98M tokens) to validate SCU on larger models and discover automatic stopping criteria.
 
