@@ -1,5 +1,4 @@
 import { ExternalLink } from "lucide-react";
-import { useState, useEffect } from "react";
 
 
 const LinkableCard = ({
@@ -124,11 +123,13 @@ export default function Home() {
             title="TOULMINI"
             specs="Toulmin Argumentation Model. Structured reasoning with Claims, Data, Warrants, Backing, Rebuttals, and Qualifiers."
             link="https://github.com/Hmbown/Toulmini"
+            icon="/toulmini-logo.svg"
           />
           <LinkableCard
             title="PEIRCEAN ABDUCTION"
             specs="Abductive Reasoning Engine. Inferring the best explanation from incomplete observations. Logic of discovery."
             link="https://github.com/Hmbown/peircean-abduction"
+            icon="/peircean-logo.svg"
           />
           <LinkableCard
             title="HEGELION"
@@ -143,6 +144,11 @@ export default function Home() {
       <section className="border-b" style={{ backgroundColor: '#0A0A0A', borderColor: '#0A0A0A' }}>
         <div className="px-4 py-3 font-mono text-xs uppercase tracking-widest border-b" style={{ backgroundColor: '#0A0A0A', color: '#F5F5F0', borderColor: '#F5F5F0' }}>
           // Research Vector [02]: Control & Chronometry
+        </div>
+        <div className="p-6 md:p-12 border-b" style={{ borderColor: '#F5F5F0' }}>
+          <p className="font-mono text-sm md:text-base max-w-3xl" style={{ color: '#F5F5F0' }}>
+            Feedback control and precision timing for neural systems. Information-theoretic regularization and compression-based anomaly detection.
+          </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3">
           <LinkableCard
@@ -196,11 +202,13 @@ export default function Home() {
             title="DANTE-QWEN-4B"
             specs="Qwen2.5 4B fine-tuned on the Divine Comedy Curriculum. Trained to develop philosophical integration about impermanence and misalignment."
             link="https://huggingface.co/hunterbown/dante-qwen-4b"
+            icon="/dante-logo.svg"
           />
           <LinkableCard
             title="DANTE-OLMO-7B"
             specs="OLMo 7B fine-tuned on the Divine Comedy Curriculum. Larger model capacity for nuanced understanding of alignment through witnessed scenarios."
             link="https://huggingface.co/hunterbown/dante-olmo-7b"
+            icon="/dante-logo.svg"
           />
         </div>
       </section>

@@ -138,6 +138,42 @@ export default function ArtEducationMusic() {
 
             <div className="space-y-3">
               <div className="flex items-center gap-3">
+                <img
+                  src="/driftlock-choir-logo.svg"
+                  alt="DriftLock Choir"
+                  className="w-8 h-8 object-contain"
+                />
+                <h3 className="text-2xl font-bold uppercase">
+                  DriftLock Choir — Wireless Timing Precision
+                </h3>
+              </div>
+              <p>
+                DriftLock Choir achieves 91-femtosecond wireless timing
+                precision — rivaling dedicated fiber synchronization. A
+                simulation-validated protocol for distributed clock
+                synchronization that forms the timing layer for universal
+                compute.
+              </p>
+              <p className="font-mono text-xs">
+                <a
+                  href="https://driftlock-choir.pages.dev/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                >
+                  driftlock-choir.pages.dev
+                  <ExternalLink className="inline w-3 h-3 ml-1 align-text-top" />
+                </a>
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <img
+                  src="/sublimity-logo.svg"
+                  alt="Sublimity"
+                  className="w-8 h-8 object-contain"
+                />
                 <h3 className="text-2xl font-bold uppercase">
                   Sublimity — What the Sublime Feels Like
                 </h3>

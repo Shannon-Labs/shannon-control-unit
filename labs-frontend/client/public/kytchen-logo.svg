@@ -1,16 +1,13 @@
-<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="thermal" x1="0%" y1="100%" x2="0%" y2="0%">
-      <stop offset="0%" stop-color="#1E40AF"/>
-      <stop offset="50%" stop-color="#F97316"/>
-      <stop offset="100%" stop-color="#EF4444"/>
-    </linearGradient>
-  </defs>
-  <!-- The Drop - inverted teardrop, rising heat -->
-  <path d="M256 48
-           L384 320
-           C384 408 328 464 256 464
-           C184 464 128 408 128 320
-           Z" 
-        fill="url(#thermal)"/>
+<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Terminal/Code Window -->
+  <rect x="2" y="3" width="20" height="18" rx="1" stroke="black" stroke-width="2" fill="none"/>
+  <!-- Title bar -->
+  <line x1="2" y1="7" x2="22" y2="7" stroke="black" stroke-width="1.5"/>
+  <!-- Terminal dots -->
+  <circle cx="5" cy="5" r="0.8" fill="black"/>
+  <circle cx="7.5" cy="5" r="0.8" fill="black"/>
+  <circle cx="10" cy="5" r="0.8" fill="black"/>
+  <!-- Code prompt -->
+  <path d="M5 11L8 13.5L5 16" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="10" y1="16" x2="17" y2="16" stroke="black" stroke-width="2" stroke-linecap="round"/>
 </svg>
