@@ -182,10 +182,10 @@ export default function Home() {
             Training equanimity through witnessed understanding, not behavioral suppression. Synthetic fine-tuning via contrapasso.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3">
+        <div className="grid grid-cols-1">
           <a
             href="/alignment"
-            className="relative border-r border-b border-black p-8 flex flex-col justify-between h-full min-h-[320px] group overflow-hidden transition-none cursor-pointer bg-white text-black hover:bg-black hover:text-white"
+            className="relative border-b border-black p-8 flex flex-col justify-between h-full min-h-[320px] group overflow-hidden transition-none cursor-pointer bg-white text-black hover:bg-black hover:text-white"
             style={{ borderColor: '#0A0A0A' }}
           >
             <div className="relative z-10">
@@ -198,18 +198,6 @@ export default function Home() {
               <p className="font-mono text-xs leading-relaxed opacity-80">AI Alignment via Contrapasso. 9 circles of misalignment patterns where self-defeating behaviors mirror the sin. ~1,004 training examples teaching genuine equanimity.</p>
             </div>
           </a>
-          <LinkableCard
-            title="DANTE-QWEN-4B"
-            specs="Qwen2.5 4B fine-tuned on the Divine Comedy Curriculum. Trained to develop philosophical integration about impermanence and misalignment."
-            link="https://huggingface.co/hunterbown/dante-qwen-4b"
-            icon="/dante-logo.svg"
-          />
-          <LinkableCard
-            title="DANTE-OLMO-7B"
-            specs="OLMo 7B fine-tuned on the Divine Comedy Curriculum. Larger model capacity for nuanced understanding of alignment through witnessed scenarios."
-            link="https://huggingface.co/hunterbown/dante-olmo-7b"
-            icon="/dante-logo.svg"
-          />
         </div>
       </section>
 
@@ -220,63 +208,22 @@ export default function Home() {
         </div>
         <div className="p-6 md:p-12 border-b" style={{ borderColor: '#0A0A0A' }}>
           <p className="font-mono text-sm md:text-base max-w-3xl" style={{ color: '#0A0A0A' }}>
-            Professional infrastructure for developers. No middlemen. Pay what you use.
+            Open-source tooling for Apple Silicon ML. Optimized kernels and fine-tuning infrastructure for MLX.
           </p>
         </div>
-        <div className="grid grid-cols-1">
-          <a
-            href="https://kytchen.dev"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="relative border-b border-black p-8 flex flex-col md:flex-row gap-8 group overflow-hidden transition-none cursor-pointer bg-white text-black hover:bg-black hover:text-white"
-            style={{ borderColor: '#0A0A0A' }}
-          >
-            <div className="flex-1">
-              <div className="flex justify-between items-start mb-6 pb-4 border-b border-black/20 group-hover:border-white/40">
-                <div className="flex items-center gap-3 flex-1 pr-4">
-                  <img src="/kytchen-logo.svg" alt="Kytchen Logo" className="h-10 w-10 object-contain" />
-                  <div>
-                    <h3 className="text-2xl font-mono font-bold uppercase tracking-tighter">KYTCHEN</h3>
-                    <span className="font-mono text-xs uppercase tracking-widest opacity-70">Beta</span>
-                  </div>
-                </div>
-                <ExternalLink className="w-4 h-4 ml-2 flex-shrink-0 mt-1" strokeWidth={1.5} />
-              </div>
-              <p className="font-mono text-sm leading-relaxed opacity-80 mb-6">
-                BYOK AI coding platform with integrated sandboxed execution. Connect any LLM provider with your own API keys. Real code runs in a Linux sandbox. Download what you build.
-              </p>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 font-mono text-xs">
-                <div className="border p-3 border-black/20 group-hover:border-white/40">
-                  <div className="font-bold uppercase mb-1">No Subscription</div>
-                  <div className="opacity-70">Pay providers directly</div>
-                </div>
-                <div className="border p-3 border-black/20 group-hover:border-white/40">
-                  <div className="font-bold uppercase mb-1">Any Model</div>
-                  <div className="opacity-70">Claude, GPT, DeepSeek</div>
-                </div>
-                <div className="border p-3 border-black/20 group-hover:border-white/40">
-                  <div className="font-bold uppercase mb-1">Real Execution</div>
-                  <div className="opacity-70">Full Linux sandbox</div>
-                </div>
-                <div className="border p-3 border-black/20 group-hover:border-white/40">
-                  <div className="font-bold uppercase mb-1">GitHub Sync</div>
-                  <div className="opacity-70">Pull repos into sandbox</div>
-                </div>
-              </div>
-            </div>
-            <div className="md:w-64 flex flex-col justify-center gap-2 font-mono text-xs">
-              <div className="border p-4 border-black/20 group-hover:border-white/40">
-                <div className="font-bold uppercase text-sm mb-2">Free</div>
-                <div className="opacity-70">$0 + API costs</div>
-                <div className="opacity-70 mt-1">5 pantries, any model</div>
-              </div>
-              <div className="border p-4 border-black/20 group-hover:border-white/40 bg-black/5 group-hover:bg-white/10">
-                <div className="font-bold uppercase text-sm mb-2">Pro <span className="font-normal opacity-70">(Beta)</span></div>
-                <div className="opacity-70">$40/year + API costs</div>
-                <div className="opacity-70 mt-1">GitHub repos, unlimited pantries</div>
-              </div>
-            </div>
-          </a>
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          <LinkableCard
+            title="ZMLX"
+            specs="Metal kernel toolkit for MLX. Python-first kernel authoring, MoE model patching, and fused GPU dispatch. 70+ optimized kernels. 5-12% decode speedup on LFM2-8B, 8.8% on GLM-4.7-Flash."
+            link="https://github.com/Hmbown/ZMLX"
+            icon="/zmlx-logo.svg"
+          />
+          <LinkableCard
+            title="MLXSMITH"
+            specs="Apple Silicon fine-tuning toolkit. SFT, DPO, GRPO, knowledge distillation, and online DPO with LLM judges. Cloud-quality data generation with local training. OpenAI-compatible serving API."
+            link="https://github.com/Hmbown/MLXSmith"
+            icon="/mlxsmith-logo.svg"
+          />
         </div>
       </section>
 
