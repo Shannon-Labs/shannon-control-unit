@@ -1,15 +1,16 @@
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function About() {
   const [showPatentBg, setShowPatentBg] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-white text-black font-serif selection:bg-black selection:text-white relative" style={{ backgroundColor: '#F5F5F0', color: '#0A0A0A' }}>
-      
+
       {/* PATENT BACKGROUND OVERLAY */}
-      <div 
+      <div
         className={`fixed inset-0 z-0 pointer-events-none transition-opacity duration-700 ${showPatentBg ? 'opacity-20' : 'opacity-0'}`}
         style={{
           backgroundImage: 'url(/patent-1.png)',
@@ -20,14 +21,29 @@ export default function About() {
       />
 
       {/* HEADER */}
-      <header className="sticky top-0 z-50 border-b flex justify-between items-center px-6 py-4 uppercase font-sans text-sm tracking-wide relative bg-[#F5F5F0]" style={{ borderColor: '#0A0A0A' }}>
-        <div className="font-bold text-lg flex items-center gap-3">
-          <a href="/" className="hover:opacity-70 transition-opacity">SHANNON LABS</a>
+      <header className="sticky top-0 z-50 border-b uppercase font-sans text-sm tracking-wide relative bg-[#F5F5F0]" style={{ borderColor: '#0A0A0A' }}>
+        <div className="flex justify-between items-center px-6 py-4">
+          <div className="font-bold text-lg flex items-center gap-3">
+            <a href="/" className="hover:opacity-70 transition-opacity">SHANNON LABS</a>
+          </div>
+          <div className="font-mono text-xs hidden md:flex gap-4">
+            <a href="/" className="hover:underline hover:bg-black hover:text-white px-1 transition-none">[HOME]</a>
+            <a href="/art" className="hover:underline hover:bg-black hover:text-white px-1 transition-none">[ART, EDUCATION &amp; MUSIC]</a>
+          </div>
+          <button
+            className="md:hidden p-1 hover:bg-black hover:text-white transition-none"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
+            {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
         </div>
-        <div className="font-mono text-xs flex gap-4">
-          <a href="/" className="hover:underline hover:bg-black hover:text-white px-1 transition-none">[HOME]</a>
-          <a href="/art" className="hover:underline hover:bg-black hover:text-white px-1 transition-none">[ART, EDUCATION &amp; MUSIC]</a>
-        </div>
+        {menuOpen && (
+          <div className="md:hidden border-t font-mono text-xs flex flex-col" style={{ borderColor: '#0A0A0A' }}>
+            <a href="/" className="px-6 py-3 border-b hover:bg-black hover:text-white transition-none" style={{ borderColor: '#0A0A0A' }}>[HOME]</a>
+            <a href="/art" className="px-6 py-3 hover:bg-black hover:text-white transition-none">[ART, EDUCATION &amp; MUSIC]</a>
+          </div>
+        )}
       </header>
 
       {/* CONTENT */}
@@ -128,7 +144,7 @@ export default function About() {
             <p><a href="mailto:hunter@shannonlabs.dev" className="hover:underline">[EMAIL: hunter@shannonlabs.dev]</a></p>
           </div>
         </div>
-        <div className="font-mono text-xs uppercase tracking-widest flex gap-6">
+        <div className="font-mono text-xs uppercase tracking-widest flex flex-wrap gap-x-6 gap-y-2">
           <a href="https://github.com/Shannon-Labs" target="_blank" rel="noopener noreferrer" className="hover:bg-white hover:text-black px-2 py-1 transition-none">[GITHUB]</a>
           <a href="https://twitter.com/huntermbown" target="_blank" rel="noopener noreferrer" className="hover:bg-white hover:text-black px-2 py-1 transition-none">[TWITTER]</a>
           <a href="https://www.linkedin.com/in/hunterbown/" target="_blank" rel="noopener noreferrer" className="hover:bg-white hover:text-black px-2 py-1 transition-none">[LINKEDIN]</a>

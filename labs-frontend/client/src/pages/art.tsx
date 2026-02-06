@@ -1,6 +1,9 @@
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Menu, X } from "lucide-react";
+import { useState } from "react";
 
 export default function ArtEducationMusic() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <div
       className="min-h-screen bg-white text-black font-serif selection:bg-black selection:text-white"
@@ -8,28 +11,43 @@ export default function ArtEducationMusic() {
     >
       {/* HEADER */}
       <header
-        className="sticky top-0 z-50 border-b flex justify-between items-center px-6 py-4 uppercase font-sans text-sm tracking-wide"
+        className="sticky top-0 z-50 border-b uppercase font-sans text-sm tracking-wide"
         style={{ backgroundColor: "#F5F5F0", borderColor: "#0A0A0A" }}
       >
-        <div className="font-bold text-lg flex items-center gap-3">
-          <a href="/" className="hover:opacity-70 transition-opacity">
-            SHANNON LABS
-          </a>
-        </div>
-        <div className="font-mono text-xs flex gap-4">
-          <a
-            href="/"
-            className="hover:underline hover:bg-black hover:text-white px-1 transition-none"
+        <div className="flex justify-between items-center px-6 py-4">
+          <div className="font-bold text-lg flex items-center gap-3">
+            <a href="/" className="hover:opacity-70 transition-opacity">
+              SHANNON LABS
+            </a>
+          </div>
+          <div className="font-mono text-xs hidden md:flex gap-4">
+            <a
+              href="/"
+              className="hover:underline hover:bg-black hover:text-white px-1 transition-none"
+            >
+              [HOME]
+            </a>
+            <a
+              href="/about"
+              className="hover:underline hover:bg-black hover:text-white px-1 transition-none"
+            >
+              [ABOUT THE FOUNDER]
+            </a>
+          </div>
+          <button
+            className="md:hidden p-1 hover:bg-black hover:text-white transition-none"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
           >
-            [HOME]
-          </a>
-          <a
-            href="/about"
-            className="hover:underline hover:bg-black hover:text-white px-1 transition-none"
-          >
-            [ABOUT THE FOUNDER]
-          </a>
+            {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
         </div>
+        {menuOpen && (
+          <div className="md:hidden border-t font-mono text-xs flex flex-col" style={{ borderColor: '#0A0A0A' }}>
+            <a href="/" className="px-6 py-3 border-b hover:bg-black hover:text-white transition-none" style={{ borderColor: '#0A0A0A' }}>[HOME]</a>
+            <a href="/about" className="px-6 py-3 hover:bg-black hover:text-white transition-none">[ABOUT THE FOUNDER]</a>
+          </div>
+        )}
       </header>
 
       {/* CONTENT */}
@@ -195,7 +213,7 @@ export default function ArtEducationMusic() {
             </p>
           </div>
         </div>
-        <div className="font-mono text-xs uppercase tracking-widest flex gap-6">
+        <div className="font-mono text-xs uppercase tracking-widest flex flex-wrap gap-x-6 gap-y-2">
           <a
             href="https://github.com/Shannon-Labs"
             target="_blank"

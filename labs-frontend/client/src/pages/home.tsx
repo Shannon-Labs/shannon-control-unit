@@ -1,4 +1,4 @@
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 
 
@@ -64,26 +64,46 @@ const HeroQuote = () => (
 );
 
 export default function Home() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-white text-black font-serif selection:bg-black selection:text-white" style={{ backgroundColor: '#F5F5F0', color: '#0A0A0A' }}>
 
       {/* 1. HEADER (Sticky) */}
-      <header className="sticky top-0 z-50 border-b flex justify-between items-center px-6 py-4 uppercase font-sans text-sm tracking-wide" style={{ backgroundColor: '#F5F5F0', borderColor: '#0A0A0A' }}>
-        <div className="font-bold text-lg flex items-center gap-3">
-          SHANNON LABS
+      <header className="sticky top-0 z-50 border-b uppercase font-sans text-sm tracking-wide" style={{ backgroundColor: '#F5F5F0', borderColor: '#0A0A0A' }}>
+        <div className="flex justify-between items-center px-6 py-4">
+          <div className="font-bold text-lg flex items-center gap-3">
+            SHANNON LABS
+          </div>
+          <div className="font-mono text-xs hidden md:flex gap-4">
+            <a href="/art" className="hover:underline hover:bg-black hover:text-white px-1 transition-none">[ART, EDUCATION &amp; MUSIC]</a>
+            <a href="/about" className="hover:underline hover:bg-black hover:text-white px-1 transition-none">[ABOUT THE FOUNDER]</a>
+            <a href="https://github.com/Shannon-Labs" target="_blank" rel="noopener noreferrer" className="hover:underline hover:bg-black hover:text-white px-1 transition-none">[GITHUB]</a>
+            <a href="https://twitter.com/huntermbown" target="_blank" rel="noopener noreferrer" className="hover:underline hover:bg-black hover:text-white px-1 transition-none">[TWITTER]</a>
+            <a href="https://www.linkedin.com/in/hunterbown/" target="_blank" rel="noopener noreferrer" className="hover:underline hover:bg-black hover:text-white px-1 transition-none">[LINKEDIN]</a>
+          </div>
+          <button
+            className="md:hidden p-1 hover:bg-black hover:text-white transition-none"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
+            {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
         </div>
-        <div className="font-mono text-xs flex gap-4">
-          <a href="/art" className="hover:underline hover:bg-black hover:text-white px-1 transition-none">[ART, EDUCATION &amp; MUSIC]</a>
-          <a href="/about" className="hover:underline hover:bg-black hover:text-white px-1 transition-none">[ABOUT THE FOUNDER]</a>
-          <a href="https://github.com/Shannon-Labs" target="_blank" rel="noopener noreferrer" className="hover:underline hover:bg-black hover:text-white px-1 transition-none">[GITHUB]</a>
-          <a href="https://twitter.com/huntermbown" target="_blank" rel="noopener noreferrer" className="hover:underline hover:bg-black hover:text-white px-1 transition-none">[TWITTER]</a>
-          <a href="https://www.linkedin.com/in/hunterbown/" target="_blank" rel="noopener noreferrer" className="hover:underline hover:bg-black hover:text-white px-1 transition-none">[LINKEDIN]</a>
-        </div>
+        {menuOpen && (
+          <div className="md:hidden border-t font-mono text-xs flex flex-col" style={{ borderColor: '#0A0A0A' }}>
+            <a href="/art" className="px-6 py-3 border-b hover:bg-black hover:text-white transition-none" style={{ borderColor: '#0A0A0A' }}>[ART, EDUCATION &amp; MUSIC]</a>
+            <a href="/about" className="px-6 py-3 border-b hover:bg-black hover:text-white transition-none" style={{ borderColor: '#0A0A0A' }}>[ABOUT THE FOUNDER]</a>
+            <a href="https://github.com/Shannon-Labs" target="_blank" rel="noopener noreferrer" className="px-6 py-3 border-b hover:bg-black hover:text-white transition-none" style={{ borderColor: '#0A0A0A' }}>[GITHUB]</a>
+            <a href="https://twitter.com/huntermbown" target="_blank" rel="noopener noreferrer" className="px-6 py-3 border-b hover:bg-black hover:text-white transition-none" style={{ borderColor: '#0A0A0A' }}>[TWITTER]</a>
+            <a href="https://www.linkedin.com/in/hunterbown/" target="_blank" rel="noopener noreferrer" className="px-6 py-3 hover:bg-black hover:text-white transition-none">[LINKEDIN]</a>
+          </div>
+        )}
       </header>
 
       {/* 2. HERO SECTION */}
       <section className="border-b py-32 px-6 md:px-12 flex flex-col items-start justify-center" style={{ backgroundColor: '#F5F5F0', borderColor: '#0A0A0A' }}>
-        <h1 className="text-7xl md:text-8xl lg:text-9xl font-serif font-normal leading-none tracking-tight mb-8" style={{ color: '#0A0A0A' }}>
+        <h1 className="text-5xl md:text-7xl lg:text-9xl font-serif font-normal leading-none tracking-tight mb-8" style={{ color: '#0A0A0A' }}>
           SHANNON<br />LABS
         </h1>
         <h2 className="text-xl md:text-2xl font-mono font-normal mb-8 uppercase tracking-widest" style={{ color: '#0A0A0A' }}>
@@ -283,7 +303,7 @@ export default function Home() {
             The Next Idea Factory
           </p>
 
-          <div className="grid grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* 1952 COLUMN */}
             <div>
               <div className="border-b pb-4 mb-6" style={{ borderColor: '#F5F5F0' }}>
@@ -382,7 +402,7 @@ export default function Home() {
             <p><a href="mailto:hunter@shannonlabs.dev" className="hover:underline">[EMAIL: hunter@shannonlabs.dev]</a></p>
           </div>
         </div>
-        <div className="font-mono text-xs uppercase tracking-widest flex gap-6">
+        <div className="font-mono text-xs uppercase tracking-widest flex flex-wrap gap-x-6 gap-y-2">
           <a href="/art" className="hover:bg-white hover:text-black px-2 py-1 transition-none">[ART, EDUCATION &amp; MUSIC]</a>
           <a href="/about" className="hover:bg-white hover:text-black px-2 py-1 transition-none">[ABOUT THE FOUNDER]</a>
           <a href="https://github.com/Shannon-Labs" target="_blank" rel="noopener noreferrer" className="hover:bg-white hover:text-black px-2 py-1 transition-none">[GITHUB]</a>
