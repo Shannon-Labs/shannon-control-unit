@@ -1,0 +1,10 @@
+{
+  "base_model": "mlx-community/Olmo-3-7B-Instruct-4bit",
+  "architecture": "OLMo3-MLX-SCU",
+  "backend": "MLX",
+  "target_s": 0.02,
+  "timestamp": "2025-11-25T11:57:46.549242",
+  "success": false,
+  "error": "MLX is not available. This engine requires Apple Silicon. Install with: pip install mlx mlx-lm",
+  "adapter_path": "adapters/olmo3_7b_scu"
+}

@@ -1,0 +1,18 @@
+{
+  "num_layers": 32,
+  "lora_parameters": {
+    "rank": 16,
+    "alpha": 32,
+    "dropout": 0.05,
+    "scale": 2.0,
+    "keys": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ]
+  }
+}

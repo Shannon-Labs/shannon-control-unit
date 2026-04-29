@@ -1,0 +1,33 @@
+{
+  "job_id": "mlx_scu_20251124_204959",
+  "base_model": "mlx-community/DeepSeek-R1-Distill-Qwen-1.5B-4bit",
+  "framework": "mlx",
+  "scu_config": {
+    "target_s": 0.01,
+    "kp": 0.8,
+    "ki": 0.15,
+    "deadband": 0.002,
+    "lambda_init": 1.0
+  },
+  "training_config": {
+    "steps": 10,
+    "batch_size": 1,
+    "lr": 0.0002,
+    "lora_r": 16,
+    "lora_alpha": 32
+  },
+  "summary": {
+    "total_steps": 5,
+    "final_s_ratio": NaN,
+    "mean_s_ratio": NaN,
+    "final_lambda": 1.0,
+    "lambda_range": [
+      1.0,
+      1.0
+    ],
+    "final_loss": NaN,
+    "mean_loss": NaN,
+    "target_s": 0.01
+  },
+  "timestamp": "2025-11-24T20:50:11.418722"
+}

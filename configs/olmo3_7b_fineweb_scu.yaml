@@ -1,0 +1,64 @@
+# OLMo 3 7B FineWeb-Edu SCU Training Configuration
+# Model: mlx-community/Olmo-3-7B-Instruct-4bit
+# Dataset: FineWeb-Edu (~1GB educational web text)
+# Method: Shannon Control Unit with PI Control
+# Target: HuggingFace release
+
+# Model Configuration
+base_model: "mlx-community/Olmo-3-7B-Instruct-4bit"
+adapter_out: "adapters/olmo3_7b_fineweb_scu"
+
+# SCU Control Parameters (tuned for 7B models)
+# S-ratio = ParamBPT / (DataBPT + ParamBPT)
+target_s: 0.03          # 3% - moderate regularization for 7B
+kp: 0.8                 # Proportional gain
+ki: 0.15                # Integral gain
+deadband: 0.003         # +/-0.3pp deadband for stability
+lambda_init: 1.0        # Starting regularization strength
+lambda_min: 0.0001      # Minimum lambda bound
+lambda_max: 2.0         # Maximum lambda bound
+prior_sigma: 0.01       # Prior std dev for ParamBPT
+
+# Training Hyperparameters
+steps: 5000             # Full training run (~4-6 hours on M4 Max)
+batch_size: 1           # Conservative for 7B model
+gradient_accumulation_steps: 16  # Effective batch = 16
+lr: 2e-5                # Lower LR for 7B model stability
+warmup_steps: 500       # 10% warmup
+block_size: 2048        # OLMo 3 context length
+seed: 42
+
+# LoRA Configuration
+lora_r: 32              # Higher rank for 7B expressiveness
+lora_alpha: 64          # 2x r
+lora_dropout: 0.05
+lora_layers: 32         # OLMo 3 7B has 32 layers
+lora_target_modules:
+  - q_proj
+  - k_proj
+  - v_proj
+  - o_proj
+  - gate_proj
+  - up_proj
+  - down_proj
+
+# Data Configuration
+train_data: "data/fineweb_edu_1gb.jsonl"
+val_data: null          # Optional: data/fineweb_edu_val.jsonl
+
+# Logging and Checkpointing
+log_dir: "logs/olmo3_7b_fineweb_scu"
+log_csv: "logs/olmo3_7b_fineweb_scu/metrics.csv"
+report_steps: 50        # Log every 50 steps
+eval_steps: 500         # Validate every 500 steps (if val_data)
+save_steps: 1000        # Checkpoint every 1000 steps
+control_frequency: 50   # Apply SCU control every 50 steps
+
+# MLX-Specific Settings
+grad_checkpoint: true
+use_quantized_model: true
+enable_power_monitoring: true
+
+# HuggingFace Release (configure before upload)
+hf_repo_id: null        # Set before running: hunterbown/olmo3-7b-fineweb-scu
+hf_model_card: true     # Generate model card on save

@@ -1,0 +1,18 @@
+<svg viewBox="0 0 180 40" xmlns="http://www.w3.org/2000/svg">
+  <!-- Pill background -->
+  <rect x="0" y="0" width="180" height="40" rx="20" fill="#18181B" stroke="#27272A" stroke-width="1"/>
+  
+  <!-- Mini signal mark -->
+  <rect x="16" y="20" width="2" height="8" rx="0.5" fill="#A1A1AA"/>
+  <rect x="20" y="16" width="2" height="12" rx="0.5" fill="#A1A1AA"/>
+  <rect x="24" y="10" width="2" height="18" rx="0.5" fill="#A1A1AA"/>
+  <rect x="28" y="14" width="2" height="14" rx="0.5" fill="#A1A1AA"/>
+  <rect x="32" y="18" width="2" height="10" rx="0.5" fill="#A1A1AA"/>
+  
+  <!-- Text -->
+  <text x="46" y="26" 
+        font-family="Inter, SF Pro Display, system-ui, sans-serif" 
+        font-weight="500" 
+        font-size="14" 
+        fill="#E4E4E7">Shannon Labs</text>
+</svg>

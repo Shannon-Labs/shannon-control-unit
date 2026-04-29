@@ -299,6 +299,7 @@ def main(args):
         'tokens_per_epoch': tokens_per_epoch,
         'steps': global_step,
         'seed': args.seed,
+        'log_csv': args.log_csv,
         'timestamp': datetime.now().isoformat()
     }
     

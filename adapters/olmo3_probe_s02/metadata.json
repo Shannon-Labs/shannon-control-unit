@@ -1,0 +1,10 @@
+{
+  "base_model": "mlx-community/Olmo-3-7B-Instruct-4bit",
+  "architecture": "OLMo3-MLX-SCU",
+  "backend": "MLX",
+  "target_s": 0.02,
+  "timestamp": "2025-11-25T12:06:50.119012",
+  "success": false,
+  "error": "Dataset must have at least batch_size=1 examples but only has 0.",
+  "adapter_path": "adapters/olmo3_probe_s02"
+}

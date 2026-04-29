@@ -1,0 +1,74 @@
+# DGX Spark + Qwen 3.5 27B SCU Training Configuration
+#
+# Hardware: NVIDIA DGX Spark (Grace Blackwell GB10, 128GB unified memory)
+# Model: Qwen/Qwen3.5-27B (dense 27B, Apache 2.0)
+# Mode: Full precision LoRA (bf16) — not quantized
+#
+# Memory budget:
+#   Model (bf16):    ~54 GB
+#   LoRA + optim:    ~12 GB
+#   Activations:     ~20 GB (with grad checkpoint)
+#   Headroom:        ~42 GB
+#
+# Usage:
+#   python scripts/train_dgx_spark.py  # uses these defaults
+
+# Model
+base_model: "Qwen/Qwen3.5-27B"
+adapter_out: "adapters/qwen35_27b_dgx_scu"
+
+# SCU Control — xlarge tier (7B+)
+target_s: 0.04       # 4% information ratio
+kp: 0.9              # Proportional gain
+ki: 0.18             # Integral gain
+deadband: 0.003      # ±0.3pp deadband
+lambda_init: 1.0
+lambda_min: 0.0001
+lambda_max: 2.0
+control_frequency: 50
+
+# Training
+prior_sigma: 0.01
+steps: 2000
+batch_size: 2
+gradient_accumulation_steps: 8  # effective batch = 16
+lr: 2e-5
+warmup_ratio: 0.05
+block_size: 2048
+max_grad_norm: 1.0
+weight_decay: 0.0    # MUST be 0 — SCU provides regularization
+seed: 42
+
+# LoRA
+lora_r: 32
+lora_alpha: 64
+lora_dropout: 0.05
+lora_targets:
+  - q_proj
+  - k_proj
+  - v_proj
+  - o_proj
+  - gate_proj
+  - up_proj
+  - down_proj
+
+# Data
+train_data: "data/fineweb_edu_1gb.jsonl"
+val_data: null
+
+# CUDA / DGX Spark optimizations
+dtype: "bf16"                    # Blackwell native bf16
+use_flash_attention: true        # Flash Attention 2
+gradient_checkpointing: true     # Required for 27B in 128GB
+use_4bit: false                  # Full precision LoRA (not QLoRA)
+tf32: true                       # Blackwell TF32 matmul
+compile_model: false             # torch.compile (experimental)
+dataloader_num_workers: 4
+dataloader_pin_memory: true
+
+# Logging
+log_dir: "logs/dgx_spark_scu"
+log_csv: "logs/dgx_spark_scu/metrics.csv"
+report_steps: 25
+eval_steps: 200
+save_steps: 500

@@ -1,0 +1,50 @@
+{
+  "config": {
+    "target_s": 0.02,
+    "Kp": 0.8,
+    "Ki": 0.15,
+    "deadband": 0.002,
+    "lambda_min": 0.0001,
+    "lambda_max": 2.0,
+    "control_frequency": 10
+  },
+  "summary": {
+    "total_steps": 2,
+    "final_s_ratio": 0.9829859144567025,
+    "mean_s_ratio": 0.9820219231601837,
+    "final_lambda": 2.0,
+    "lambda_range": [
+      2.0,
+      2.0
+    ],
+    "final_loss": 2.609931755065918,
+    "mean_loss": 2.732402229309082,
+    "target_s": 0.02
+  },
+  "metrics": [
+    {
+      "step": 10,
+      "loss_nats": 2.854872703552246,
+      "data_bpt": 4.118710691784093,
+      "param_bpt": 213.31851222071555,
+      "s_ratio": 0.9810579318636647,
+      "lambda": 2.0,
+      "integral": 0.1441586897795497,
+      "power_watts": 12.727161259696327,
+      "temperature_c": 45.0,
+      "timestamp": 1764094105.321501
+    },
+    {
+      "step": 20,
+      "loss_nats": 2.609931755065918,
+      "data_bpt": 3.7653356000922282,
+      "param_bpt": 217.54162741653064,
+      "s_ratio": 0.9829859144567025,
+      "lambda": 2.0,
+      "integral": 0.14343789633065196,
+      "power_watts": 3.462030578502928,
+      "temperature_c": 45.0,
+      "timestamp": 1764094187.419657
+    }
+  ]
+}

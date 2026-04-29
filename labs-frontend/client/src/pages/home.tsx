@@ -1,6 +1,5 @@
 import Header from "@/components/header";
 import Footer from "@/components/Footer";
-import SignalMark from "@/components/SignalMark";
 import SectionEyebrow from "@/components/SectionEyebrow";
 import QuoteBlock from "@/components/QuoteBlock";
 import LinkableCard from "@/components/LinkableCard";
@@ -38,9 +37,6 @@ export default function Home() {
           className="border-b py-16 md:py-24 lg:py-32 px-4 md:px-12 flex flex-col items-start justify-center"
           style={{ backgroundColor: "#F5F5F0", borderColor: "#0A0A0A" }}
         >
-          <div className="flex items-center gap-3 md:gap-4 mb-6 md:mb-8">
-            <SignalMark size={48} variant="dark" />
-          </div>
           <h1
             className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-serif font-normal leading-[0.9] tracking-tight mb-6 md:mb-8"
             style={{ color: "#0A0A0A" }}
@@ -93,7 +89,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2">
             <LinkableCard
               title="HEGELION"
-              description="Dialectical engine. Thesis \u2192 Antithesis \u2192 Synthesis loops."
+              description="Dialectical engine. Thesis -> Antithesis -> Synthesis loops."
               link="https://hegelion-web.pages.dev/"
               icon="/hegelion-logo.svg"
               variant="highlight"
@@ -129,7 +125,7 @@ export default function Home() {
         >
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 justify-center items-center">
             <a
-              href="https://github.com/Shannon-Labs"
+              href="https://github.com/Hmbown?tab=repositories"
               target="_blank"
               rel="noopener noreferrer"
               className="font-mono text-xs md:text-sm uppercase tracking-wider px-4 py-3 min-h-[44px] flex items-center transition-none"

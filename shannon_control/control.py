@@ -1,4 +1,8 @@
-"""Shannon Control Unit: PI controller for adaptive regularization."""
+"""Shannon Control Unit: control-theoretic regularization layer for stable training.
+
+S* is an internal controller setpoint used for diagnostics (tracking error,
+overshoot), not a public performance metric.
+"""
 
 import math
 from typing import Optional, Tuple
@@ -51,7 +55,7 @@ def update_lambda(
     Args:
         lmbda: Current lambda value
         S_meas: Measured S ratio (ParamBPT / (DataBPT + ParamBPT))
-        S_target: Target S ratio
+        S_target: Target S ratio (internal controller setpoint)
         I: Current integral term
         Kp: Proportional gain
         Ki: Integral gain
@@ -131,51 +135,84 @@ def update_lambda(
     return lmbda_new, I, S_hat
 
 
+def calculate_param_bpt_from_stats(
+    param_sum_squares: float,
+    tokens_per_epoch: int,
+    sigma: float = 0.01,
+) -> float:
+    """Calculate Parameter BPT from pre-computed statistics (framework-agnostic).
+
+    ParamBPT = (1 / (N * ln(2))) * Σ(w² / (2σ²))
+
+    This function accepts pre-computed sum of squared weights, making it
+    compatible with any ML framework (PyTorch, MLX, etc.).
+
+    Args:
+        param_sum_squares: Pre-computed sum of squared LoRA weights
+        tokens_per_epoch: Fixed normalization constant (N)
+        sigma: Prior standard deviation
+
+    Returns:
+        Parameter bits per token
+
+    # Unit tests:
+    >>> calculate_param_bpt_from_stats(0.0, 10000) == 1e-6  # Zero weights
+    True
+    >>> calculate_param_bpt_from_stats(1.0, 10000, 0.01) > 0  # Positive result
+    True
+    """
+    if param_sum_squares == 0:
+        return 1e-6
+
+    param_bpt = param_sum_squares / (2 * sigma**2 * tokens_per_epoch * math.log(2))
+    return param_bpt
+
+
 def calculate_param_bpt(
     model,
     tokens_per_epoch: int,
     sigma: float = 0.01,
 ) -> float:
-    """Calculate Parameter BPT for LoRA weights.
-    
+    """Calculate Parameter BPT for LoRA weights (PyTorch-specific).
+
     ParamBPT = (1 / (N * ln(2))) * Σ(w² / (2σ²)) for trainable LoRA parameters
-    
+
+    For MLX models, use calculate_param_bpt_mlx() from shannon_control.mlx_adapters.
+
     Args:
-        model: Model with parameters
+        model: PyTorch model with parameters
         tokens_per_epoch: Fixed normalization constant (N). REQUIRED to avoid arbitrary S values.
         sigma: Prior standard deviation
-        
+
     Returns:
         Parameter bits per token
-        
+
     # Unit tests:
     >>> # Test 1: Zero weights => ParamBPT ≈ 0
     >>> # Test 2: Scaling weights by 2 => ParamBPT × 4 (quadratic)
     """
     import torch
-    
+
     param_sum = 0.0
     param_count = 0
-    
+
     for name, param in model.named_parameters():
         if param.requires_grad and "lora" in name.lower():
             # Skip meta device parameters (offloaded to disk)
             if param.device.type == 'meta':
                 continue
-                
+
             # Sum of squares in float32 for stability
             param_sum += (param.data.float() ** 2).sum().item()
             param_count += param.numel()
-    
+
     if param_count == 0:
         # Return a small default value to avoid division by zero
         # This happens when all parameters are on meta device
         return 1e-6
-    
-    # Convert to bits (divide by ln(2)) and normalize by tokens
-    param_bpt = param_sum / (2 * sigma**2 * tokens_per_epoch * math.log(2))
-    
-    return param_bpt
+
+    # Use the framework-agnostic function
+    return calculate_param_bpt_from_stats(param_sum, tokens_per_epoch, sigma)
 
 
 def calculate_data_bpt(loss_nats: float) -> float:

@@ -173,136 +173,171 @@ def train_cuda(args):
 
 
 def train_mlx(args):
-    """Train on Apple Silicon with MLX."""
-    try:
-        import mlx.core as mx
-        import mlx.nn as nn
-        import mlx.optimizers as optim
-        from mlx_lm import load as mlx_load
-        from mlx_lm.tuner.trainer import TrainingArgs, train as mlx_train
-        from mlx_lm.tuner.lora import LoRALinear
-    except ImportError as e:
-        print(f"Error: MLX libraries not installed. Run:")
-        print("  pip install mlx mlx-lm")
-        raise e
+    """Train on Apple Silicon with MLX using the production MLXTrainingEngine."""
+    from shannon_control.mlx import MLXTrainingEngine, MLXTrainingConfig
 
-    from scu import control, data
+    print(f"\n{'='*60}")
+    print(f"OLMo 3 MLX Training with Shannon Control Unit")
+    print(f"{'='*60}")
+    print(f"Model: {args.base_model}")
+    print(f"Target S: {args.target_s:.1%}")
+    print(f"Data: {args.train_data}")
+    print(f"Steps: {args.steps}")
+    print(f"{'='*60}\n")
 
-    print(f"Loading MLX model: {args.base_model}")
+    # Create MLX training configuration
+    config = MLXTrainingConfig(
+        # Model and data
+        base_model=args.base_model,
+        train_data=args.train_data,
+        val_data=None,  # No validation data for now
 
-    # Load model and tokenizer via mlx_lm
-    model, tokenizer = mlx_load(args.base_model)
-
-    # Apply LoRA to attention projections
-    # MLX-LM handles this differently - we need to use their tuner
-
-    # For MLX, we'll use a custom training loop that integrates SCU
-    # Load data
-    train_texts = data.load_texts_from_file(args.train_data, max_texts=args.max_texts)
-
-    # For MLX, we need to tokenize differently
-    all_tokens = []
-    for text in train_texts:
-        tokens = tokenizer.encode(text)
-        all_tokens.extend(tokens)
-
-    # Chunk into blocks
-    train_chunks = []
-    for i in range(0, len(all_tokens) - args.block_size + 1, args.block_size):
-        train_chunks.append(all_tokens[i:i + args.block_size])
-
-    print(f"Created {len(train_chunks)} training chunks ({len(all_tokens)} total tokens)")
-    tokens_per_epoch = len(train_chunks) * args.block_size
-
-    # Initialize control variables
-    lmbda = args.lambda_init
-    I = 0.0
-    S_hat = None
-
-    # Setup logging
-    csv_file = None
-    csv_writer = None
-    if args.log_csv:
-        csv_path = Path(args.log_csv)
-        csv_path.parent.mkdir(parents=True, exist_ok=True)
-        csv_file = open(csv_path, 'w', newline='')
-        csv_writer = csv.writer(csv_file)
-        csv_writer.writerow(['step', 'data_bpt', 'param_bpt', 'total_bpt', 'S', 'lambda', 'I', 'wall_time_s'])
-        start_time = time.time()
-
-    # MLX optimizer
-    optimizer = optim.AdamW(learning_rate=args.lr, weight_decay=0.0)
-
-    print(f"\nStarting MLX training for {args.steps} steps")
-    print(f"Target S: {args.target_s:.1%}, Kp: {args.kp}, Ki: {args.ki}")
-
-    # MLX training loop
-    global_step = 0
-    data_bpt = 0.0
-    param_bpt = 0.0
-    S_meas = 0.0
-
-    import random
-    random.seed(args.seed)
-    random.shuffle(train_chunks)
-
-    def loss_fn(model, x, y):
-        logits = model(x)
-        # Cross entropy loss
-        loss = nn.losses.cross_entropy(
-            logits[:, :-1, :].reshape(-1, logits.shape[-1]),
-            y[:, 1:].reshape(-1),
-            reduction='mean'
-        )
-        return loss
-
-    # Note: Full MLX LoRA training requires mlx-lm's tuner
-    # This is a simplified version - for production, use mlx_lm.tuner
-    print("\nNote: MLX training uses mlx-lm's built-in LoRA tuner.")
-    print("For full SCU integration, consider using the CUDA path with Unsloth.")
-    print("MLX path provides baseline comparison.\n")
-
-    # Use mlx_lm's training API with SCU monitoring
-    training_args = TrainingArgs(
+        # Training parameters
         batch_size=args.batch_size,
-        iters=args.steps,
-        learning_rate=args.lr,
-        steps_per_report=10,
-        steps_per_eval=50,
-        adapter_path=args.adapter_out,
-        save_every=args.steps,
+        gradient_accumulation_steps=args.gradient_accumulation_steps,
+        lr=args.lr,
+        steps=args.steps,
+        block_size=args.block_size,
+        seed=args.seed,
+
+        # LoRA configuration
+        lora_r=args.lora_r,
+        lora_alpha=args.lora_alpha,
+        lora_dropout=args.lora_dropout,
+        lora_layers=32,  # OLMo 3 has 32 layers
+        lora_target_modules=[
+            "q_proj", "k_proj", "v_proj", "o_proj",
+            "gate_proj", "up_proj", "down_proj"
+        ],
+
+        # SCU control parameters
+        target_s=args.target_s,
+        kp=args.kp,
+        ki=args.ki,
+        deadband=args.deadband,
+        lambda_init=args.lambda_init,
+        lambda_min=args.lambda_min,
+        lambda_max=args.lambda_max,
+        prior_sigma=args.prior_sigma,
+        control_frequency=10,  # Apply control every 10 steps for fine-grained control
+
+        # Output and logging
+        adapter_out=args.adapter_out,
+        log_dir=str(Path(args.adapter_out).parent / "logs"),
+        log_csv=args.log_csv,
+        report_steps=10,
+        eval_steps=0,  # No validation for now
+        save_steps=args.steps,  # Save only at the end
+
+        # MLX-specific settings
+        grad_checkpoint=True,
+        use_quantized_model=True,  # Using quantized model
+        enable_power_monitoring=True,
     )
 
-    # Prepare data in the format mlx_lm expects
-    data_path = Path(args.train_data)
+    # Create and run MLX training engine
+    engine = MLXTrainingEngine(
+        config=config,
+        job_id=f"olmo3_scu_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+    )
 
-    # Save metadata
-    metadata = {
-        'base_model': args.base_model,
-        'architecture': 'OLMo3-MLX',
-        'target_s': args.target_s,
-        'kp': args.kp,
-        'ki': args.ki,
-        'prior_sigma': args.prior_sigma,
-        'block_size': args.block_size,
-        'tokens_per_epoch': tokens_per_epoch,
-        'steps': args.steps,
-        'backend': 'MLX',
-        'timestamp': datetime.now().isoformat(),
-        'note': 'MLX training - SCU monitoring only, control not applied'
-    }
+    try:
+        # Run training
+        adapter_path = engine.run()
 
-    Path(args.adapter_out).mkdir(parents=True, exist_ok=True)
-    with open(Path(args.adapter_out) / 'metadata.json', 'w') as f:
-        json.dump(metadata, f, indent=2)
+        # Get final metrics
+        summary = engine.scu_callback.get_metrics_summary()
 
-    if csv_file:
-        csv_file.close()
+        # Create comprehensive metadata
+        metadata = {
+            'base_model': args.base_model,
+            'architecture': 'OLMo3-MLX-SCU',
+            'backend': 'MLX',
 
-    print(f"\nMLX setup complete. Adapter will be saved to: {args.adapter_out}")
-    print("Run `mlx_lm.lora --model <model> --train --data <data>` for full LoRA training")
+            # SCU metrics
+            'target_s': args.target_s,
+            'final_s_ratio': summary.get('final_s_ratio', 0),
+            'mean_s_ratio': summary.get('mean_s_ratio', 0),
+            'final_lambda': summary.get('final_lambda', 0),
+            'lambda_range': summary.get('lambda_range', [0, 0]),
 
-    return metadata
+            # Training metrics
+            'final_loss': summary.get('final_loss', 0),
+            'mean_loss': summary.get('mean_loss', 0),
+            'total_steps': summary.get('total_steps', 0),
+
+            # Configuration
+            'scu_config': {
+                'kp': args.kp,
+                'ki': args.ki,
+                'deadband': args.deadband,
+                'lambda_init': args.lambda_init,
+                'lambda_min': args.lambda_min,
+                'lambda_max': args.lambda_max,
+                'prior_sigma': args.prior_sigma,
+            },
+            'lora_config': {
+                'r': args.lora_r,
+                'alpha': args.lora_alpha,
+                'dropout': args.lora_dropout,
+                'target_modules': config.lora_target_modules,
+            },
+            'training_config': {
+                'steps': args.steps,
+                'batch_size': args.batch_size,
+                'gradient_accumulation_steps': args.gradient_accumulation_steps,
+                'lr': args.lr,
+                'block_size': args.block_size,
+                'seed': args.seed,
+            },
+
+            'adapter_path': str(adapter_path),
+            'log_csv': args.log_csv,
+            'timestamp': datetime.now().isoformat(),
+            'success': True,
+        }
+
+        # Save metadata
+        metadata_path = Path(args.adapter_out) / 'metadata.json'
+        with open(metadata_path, 'w') as f:
+            json.dump(metadata, f, indent=2)
+
+        print(f"\n{'='*60}")
+        print(f"Training Complete!")
+        print(f"{'='*60}")
+        print(f"Final S-ratio: {metadata['final_s_ratio']:.4f} (target: {args.target_s:.4f})")
+        print(f"Final lambda: {metadata['final_lambda']:.4f}")
+        print(f"Final loss: {metadata['final_loss']:.4f}")
+        print(f"Adapter saved to: {adapter_path}")
+        print(f"Metadata saved to: {metadata_path}")
+        if args.log_csv:
+            print(f"Metrics logged to: {args.log_csv}")
+        print(f"{'='*60}")
+
+        return metadata
+
+    except Exception as e:
+        print(f"\n[ERROR] MLX training failed: {e}")
+        print(f"Check logs in {config.log_dir} for details")
+
+        # Return error metadata
+        error_metadata = {
+            'base_model': args.base_model,
+            'architecture': 'OLMo3-MLX-SCU',
+            'backend': 'MLX',
+            'target_s': args.target_s,
+            'timestamp': datetime.now().isoformat(),
+            'success': False,
+            'error': str(e),
+            'adapter_path': args.adapter_out,
+        }
+
+        # Save error metadata
+        Path(args.adapter_out).mkdir(parents=True, exist_ok=True)
+        with open(Path(args.adapter_out) / 'metadata.json', 'w') as f:
+            json.dump(error_metadata, f, indent=2)
+
+        raise
 
 
 def _run_training_loop(model, tokenizer, train_chunks, optimizer, scheduler,

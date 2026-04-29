@@ -16,3 +16,7 @@ requests>=2.31.0
 psutil>=5.9.0
 tqdm>=4.60.0
 click>=8.0.0
+
+# MLX - Native Apple Silicon training (optional, macOS arm64 only)
+mlx>=0.8.0; platform_system == "Darwin" and platform_machine == "arm64"
+mlx-lm>=0.8.0; platform_system == "Darwin" and platform_machine == "arm64"

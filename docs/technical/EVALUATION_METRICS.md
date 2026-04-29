@@ -2,7 +2,21 @@
 
 Hunter Bown — Shannon Labs
 
-## 1. Primary Metrics
+Public reporting should focus on generalization, retention, and efficiency.
+The information ratio $S$ and target $S^*$ are **internal controller diagnostics**
+and should not be used as headline performance metrics.
+
+**Metric Stack (research-facing)**:
+
+| Metric | Why it matters | How to compute in this repo |
+| --- | --- | --- |
+| BPT / PPL (held-out) | Core generalization for next-token models | `scripts/eval_bpt.py --texts data/fineweb_edu_1gb_val.jsonl` |
+| Domain retention (benchmark score) | Catastrophic forgetting signal | `scripts/eval_bpt.py --domain_texts <domain.jsonl>` or pass `--domain_score_*` |
+| Generalization gap (train-val BPT) | Overfitting signal | `scripts/eval_bpt.py --train_texts data/fineweb_edu_1gb_train.jsonl` |
+| Compute-adjusted improvement | Practical impact per step/FLOP | `scripts/eval_bpt.py --steps <n>` or `--total_flops <n>` |
+| Control stability (e_RMS, overshoot, OSC) | Safe control dynamics | `scripts/eval_bpt.py --control_log logs/scu_training.csv --target_s <S*>` |
+
+## 1. External Outcome Metrics (Headline)
 
 ### 1.1 Bits-Per-Token (BPT)
 
@@ -43,7 +57,42 @@ $$\text{PPL} = \exp(\text{CE}_{\text{nats}}) = 2^{\text{BPT}}$$
 **Relationship to BPT**:
 $$\Delta\text{PPL} \approx \text{PPL}_{\text{base}} \cdot \ln(2) \cdot \Delta\text{BPT}$$
 
-## 2. Control Metrics
+### 1.3 Domain Retention (Benchmark Score)
+
+**Definition**: A fixed-domain benchmark metric where higher is better
+(e.g., accuracy, pass@k, or $1/\text{BPT}$ on a locked domain-held-out set).
+
+$$P = \frac{\text{DomainScore}_{\text{finetuned}}}{\text{DomainScore}_{\text{base}}}$$
+
+**Repo default**: `scripts/eval_bpt.py --domain_texts ...` uses
+$$\text{DomainScore} = \frac{1}{\text{BPT}_{\text{domain}}}$$
+so $P = \text{BPT}_{\text{base}} / \text{BPT}_{\text{finetuned}}$ on the domain set.
+
+Note: a locked domain benchmark must be selected (math/code/etc.) before reporting retention.
+
+### 1.4 Generalization Gap (Train-Val BPT)
+
+**Definition**: Overfitting signal measured as train minus validation BPT.
+
+$$\text{Gap} = \text{BPT}_{\text{train}} - \text{BPT}_{\text{val}}$$
+
+Lower is better; large positive gaps indicate overfitting.
+
+### 1.5 Preservation-Adjusted Generalization (PAG)
+
+**Definition**: External success metric combining generalization and retention.
+
+Let
+$$G = \frac{\text{BPT}_{\text{base}}}{\text{BPT}_{\text{finetuned}}}$$
+and
+$$P = \frac{\text{DomainScore}_{\text{finetuned}}}{\text{DomainScore}_{\text{base}}}$$
+
+Then
+$$\text{PAG} = \sqrt{G \cdot P}$$
+
+PAG > 1 indicates improved generalization with preserved or improved domain skill.
+
+## 2. Control Diagnostics (Internal Only)
 
 ### 2.1 Information Ratio (S)
 
@@ -60,6 +109,7 @@ $$S = \frac{\text{ParamBPT}}{\text{DataBPT} + \text{ParamBPT}}$$
 - Typical range (observed here): ≈1% (1B), ≈2.9% (3B)
 - Scaling with model size is a hypothesis to test, not established
 - **Note**: $S$ values depend on the normalization constant $N$ (`tokens_per_epoch`). Always report $N$ alongside $S$.
+- **Reporting**: Treat $S$ and $S^*$ as internal diagnostics (tracking error, overshoot, OSC), not public success metrics.
 
 ### 2.2 Control Error Metrics
 
@@ -145,13 +195,14 @@ $$\text{Overhead}_{\text{memory}} = \frac{M_{\text{SCU}} - M_{\text{baseline}}}{
 
 **Target**: < 1% for both metrics
 
-### 5.2 Sample Efficiency
+### 5.2 Compute-Adjusted Improvement
 
-Define efficiency as improvement per training step:
+Define improvement per unit of compute:
 
-$$\text{Efficiency} = \frac{\Delta\text{BPT}}{\text{Steps}}$$
+$$\text{Efficiency}_{\text{steps}} = \frac{\Delta\text{BPT}}{\text{Steps}}$$
+$$\text{Efficiency}_{\text{FLOPs}} = \frac{\Delta\text{BPT}}{\text{FLOPs}}$$
 
-We have not yet benchmarked efficiency across tuning methods; proposed metric only.
+Use steps when FLOPs are not available; always report the denominator used.
 
 ## 6. Generalization Metrics
 
@@ -161,7 +212,7 @@ We have not yet benchmarked efficiency across tuning methods; proposed metric on
 
 $$\text{Transfer} = \frac{\text{BPT}_{\text{OOD}}}{\text{BPT}_{\text{ID}}}$$
 
-We have not yet reported cross‑domain transfer results in this repo.
+We have not yet reported cross-domain transfer results in this repo.
 
 ### 6.2 Robustness Score
 
@@ -234,10 +285,12 @@ For 80% power, α=0.05, δ=0.1 BPT: n ≈ 64
 ### 9.1 Minimal Reporting Set
 
 1. **Performance**: BPT, Perplexity (mean ± SE)
-2. **Control**: Final S-ratio, convergence time
-3. **Statistical**: p-value, effect size, 95% CI
-4. **Computational**: Time overhead, memory overhead
-5. **Configuration**: All hyperparameters
+2. **Retention**: DomainScore, retention ratio $P$, PAG
+3. **Overfitting**: Generalization gap (train-val BPT)
+4. **Efficiency**: Compute-adjusted improvement (per step or FLOP)
+5. **Control (internal)**: $S$, $e_{\text{RMS}}$, overshoot, OSC
+6. **Statistical**: p-value, effect size, 95% CI
+7. **Configuration**: All hyperparameters
 
 ### 9.2 Extended Reporting Set
 
@@ -259,7 +312,7 @@ Additionally include:
 
 ## 10. Benchmark Comparisons
 
-We do not include benchmark leaderboards or SOTA comparisons here; only repo‑measured 1B/3B values.
+We do not include benchmark leaderboards or SOTA comparisons here; only repo-measured 1B/3B values.
 
 ## 11. Failure Mode Analysis
 

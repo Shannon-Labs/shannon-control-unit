@@ -1,0 +1,155 @@
+<svg viewBox="0 0 900 700" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .label { font-family: system-ui, sans-serif; font-size: 11px; fill: #52525B; }
+      .section { font-family: system-ui, sans-serif; font-size: 13px; font-weight: 600; fill: #71717A; letter-spacing: 0.05em; }
+    </style>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="900" height="700" fill="#0A0A0B"/>
+  
+  <!-- Title -->
+  <text x="450" y="40" text-anchor="middle" font-family="Inter, system-ui" font-size="20" font-weight="500" fill="#F4F4F5">Shannon Labs</text>
+  <text x="450" y="62" text-anchor="middle" font-family="system-ui" font-size="12" fill="#52525B">Brand System — Monochrome</text>
+  
+  <!-- MARK -->
+  <text x="50" y="110" class="section">MARK</text>
+  
+  <g transform="translate(50, 130)">
+    <rect width="80" height="80" rx="8" fill="#18181B"/>
+    <g transform="translate(10, 10)">
+      <rect x="4" y="38" width="7" height="18" rx="1" fill="#F4F4F5"/>
+      <rect x="15" y="28" width="7" height="28" rx="1" fill="#F4F4F5"/>
+      <rect x="26" y="16" width="7" height="40" rx="1" fill="#F4F4F5"/>
+      <rect x="37" y="22" width="7" height="34" rx="1" fill="#F4F4F5"/>
+      <rect x="48" y="32" width="7" height="24" rx="1" fill="#F4F4F5"/>
+    </g>
+    <text x="40" y="100" text-anchor="middle" class="label">Dark bg</text>
+  </g>
+  
+  <g transform="translate(150, 130)">
+    <rect width="80" height="80" rx="8" fill="#FAFAFA"/>
+    <g transform="translate(10, 10)">
+      <rect x="4" y="38" width="7" height="18" rx="1" fill="#0A0A0B"/>
+      <rect x="15" y="28" width="7" height="28" rx="1" fill="#0A0A0B"/>
+      <rect x="26" y="16" width="7" height="40" rx="1" fill="#0A0A0B"/>
+      <rect x="37" y="22" width="7" height="34" rx="1" fill="#0A0A0B"/>
+      <rect x="48" y="32" width="7" height="24" rx="1" fill="#0A0A0B"/>
+    </g>
+    <text x="40" y="100" text-anchor="middle" class="label">Light bg</text>
+  </g>
+  
+  <!-- Size tests -->
+  <g transform="translate(260, 130)">
+    <rect width="48" height="48" rx="6" fill="#18181B"/>
+    <g transform="translate(6, 6)">
+      <rect x="3" y="23" width="4" height="11" rx="0.5" fill="#F4F4F5"/>
+      <rect x="10" y="17" width="4" height="17" rx="0.5" fill="#F4F4F5"/>
+      <rect x="17" y="10" width="4" height="24" rx="0.5" fill="#F4F4F5"/>
+      <rect x="24" y="14" width="4" height="20" rx="0.5" fill="#F4F4F5"/>
+      <rect x="31" y="20" width="4" height="14" rx="0.5" fill="#F4F4F5"/>
+    </g>
+    <text x="24" y="68" text-anchor="middle" class="label">48px</text>
+  </g>
+  
+  <g transform="translate(320, 130)">
+    <rect width="32" height="32" rx="4" fill="#18181B"/>
+    <g transform="translate(4, 4)">
+      <rect x="2" y="15" width="3" height="7" rx="0.5" fill="#F4F4F5"/>
+      <rect x="7" y="11" width="3" height="11" rx="0.5" fill="#F4F4F5"/>
+      <rect x="12" y="6" width="3" height="16" rx="0.5" fill="#F4F4F5"/>
+      <rect x="17" y="9" width="3" height="13" rx="0.5" fill="#F4F4F5"/>
+      <rect x="22" y="13" width="3" height="9" rx="0.5" fill="#F4F4F5"/>
+    </g>
+    <text x="16" y="52" text-anchor="middle" class="label">32px</text>
+  </g>
+  
+  <g transform="translate(370, 130)">
+    <rect width="16" height="16" rx="2" fill="#18181B"/>
+    <g transform="translate(2, 2)">
+      <rect x="1" y="7" width="1.5" height="4" rx="0.25" fill="#F4F4F5"/>
+      <rect x="3.5" y="5" width="1.5" height="6" rx="0.25" fill="#F4F4F5"/>
+      <rect x="6" y="3" width="1.5" height="8" rx="0.25" fill="#F4F4F5"/>
+      <rect x="8.5" y="4" width="1.5" height="7" rx="0.25" fill="#F4F4F5"/>
+      <rect x="11" y="6" width="1.5" height="5" rx="0.25" fill="#F4F4F5"/>
+    </g>
+    <text x="8" y="36" text-anchor="middle" class="label">16px</text>
+  </g>
+  
+  <!-- WORDMARK -->
+  <text x="50" y="280" class="section">WORDMARK</text>
+  
+  <g transform="translate(50, 300)">
+    <rect width="280" height="56" rx="8" fill="#18181B"/>
+    <text x="20" y="38" font-family="Inter, system-ui" font-weight="500" font-size="28" fill="#F4F4F5" letter-spacing="-0.01em">Shannon Labs</text>
+    <text x="140" y="76" text-anchor="middle" class="label">Dark mode</text>
+  </g>
+  
+  <g transform="translate(360, 300)">
+    <rect width="280" height="56" rx="8" fill="#FAFAFA"/>
+    <text x="20" y="38" font-family="Inter, system-ui" font-weight="500" font-size="28" fill="#0A0A0B" letter-spacing="-0.01em">Shannon Labs</text>
+    <text x="140" y="76" text-anchor="middle" class="label">Light mode</text>
+  </g>
+  
+  <g transform="translate(670, 300)">
+    <rect width="180" height="56" rx="8" fill="#18181B"/>
+    <text x="16" y="38" font-family="Inter, system-ui" font-weight="500" font-size="24" fill="#F4F4F5" letter-spacing="-0.01em">Shannon Labs<tspan fill="#52525B">, Inc.</tspan></text>
+    <text x="90" y="76" text-anchor="middle" class="label">Formal</text>
+  </g>
+  
+  <!-- LOCKUP -->
+  <text x="50" y="430" class="section">LOCKUP</text>
+  
+  <g transform="translate(50, 450)">
+    <rect width="340" height="56" rx="8" fill="#18181B"/>
+    <!-- Mark -->
+    <rect x="20" y="26" width="4" height="12" rx="1" fill="#F4F4F5"/>
+    <rect x="27" y="20" width="4" height="18" rx="1" fill="#F4F4F5"/>
+    <rect x="34" y="12" width="4" height="26" rx="1" fill="#F4F4F5"/>
+    <rect x="41" y="16" width="4" height="22" rx="1" fill="#F4F4F5"/>
+    <rect x="48" y="22" width="4" height="16" rx="1" fill="#F4F4F5"/>
+    <!-- Text -->
+    <text x="68" y="38" font-family="Inter, system-ui" font-weight="500" font-size="26" fill="#F4F4F5" letter-spacing="-0.01em">Shannon Labs</text>
+    <text x="170" y="76" text-anchor="middle" class="label">Mark + Wordmark</text>
+  </g>
+  
+  <!-- SERVICE BADGES -->
+  <text x="50" y="570" class="section">SERVICE BADGES</text>
+  
+  <g transform="translate(50, 590)">
+    <rect width="200" height="40" rx="6" fill="#18181B"/>
+    <text x="16" y="26" font-family="Inter, system-ui" font-weight="400" font-size="13" fill="#71717A">A </text>
+    <text x="28" y="26" font-family="Inter, system-ui" font-weight="500" font-size="13" fill="#E4E4E7">Shannon Labs</text>
+    <text x="120" y="26" font-family="Inter, system-ui" font-weight="400" font-size="13" fill="#71717A"> Product</text>
+    <text x="100" y="60" text-anchor="middle" class="label">"A Shannon Labs Product"</text>
+  </g>
+  
+  <g transform="translate(280, 590)">
+    <rect width="180" height="40" rx="6" fill="#18181B"/>
+    <!-- Mini mark -->
+    <rect x="16" y="19" width="2" height="7" rx="0.5" fill="#71717A"/>
+    <rect x="20" y="15" width="2" height="11" rx="0.5" fill="#71717A"/>
+    <rect x="24" y="10" width="2" height="16" rx="0.5" fill="#71717A"/>
+    <rect x="28" y="13" width="2" height="13" rx="0.5" fill="#71717A"/>
+    <rect x="32" y="17" width="2" height="9" rx="0.5" fill="#71717A"/>
+    <text x="46" y="26" font-family="Inter, system-ui" font-weight="400" font-size="13" fill="#71717A">from </text>
+    <text x="78" y="26" font-family="Inter, system-ui" font-weight="500" font-size="13" fill="#E4E4E7">Shannon Labs</text>
+    <text x="90" y="60" text-anchor="middle" class="label">"from Shannon Labs"</text>
+  </g>
+  
+  <g transform="translate(490, 590)">
+    <rect width="160" height="40" rx="20" fill="#18181B" stroke="#27272A" stroke-width="1"/>
+    <!-- Mini mark -->
+    <rect x="16" y="19" width="2" height="7" rx="0.5" fill="#71717A"/>
+    <rect x="20" y="15" width="2" height="11" rx="0.5" fill="#71717A"/>
+    <rect x="24" y="10" width="2" height="16" rx="0.5" fill="#71717A"/>
+    <rect x="28" y="13" width="2" height="13" rx="0.5" fill="#71717A"/>
+    <rect x="32" y="17" width="2" height="9" rx="0.5" fill="#71717A"/>
+    <text x="46" y="26" font-family="Inter, system-ui" font-weight="500" font-size="13" fill="#E4E4E7">Shannon Labs</text>
+    <text x="80" y="60" text-anchor="middle" class="label">Pill (footer)</text>
+  </g>
+  
+  <!-- Note -->
+  <text x="450" y="680" text-anchor="middle" font-family="system-ui" font-size="11" fill="#3F3F46">Monochrome only. Signal bars reference information theory. Clean, scientific, understated.</text>
+</svg>

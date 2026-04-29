@@ -43,6 +43,24 @@ val_data: "data/val.txt"
 max_texts: null
 val_split: 0.1
 
+# Baseline evaluation suite (fixed datasets + seeds)
+baseline_suite:
+  seeds:
+    - 42
+    - 123
+    - 2025
+  generalization_sets:
+    - name: "fineweb_edu_1gb"
+      train: "data/fineweb_edu_1gb_train.jsonl"
+      val: "data/fineweb_edu_1gb_val.jsonl"
+    - name: "wikitext"
+      train: "data/wikitext_train.jsonl"
+      val: "data/wikitext_val.jsonl"
+  domain_benchmark:
+    # Choose a locked specialization benchmark (math/code/etc.) and keep fixed.
+    name: "todo_select_domain"
+    data: "data/domain_benchmark.jsonl"
+
 # Logging
 log_csv: "logs/scu_training.csv"
 log_interval: 10

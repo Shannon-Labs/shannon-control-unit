@@ -10,6 +10,8 @@ Consider the adaptive regularization system with state variables:
 - $I(t) \in [I_{\min}, I_{\max}]$: integral state
 
 The control objective is to track a reference $S^* \in (0,1)$.
+This setpoint is an **internal** controller target used for stability diagnostics
+(tracking error, overshoot), not a public performance metric.
 
 ## 2. System Dynamics (Corrected)
 

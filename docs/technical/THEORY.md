@@ -35,13 +35,22 @@ $$S = \frac{\text{ParamBPT}}{\text{DataBPT} + \text{ParamBPT}}$$
 This ratio satisfies $S \in [0,1]$, with interpretation:
 - $S \to 0$: Negligible regularization (overfitting risk)
 - $S \to 1$: Excessive regularization (underfitting)
-- $S^* \in (0,1)$: Optimal trade-off
+- $S^* \in (0,1)$: Internal setpoint for controller stability
+
+Note: $S^*$ is an internal control target; external success is evaluated with
+generalization, retention, and efficiency metrics (see `docs/technical/EVALUATION_METRICS.md`).
 
 ### 1.4 Normalization Dependency
 
 Note that $S$ depends inversely on the dataset size normalization constant $N$ (`tokens_per_epoch`).
 $$ S \propto \frac{1}{N} $$
 Therefore, $S^*$ values are only comparable when $N$ is fixed. The code enforces explicit $N$ to ensure reproducibility.
+
+### 1.5 What We Control vs What We Measure
+
+- **Control target**: internal $S^*$ for stability and anti-overfit behavior.
+- **Success target**: external metrics (BPT/PPL, retention, compute efficiency) in
+  `docs/technical/EVALUATION_METRICS.md`.
 
 ## 2. Control System Design
 
@@ -238,4 +247,3 @@ Sample size determination for detecting $\Delta\text{BPT} = 0.1$:
 *Correspondence: Hunter Bown, Shannon Labs (hunter@shannonlabs.dev)*
 
 *Preprint available at arXiv:2509.XXXXX*
-

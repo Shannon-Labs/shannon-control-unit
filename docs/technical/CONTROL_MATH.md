@@ -1,6 +1,9 @@
 # SCU Control Math Summary
 
 This document summarizes the **actual** control logic implemented in `shannon_control/control.py`.
+SCU is a control-theoretic regularization layer whose job is to stabilize training dynamics.
+The controller setpoint $S^*$ is **internal** and should be reported only as a diagnostic
+(tracking error, overshoot), not as a headline performance metric.
 
 ## 1. Core Definitions
 
@@ -17,7 +20,7 @@ $$ S = \frac{\text{ParamBPT}}{\text{DataBPT} + \text{ParamBPT}} $$
 
 ### Error Signal
 $$ e(t) = S(t) - S^* $$
-where $S^*$ is the target setpoint (e.g., 0.01).
+where $S^*$ is the internal target setpoint (e.g., 0.01).
 
 ### Plant Dynamics (Negative Gain)
 The system acts as a "negative plant":

@@ -4,6 +4,8 @@ Comprehensive documentation for the Shannon Control Unit (SCU) adaptive regulari
 
 ## Quick Links
 
+- **[Start Here](./START_HERE.md)** - Getting oriented and training a new model
+- **[Repo Map](./REPO_MAP.md)** - What lives where
 - **[Getting Started](../README.md)** - Installation and quick start
 - **[API Reference](#api-reference)** - Core API documentation
 - **[Examples](../examples/)** - Code examples and tutorials

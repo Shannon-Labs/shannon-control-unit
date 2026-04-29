@@ -9,7 +9,7 @@ const navLinks = [
 ];
 
 const externalLinks = [
-  { href: "https://github.com/Shannon-Labs", label: "GITHUB" },
+  { href: "https://github.com/Hmbown?tab=repositories", label: "GITHUB" },
   { href: "https://twitter.com/huntermbown", label: "TWITTER" },
   { href: "https://www.linkedin.com/in/hunterbown/", label: "LINKEDIN" },
   { href: "https://huggingface.co/hunterbown", label: "HUGGING FACE" },
@@ -18,49 +18,60 @@ const externalLinks = [
 export default function Footer({ currentPath }: FooterProps) {
   return (
     <footer
-      className="py-8 md:py-12 px-4 md:px-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 md:gap-8"
+      className="py-8 md:py-12 px-4 md:px-12"
       style={{ backgroundColor: "#0A0A0A", color: "#F5F5F0", borderTop: "1px solid #F5F5F0" }}
       role="contentinfo"
     >
-      <div>
-        <div className="font-mono text-[10px] md:text-xs space-y-2">
-          <p>
-            <a
-              href="mailto:hunter@shannonlabs.dev"
-              className="hover:underline inline-block py-1 px-1 min-h-[44px] flex items-center"
-            >
-              [EMAIL: hunter@shannonlabs.dev]
-            </a>
-          </p>
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 md:gap-8">
+        <div>
+          <div className="font-mono text-[10px] md:text-xs space-y-2">
+            <p>
+              <a
+                href="mailto:hunter@shannonlabs.dev"
+                className="hover:underline inline-block py-1 px-1 min-h-[44px] flex items-center"
+              >
+                [EMAIL: hunter@shannonlabs.dev]
+              </a>
+            </p>
+          </div>
         </div>
-      </div>
-      <nav
-        className="font-mono text-[10px] md:text-xs uppercase tracking-widest flex flex-wrap gap-x-3 md:gap-x-6 gap-y-2"
-        aria-label="Footer navigation"
-      >
-        {navLinks
-          .filter((link) => link.href !== currentPath)
-          .map((link) => (
+        <nav
+          className="font-mono text-[10px] md:text-xs uppercase tracking-widest flex flex-wrap gap-x-3 md:gap-x-6 gap-y-2"
+          aria-label="Footer navigation"
+        >
+          {navLinks
+            .filter((link) => link.href !== currentPath)
+            .map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="hover:bg-white hover:text-black px-1 py-1 min-h-[44px] flex items-center transition-none"
+              >
+                [{link.label}]
+              </a>
+            ))}
+          {externalLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
               className="hover:bg-white hover:text-black px-1 py-1 min-h-[44px] flex items-center transition-none"
             >
               [{link.label}]
             </a>
           ))}
-        {externalLinks.map((link) => (
-          <a
-            key={link.href}
-            href={link.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:bg-white hover:text-black px-1 py-1 min-h-[44px] flex items-center transition-none"
-          >
-            [{link.label}]
-          </a>
-        ))}
-      </nav>
+        </nav>
+      </div>
+
+      {/* Logo — bottom right */}
+      <div className="flex justify-end mt-8 md:mt-10">
+        <img
+          src="/shannon-labs-logo.png"
+          alt="Shannon Labs"
+          className="h-16 md:h-20 w-auto"
+        />
+      </div>
     </footer>
   );
 }

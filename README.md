@@ -5,9 +5,9 @@
 
 **Abstract**
 
-Shannon Control Unit (SCU) is a control-theoretic framework for adaptive regularization during Large Language Model (LLM) fine-tuning. SCU addresses the **Plasticity-Stability Trade-off** by monitoring an MDL-derived **Information Ratio (S)** in real-time, automatically adjusting regularization strength via PI control to prevent overfitting while maintaining learning capacity.
+Shannon Control Unit (SCU) is a control-theoretic **regularization layer** that stabilizes training dynamics during LLM fine-tuning. It adapts regularization strength using an **internal** MDL-derived information ratio (S) and a PI controller; the target S* is a controller setpoint and **not** a headline metric. Public evaluation focuses on **generalization** (BPT/PPL), **domain retention**, and **efficiency**, summarized with the Preservation-Adjusted Generalization (PAG) score.
 
-**Latest Discovery (Dec 2025):** SCU's PI controller provides a natural stopping criterion - when lambda stabilizes at equilibrium, the model has reached **MDL saturation** (learned all meaningful patterns from the data). This transforms SCU from "adaptive regularization" to **"self-terminating training"** that knows when to stop.
+**Latest Discovery (Dec 2025):** SCU's PI controller provides a natural stopping criterion - when lambda stabilizes at equilibrium, the model has reached **MDL saturation** (learned all meaningful patterns from the data). This turns SCU into **automatic early-stop**, delivering compute savings without sacrificing quality.
 
 ---
 
@@ -26,8 +26,8 @@ Fine-tuning a specialized model like **VibeThinker-1.5B** (a Qwen-2.5-Math deriv
 
 We validated SCU on **WeiboAI/VibeThinker-1.5B** using the FineWeb-Edu dataset.
 
-### Observed Behavior: Information Ratio Saturation
-SCU detected that the Information Ratio saturated after approximately **16M tokens** (~Step 386).
+### Observed Controller Diagnostic: Information Ratio Saturation
+SCU detected that the internal Information Ratio saturated after approximately **16M tokens** (~Step 386).
 *   **Reaction:** SCU increased regularization to $\lambda=2.0$, effectively freezing the weights.
 *   **Interpretation:** This suggests SCU identified a point where additional training provided diminishing returns on information gain.
 
@@ -49,7 +49,7 @@ SCU couples information theory with PI control. We monitor the MDL-derived infor
 S(t) = ParamBPT(t) / (DataBPT(t) + ParamBPT(t))
 ```
 
-where **DataBPT** is the bits-per-token of the loss and **ParamBPT** is the bits-per-token of the parameter update. The control objective is `S(t) → S*`. Let `e(t) = S(t) - S*`. With plant gain `∂S/∂λ < 0`, the PI law updates the regularization strength as:
+where **DataBPT** is the bits-per-token of the loss and **ParamBPT** is the bits-per-token of the parameter update. The control objective is `S(t) → S*` (internal only). Let `e(t) = S(t) - S*`. With plant gain `∂S/∂λ < 0`, the PI law updates the regularization strength as:
 
 ```
 λ(t+1) = λ(t) * exp(+(K_p × e(t) + K_i × Σ e(τ)))
@@ -58,11 +58,24 @@ where **DataBPT** is the bits-per-token of the loss and **ParamBPT** is the bits
 optionally with deadband and integral clamping for anti-windup. Updates are applied at gradient-accumulation boundaries to maintain stability.
 
 ### Control System Highlights
-- **Closed-loop, not scheduled:** PI controller keeps S near the target S*; λ adapts continually instead of following a fixed decay or manual grid.
+- **Closed-loop, not scheduled:** PI controller keeps internal S near the target S*; λ adapts continually instead of following a fixed decay or manual grid.
 - **Stability primitives:** Deadband to avoid chatter, integral clamp/leak for anti-windup, and λ min/max guards to prevent runaway behavior.
-- **Observation + actuation:** Telemetry exposes S/DataBPT/ParamBPT; λ updates gate at accumulation boundaries to avoid noise amplification.
+- **Observation + actuation:** Telemetry exposes S/DataBPT/ParamBPT as controller diagnostics; λ updates gate at accumulation boundaries to avoid noise amplification.
 - **Hardware-aware path:** CUDA 4-bit + Unsloth fast path when requested; MPS and CPU fall back safely with sane defaults.
 - **Bootstrapping:** Auto-config seeds controller gains/targets from model and dataset scale so feedback starts stable on first step.
+
+### Public Outcome Metrics (Headline)
+- **Generalization:** Held-out BPT/PPL on fixed validation sets.
+- **Domain retention:** Benchmark score on a locked domain set (math/code/etc.).
+- **Generalization gap:** Train-val BPT difference.
+- **Compute-adjusted improvement:** ΔBPT per step or per FLOP.
+- **PAG:** $\text{PAG} = \sqrt{G \cdot P}$ with $G = \text{BPT}_{\text{base}}/\text{BPT}_{\text{finetuned}}$ and $P = \text{DomainScore}_{\text{finetuned}}/\text{DomainScore}_{\text{base}}$.
+
+### Benchmark Protocol (Credible by Default)
+- **General text:** fixed held-out sets (FineWeb-Edu + Wikitext in `data/`).
+- **Domain:** pick and lock a specialization benchmark (math/code/etc.) for retention.
+- **Baselines:** fixed λ, tuned weight decay, and modern PEFT baselines (DoRA/QLoRA).
+- **Reproducibility:** record `tokens_per_epoch`, seeds, and CI/p-values (see `results/3b_validation_results.json` and `docs/technical/STATISTICAL_ANALYSIS.md`).
 
 ### Control Loop (text diagram)
 
@@ -93,8 +106,9 @@ We conducted a comparative study on the **VibeThinker 1.5B** model to validate S
 | **V3 (Fixed Prior)** | SCU (Fixed σ) | **70.39** | Comparable |
 | **V4 (Dynamic Prior)** | SCU (Dynamic σ) | 108.84 | Overfit |
 
-#### Key Observation: Regularization Saturation as Safety Signal
+#### Key Observation: Regularization Saturation as Safety Signal (Internal Diagnostic)
 In the V3 run, the SCU controller naturally saturated the regularization strength ($\lambda \to 2.0$) towards the end of training.
+This is a controller diagnostic; the headline outcomes remain BPT/PPL, retention, and efficiency.
 *   **The Test:** We hypothesized this saturation was a limitation and ran V4 to "fix" it by loosening the prior.
 *   **The Result:** V4 overfitted (PPL 108 vs 70).
 *   **The Interpretation:** The saturation in V3 appears to be a useful signal that the model-data complexity ratio has reached a threshold. This suggests SCU can serve as an automatic early-stopping mechanism.
@@ -124,7 +138,7 @@ We trained a LoRA adapter for **OLMo 3 7B Instruct** (4-bit MLX) on FineWeb-Edu 
 | 2500 | 2.393 | 3.453 | 0.112 | 3.14% | 0.870 | No lambda change |
 | 2800 | 2.435 | 3.513 | 0.114 | 3.14% | 0.870 | No lambda change |
 
-**Observation:** Lambda stabilized at 0.870 around step 1500 and **did not change** through step 2800, indicating the PI controller reached equilibrium. This suggests step 1500 was the **MDL saturation point** - where the model learned all meaningful patterns from the data.
+**Observation:** Lambda stabilized at 0.870 around step 1500 and **did not change** through step 2800, indicating the PI controller reached equilibrium. This suggests step 1500 was the **MDL saturation point** - where the model learned all meaningful patterns from the data. This equilibrium is an internal control diagnostic; external success is still judged by BPT/PPL and retention.
 
 **Evidence supporting step 1500 as optimal stop:**
 1. **Lambda convergence**: Δλ < 0.001 from step 1500-2800 (controller saturated)
@@ -177,7 +191,7 @@ Recent independent work, **EntroPIC** (arXiv:2511.15248), applies PI control to 
 
 - **Scale**: Validated only up to 3B parameters with LoRA fine-tuning
 - **Domain benchmarks**: No direct measurement of specialized capability preservation (e.g., math benchmarks)
-- **S* selection**: Optimal target S* currently requires empirical tuning
+- **S* selection (internal)**: Controller setpoint still requires empirical tuning
 - **Baseline comparisons**: Not yet compared against DoRA, QLoRA, or other modern PEFT methods with careful tuning
 
 ## 6. Future Directions
@@ -186,7 +200,7 @@ Our ongoing research focuses on:
 
 - **Automatic Stopping Implementation**: Deploy the PI equilibrium detection mechanism discovered in OLMo 3 7B training as a production feature. This would eliminate manual step count selection and provide provable stopping criteria based on MDL saturation.
 
-- **Scaling Laws for S***: Investigating whether optimal target S* can be derived from model size (N) and dataset size (D). Early evidence from 1B-7B range suggests S* ≈ 2-3% may be universal for LoRA fine-tuning.
+- **Scaling Laws for S* (internal)**: Investigating whether the controller setpoint can be derived from model size (N) and dataset size (D). Early evidence from 1B-7B range suggests S* ≈ 2-3% may be universal for LoRA fine-tuning.
 
 - **Full-Parameter Training**: Extending validation beyond LoRA to full model pretraining. The automatic stopping mechanism may be even more valuable for expensive pretraining runs.
 
@@ -271,10 +285,10 @@ This repository is dual-licensed:
 
 ## Appendix: Control Math (tl;dr)
 
-- **S-ratio (controlled variable):**
+- **S-ratio (controlled variable, internal):**
   
   \(S = \frac{\text{ParamBPT}}{\text{DataBPT} + \text{ParamBPT}}\); the MDL-derived regularization-to-fit ratio.
-- **Error:** \(e(t) = S(t) - S^*\) with plant gain \(\partial S / \partial \lambda < 0\).
+- **Error (internal diagnostic):** \(e(t) = S(t) - S^*\) with plant gain \(\partial S / \partial \lambda < 0\).
 - **PI update with deadband and clamp:**
   
   \(e_d = 0\) if \(|e| < \delta\) (deadband), else \(e_d = e\).

@@ -1,0 +1,20 @@
+<svg viewBox="0 0 180 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- Mini signal mark -->
+  <rect x="0" y="16" width="2" height="8" rx="0.5" fill="#A1A1AA"/>
+  <rect x="4" y="12" width="2" height="12" rx="0.5" fill="#A1A1AA"/>
+  <rect x="8" y="6" width="2" height="18" rx="0.5" fill="#A1A1AA"/>
+  <rect x="12" y="10" width="2" height="14" rx="0.5" fill="#A1A1AA"/>
+  <rect x="16" y="14" width="2" height="10" rx="0.5" fill="#A1A1AA"/>
+  
+  <!-- Text -->
+  <text x="28" y="22" 
+        font-family="Inter, SF Pro Display, system-ui, sans-serif" 
+        font-weight="400" 
+        font-size="14" 
+        fill="#71717A">from </text>
+  <text x="64" y="22" 
+        font-family="Inter, SF Pro Display, system-ui, sans-serif" 
+        font-weight="500" 
+        font-size="14" 
+        fill="#E4E4E7">Shannon Labs</text>
+</svg>

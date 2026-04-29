@@ -1,0 +1,57 @@
+{
+  "base_model": "mlx-community/Olmo-3-7B-Instruct-4bit",
+  "architecture": "OLMo3-MLX-SCU",
+  "dataset": "FineWeb-Edu",
+  "backend": "MLX",
+  "target_s": 0.03,
+  "final_s_ratio": 0.599033615264204,
+  "mean_s_ratio": 0.599060377124238,
+  "final_lambda": 2.0,
+  "lambda_range": [
+    1.0,
+    2.0
+  ],
+  "final_loss": 2.5470415115356446,
+  "mean_loss": 2.5187752342224123,
+  "total_steps": 10,
+  "scu_config": {
+    "kp": 0.8,
+    "ki": 0.15,
+    "deadband": 0.003,
+    "lambda_init": 1.0,
+    "lambda_min": 0.0001,
+    "lambda_max": 2.0,
+    "prior_sigma": 0.01,
+    "control_frequency": 50
+  },
+  "lora_config": {
+    "r": 32,
+    "alpha": 64,
+    "dropout": 0.05,
+    "layers": 32,
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ]
+  },
+  "training_config": {
+    "steps": 100,
+    "batch_size": 1,
+    "gradient_accumulation_steps": 16,
+    "effective_batch_size": 16,
+    "lr": 2e-05,
+    "warmup_steps": 500,
+    "block_size": 2048,
+    "seed": 42
+  },
+  "job_id": "olmo3_fineweb_20251201_035356",
+  "adapter_path": "/Volumes/VIXinSSD/shannon-control-unit/adapters/olmo3_test_100",
+  "log_csv": "/Volumes/VIXinSSD/shannon-control-unit/logs/olmo3_test_100/metrics.csv",
+  "timestamp": "2025-12-01T04:01:40.879033",
+  "success": true
+}

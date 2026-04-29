@@ -1,0 +1,75 @@
+# DGX Spark + Qwen 3.5 27B QLoRA Configuration
+#
+# Hardware: NVIDIA DGX Spark (Grace Blackwell GB10, 128GB unified memory)
+# Model: Qwen/Qwen3.5-27B (dense 27B, Apache 2.0)
+# Mode: QLoRA (4-bit quantized base + larger LoRA rank + longer context)
+#
+# Memory budget:
+#   Model (4-bit):   ~14 GB
+#   LoRA r=64:       ~8 GB
+#   Optimizer:       ~16 GB
+#   Activations:     ~25 GB (seq_len=4096)
+#   Headroom:        ~65 GB
+#
+# Usage:
+#   python scripts/train_dgx_spark.py --qlora
+
+# Model
+base_model: "Qwen/Qwen3.5-27B"
+adapter_out: "adapters/qwen35_27b_dgx_scu_qlora"
+
+# SCU Control — xlarge tier
+target_s: 0.04
+kp: 0.9
+ki: 0.18
+deadband: 0.003
+lambda_init: 1.0
+lambda_min: 0.0001
+lambda_max: 2.0
+control_frequency: 50
+
+# Training
+prior_sigma: 0.01
+steps: 2000
+batch_size: 4
+gradient_accumulation_steps: 4  # effective batch = 16
+lr: 2e-5
+warmup_ratio: 0.05
+block_size: 4096                # longer context with QLoRA memory savings
+max_grad_norm: 1.0
+weight_decay: 0.0
+seed: 42
+
+# LoRA — larger rank since base is quantized
+lora_r: 64
+lora_alpha: 128
+lora_dropout: 0.05
+lora_targets:
+  - q_proj
+  - k_proj
+  - v_proj
+  - o_proj
+  - gate_proj
+  - up_proj
+  - down_proj
+
+# Data
+train_data: "data/fineweb_edu_1gb.jsonl"
+val_data: null
+
+# CUDA / DGX Spark — QLoRA mode
+dtype: "bf16"
+use_flash_attention: true
+gradient_checkpointing: true
+use_4bit: true                  # QLoRA: 4-bit base model
+tf32: true
+compile_model: false
+dataloader_num_workers: 4
+dataloader_pin_memory: true
+
+# Logging
+log_dir: "logs/dgx_spark_scu_qlora"
+log_csv: "logs/dgx_spark_scu_qlora/metrics.csv"
+report_steps: 25
+eval_steps: 200
+save_steps: 500

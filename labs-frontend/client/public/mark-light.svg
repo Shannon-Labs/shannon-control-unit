@@ -1,0 +1,8 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <!-- Signal bars - black for light backgrounds -->
+  <rect x="4" y="40" width="8" height="20" rx="1" fill="#0A0A0B"/>
+  <rect x="16" y="28" width="8" height="32" rx="1" fill="#0A0A0B"/>
+  <rect x="28" y="16" width="8" height="44" rx="1" fill="#0A0A0B"/>
+  <rect x="40" y="24" width="8" height="36" rx="1" fill="#0A0A0B"/>
+  <rect x="52" y="36" width="8" height="24" rx="1" fill="#0A0A0B"/>
+</svg>

@@ -1,0 +1,41 @@
+# Requirements for CUDA training (DGX Spark / NVIDIA GPUs)
+#
+# Install: pip install -r requirements-cuda.txt
+#
+# For DGX Spark, also ensure:
+#   - CUDA 12.x toolkit
+#   - NVIDIA driver >= 550
+#   - cuDNN 9.x
+
+# Core
+torch>=2.4.0
+transformers>=4.48.0
+peft>=0.14.0
+accelerate>=0.35.0
+datasets>=2.20.0
+
+# Quantization (for QLoRA mode)
+bitsandbytes>=0.45.0
+
+# Flash Attention 2
+flash-attn>=2.7.0
+
+# Monitoring
+pynvml>=12.0.0
+
+# Data processing
+scipy>=1.9.0
+numpy>=1.21.0
+pandas>=1.3.0
+
+# Utilities
+pyyaml>=6.0
+tqdm>=4.60.0
+psutil>=5.9.0
+
+# Evaluation
+matplotlib>=3.5.0
+
+# SCU core (shared with MLX)
+# These are also in requirements.txt but listed for completeness
+requests>=2.31.0
