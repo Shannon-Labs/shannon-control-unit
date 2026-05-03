@@ -6,9 +6,12 @@ const navLinks = [
   { href: "/", label: "HOME" },
   { href: "/art", label: "ART, EDUCATION & MUSIC" },
   { href: "/about", label: "ABOUT THE FOUNDER" },
+  { href: "/privacy", label: "PRIVACY" },
+  { href: "/terms", label: "TERMS" },
 ];
 
 const externalLinks = [
+  { href: "https://github.com/Hmbown/DeepSeek-TUI", label: "DEEPSEEK-TUI" },
   { href: "https://github.com/Hmbown?tab=repositories", label: "GITHUB" },
   { href: "https://twitter.com/huntermbown", label: "TWITTER" },
   { href: "https://www.linkedin.com/in/hunterbown/", label: "LINKEDIN" },

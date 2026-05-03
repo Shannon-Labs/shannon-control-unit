@@ -7,6 +7,8 @@ import Home from "@/pages/home";
 import About from "@/pages/about";
 import ArtEducationMusic from "@/pages/art";
 import Alignment from "@/pages/alignment";
+import Privacy from "@/pages/privacy";
+import Terms from "@/pages/terms";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -16,6 +18,8 @@ function Router() {
       <Route path="/about" component={About} />
       <Route path="/art" component={ArtEducationMusic} />
       <Route path="/alignment" component={Alignment} />
+      <Route path="/privacy" component={Privacy} />
+      <Route path="/terms" component={Terms} />
       <Route component={NotFound} />
     </Switch>
   );
